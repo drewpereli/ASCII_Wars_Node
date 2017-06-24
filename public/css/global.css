@@ -1,0 +1,9 @@
+.display-none {
+  display: none; }
+
+#canvas-container {
+  position: relative; }
+  #canvas-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0; }
