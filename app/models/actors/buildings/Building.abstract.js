@@ -1,5 +1,5 @@
 
-var Actor = require('../Actor');
+var Actor = require('../Actor.abstract');
 
 class Building extends Actor{
 

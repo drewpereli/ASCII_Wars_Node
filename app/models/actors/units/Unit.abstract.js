@@ -1,5 +1,5 @@
 
-var Actor = require('../Actor');
+var Actor = require('../Actor.abstract');
 
 class Unit extends Actor{
 
@@ -7,3 +7,5 @@ class Unit extends Actor{
 		super.constructor(...arguments);
 	}
 }
+
+module.exports = Actor;

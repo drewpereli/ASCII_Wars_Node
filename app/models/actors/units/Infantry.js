@@ -1,7 +1,7 @@
 
-var Unit = require('./Unit');
+var Unit = require('./Unit.abstract');
 
-class Infantry exends Unit {
+class Infantry extends Unit {
 
 	constructor(){
 		this.maxHealth = 100;
@@ -19,3 +19,5 @@ class Infantry exends Unit {
 		return 1;
 	}
 }
+
+module.exports = Infantry;

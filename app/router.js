@@ -72,6 +72,14 @@ function initializePlayerSocketRoutes(socket){
 		if (!p) return;
 		game.playerQuit(p);
 	});
+
+	if (process.env.DEBUG_MODE){
+		socket.on('restart', () => {
+			var p = authenticatePlayer(socket);
+			if (!p) return;
+			game.restart();
+		});
+	}
 }
 
 

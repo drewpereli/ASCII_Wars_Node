@@ -6,3 +6,5 @@ class Player{
 		this.timeState = 'paused'; //Paused or playing
 	}
 }
+
+module.exports = Player;

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const config = require('../../config');
-const Player = require('../models/player');
-const Map = require('../models/map');
+const Player = require('../models/player/Player');
+const Map = require('../models/map/Map');
 
 class Game{
 
@@ -10,7 +10,6 @@ class Game{
 		this.state = 'waiting for players';
 		this.players = [];
 		this.spectators = [];
-		this.actors = [];
 		this.map;
 		this.io = io;
 		this.ticks = 0;
@@ -186,6 +185,17 @@ class Game{
 		return this.players.length;
 	}
 
+
+
+
+	/*
+	*
+	* Debugging Functions
+	*
+	*/
+	restart(){
+		this.start();
+	}
 
 }
 
