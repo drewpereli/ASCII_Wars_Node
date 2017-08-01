@@ -10,7 +10,9 @@ class Cell
 		x = @getXPixel()
 		y = @getYPixel()
 		l = @getCellLength()
-		@layer.fillRect(x, y, l, l)
+		@layer.fillRect(x + 1, y + 1, l - 2, l - 2)
+		@layer.fillStyle = config.view.colors.cellBorder
+		@layer.strokeRect(x, y, l, l)
 		@cleared = false
 
 	clear: ->

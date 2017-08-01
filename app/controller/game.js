@@ -19,6 +19,10 @@ class Game{
 			'default',
 			'ending'
 		];
+
+
+		//Temporary properties
+		this.actors = [];
 	}
 
 
@@ -34,29 +38,30 @@ class Game{
 	start() {
 		this.changeState('default');
 		//Create a new map
-		this.sendMessage('Generating map');
-		this.map = new Map();
+		this.emitMessage('Generating map');
+		this.map = new Map(this);
 		this.map.generate()
-		.then( data => {
-			this.sendMessage('Map finished generating');
-			this.io.emit('map updated', this.map.tiles);
+		.then(() => {
+			this.emitMessage('Map finished generating');
+			this.emitMap();
 		})
 		.catch( err => {
 			console.log(err);
-			this.sendMessage("Error generating map. Please try again later.");
-		})
+			this.emitMessage("Error generating map. Please try again later.");
+		});
 	}
 
 
 	acceptingPlayers(){
-		return this.state === 'waiting for players' || this.state === 'counting down';
+		return (this.state === 'waiting for players' || this.state === 'counting down') 
+					&& this.players.length < config.maxPlayers;
 	}
 
 
 	beginGameStartCountdown(seconds){
 		this.changeState('counting down');
 		var countDown = (second) => {
-			this.sendMessage(second + ' seconds until game starts');
+			this.emitMessage(second + ' seconds until game starts');
 			if (second === 0){
 				this.start();
 				return;
@@ -85,18 +90,41 @@ class Game{
 	addSpectator(socket){
 		this.spectators.push({socket: socket});
 		if (this.state === 'default')
-			socket.emit('map updated', this.map.tiles);
+			this.emitMap();
 	}
 
 
-	sendMessage(message){
+
+	addActor(actor){
+		this.actors.push(actor);
+	}
+
+
+
+
+	/*
+	*
+	* Emitter functions
+	*
+	*
+	*/
+
+	emitMessage(message){
+		if (typeof message !== 'string'){
+			throw new Error('"Message" must be a string. Instead got ' + (typeof message));
+		}
 		this.io.emit('message', message);
 	}
 
 
+	emitMap(){
+		this.io.emit('map updated', JSON.stringify(this.map.getClientData()));
+	}
 
 
-	processFluidTick(){}
+
+
+	
 
 
 
@@ -140,19 +168,25 @@ class Game{
 	*/
 	tick(){
 		this.processFluidTick();
-		var untickedActors = this.actors;
+		this.processActorTicks();
+		this.ticks++;
+		if (this.allPlayersInPlayingTimeState())
+			setTimeout(this.tick, 0);
+	}
+
+
+
+	processActorTicks(){
+		var untickedActors = this.getActors();
 		while (untickedActors.length > 0){
 			var actor = untickedActors.shift();
 			if (actor.dead)
 				continue;
 			actor.tick();
 		}
-
-		this.ticks++;
-
-		if (this.allPlayersInPlayingTimeState())
-			setTimeout(this.tick, 0);
 	}
+
+	processFluidTick(){}
 
 
 	readyToTick(){
@@ -173,15 +207,29 @@ class Game{
 
 	/*
 	*
-	* Magic getters and setters
+	* getters and setters
 	*
 	*/
-	get actors(){
+	getActors(){
 		//Get actors for this game from the database
+		return this.actors;
+	}
+
+	setActors(a){
+		this.actors = a;
+	}
+
+	getCommandCenters(){
+		//Get command centers from the database
+		return this.getActors().filter(a => a.type === 'CommandCenter');
+	}
+
+	setCommandCenters(c){
+		this.commandCenters = c;x
 	}
 
 
-	get numPlayers(){
+	getNumPlayers(){
 		return this.players.length;
 	}
 
@@ -194,6 +242,7 @@ class Game{
 	*
 	*/
 	restart(){
+		console.log('Restarting....');
 		this.start();
 	}
 

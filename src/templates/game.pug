@@ -2,11 +2,19 @@
 extends layouts/page
 		
 block content
-	
-	include components/message
-	include components/infoPanel
-	include components/map
-	include components/controlPanel
+	.row
+		.col-xs-12
+			include components/message
+	.row
+		.col-xs-3
+			include components/infoPanel
+		.col-xs-6
+			include components/map
+		.col-xs-3
+			include components/controlPanel
+	.row
+		.col-xs-12
+			include components/timePanel
 
 	script.
 		init();

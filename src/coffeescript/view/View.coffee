@@ -9,11 +9,14 @@ class View
 				layers: {}
 				cells: {}
 				currentCellLength: config.view.map.initialCellLength
+				clickableCanvas: {}
 			control: {}
 			info: {}	
 			message: $('.message')
 		@initialize.map.canvases(this)
 		@initialize.map.cells(this)
+		@initialize.controlPanel.buttons(this)
+		$('.tabs').tabs()
 
 
 	displayMessage: (message) ->
@@ -57,8 +60,18 @@ class View
 			layer[y][x].clear()
 
 
+	getTileFromPixels: (x, y)-> 
+		cellX = Math.floor(x / @components.map.currentCellLength)
+		cellY = Math.floor(y / @components.map.currentCellLength)
+		return @getTileFromCellCoordinates(cellX, cellY)
+
+
 	getTileFromCell: (cell) ->
-		return app.map.getTile(cell.x + @components.map.currentX, cell.y + @components.map.currentY)
+		return @getTileFromCellCoordinates(cell.x, cell.y)
+
+
+	getTileFromCellCoordinates: (x, y) ->
+		app.map.getTile(x + @components.map.currentX, y + @components.map.currentY)
 
 
 	getColorFromElevation: (el) ->
@@ -93,6 +106,7 @@ View.prototype.initialize =
 					.css('height', "#{config.view.map.height * config.view.map.initialCellLength}px")
 				v.components.map.layers[layerName] = c[0].getContext('2d')
 				c.appendTo("#canvas-container")
+			v.components.map.clickableCanvas = $('canvas.graphics')[0]
 		cells: (v) ->
 			for layer in config.view.map.layers
 				v.components.map.cells[layer] = [];
@@ -100,6 +114,14 @@ View.prototype.initialize =
 					v.components.map.cells[layer][y] = [];
 					for x in [0..(config.view.map.width - 1)]
 						v.components.map.cells[layer][y][x] = new Cell(x, y, v.components.map.layers[layer])
+	controlPanel:
+		buttons: (v) -> 
+			for buildingName, building of config.model.actors.buildings.producers
+				$("<div>").addClass('btn btn-default create-building-btn')
+					.data('building', buildingName)
+					.html(building.readableName)
+					.appendTo("#construct-tab .buttons")
+
 
 
 

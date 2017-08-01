@@ -8,7 +8,33 @@ app = {
   socket: null
 };
 
+var Game;
 
+Game = (function() {
+  function Game() {
+    this.state;
+    this.currentlyConstructing = false;
+  }
+
+  Game.prototype.changeState = function(state) {
+    return this.state = state;
+  };
+
+  Game.prototype.clickTile = function(tile) {};
+
+  Game.prototype.next = function() {
+    console.log('works2');
+    return app.socket.emit('next');
+  };
+
+  Game.prototype.clickCreateBuildingButton = function(building) {
+    this.changeState('constructing');
+    return this.currentlyConstructing = building;
+  };
+
+  return Game;
+
+})();
 
 var Socket;
 
@@ -22,6 +48,7 @@ Socket = (function() {
     })(this));
     this.io.on('map updated', ((function(_this) {
       return function(map) {
+        map = JSON.parse(map);
         app.map.update(map);
         return app.view.updateMap();
       };
@@ -62,8 +89,56 @@ var init;
 init = function() {
   app.map = new Map();
   app.view = new View();
-  return app.socket = new Socket();
+  app.socket = new Socket();
+  app.input = new Input();
+  return app.game = new Game();
 };
+
+var Input;
+
+Input = (function() {
+  function Input() {
+    $(app.view.components.map.clickableCanvas).mousedown((function(_this) {
+      return function(e) {
+        return app.game.clickTile(_this.getTileClicked(e));
+      };
+    })(this));
+    $("#next-btn").click((function(_this) {
+      return function() {
+        return app.game.next();
+      };
+    })(this));
+    $('.create-building-btn').click((function(_this) {
+      return function(e) {
+        var building;
+        building = $(e.target).data('building');
+        return app.game.clickCreateBuildingButton(building);
+      };
+    })(this));
+  }
+
+  Input.prototype.getTileClicked = function(event) {
+    return app.view.getTileFromPixels(event.offsetX, event.offsetY);
+
+    /*
+    		x = new Number()
+    		y = new Number()
+    		canvas = app.view.components.map.clickableCanvas
+    		if event.x != undefined && event.y != undefined
+    			x = event.x
+    			y = event.y
+    		else #Firefox method to get the position
+    			x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
+    			y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop
+    		x -= canvas.offsetLeft
+    		y -= canvas.offsetTop
+    		return app.view.getTileFromPixels(x, y)
+     */
+  };
+
+  return Input;
+
+})();
 
 var Map;
 
@@ -136,7 +211,9 @@ Cell = (function() {
     x = this.getXPixel();
     y = this.getYPixel();
     l = this.getCellLength();
-    this.layer.fillRect(x, y, l, l);
+    this.layer.fillRect(x + 1, y + 1, l - 2, l - 2);
+    this.layer.fillStyle = config.view.colors.cellBorder;
+    this.layer.strokeRect(x, y, l, l);
     return this.cleared = false;
   };
 
@@ -174,7 +251,8 @@ View = (function() {
         currentY: 0,
         layers: {},
         cells: {},
-        currentCellLength: config.view.map.initialCellLength
+        currentCellLength: config.view.map.initialCellLength,
+        clickableCanvas: {}
       },
       control: {},
       info: {},
@@ -182,6 +260,8 @@ View = (function() {
     };
     this.initialize.map.canvases(this);
     this.initialize.map.cells(this);
+    this.initialize.controlPanel.buttons(this);
+    $('.tabs').tabs();
   }
 
   View.prototype.displayMessage = function(message) {
@@ -245,8 +325,19 @@ View = (function() {
     return results;
   };
 
+  View.prototype.getTileFromPixels = function(x, y) {
+    var cellX, cellY;
+    cellX = Math.floor(x / this.components.map.currentCellLength);
+    cellY = Math.floor(y / this.components.map.currentCellLength);
+    return this.getTileFromCellCoordinates(cellX, cellY);
+  };
+
   View.prototype.getTileFromCell = function(cell) {
-    return app.map.getTile(cell.x + this.components.map.currentX, cell.y + this.components.map.currentY);
+    return this.getTileFromCellCoordinates(cell.x, cell.y);
+  };
+
+  View.prototype.getTileFromCellCoordinates = function(x, y) {
+    return app.map.getTile(x + this.components.map.currentX, y + this.components.map.currentY);
   };
 
   View.prototype.getColorFromElevation = function(el) {
@@ -271,17 +362,16 @@ View = (function() {
 View.prototype.initialize = {
   map: {
     canvases: function(v) {
-      var c, i, layerName, len, ref, results;
+      var c, i, layerName, len, ref;
       ref = config.view.map.layers;
-      results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         layerName = ref[i];
         c = $("<canvas>").addClass(layerName);
         c.attr('width', config.view.map.width * config.view.map.initialCellLength).attr('height', config.view.map.height * config.view.map.initialCellLength).css('width', (config.view.map.width * config.view.map.initialCellLength) + "px").css('height', (config.view.map.height * config.view.map.initialCellLength) + "px");
         v.components.map.layers[layerName] = c[0].getContext('2d');
-        results.push(c.appendTo("#canvas-container"));
+        c.appendTo("#canvas-container");
       }
-      return results;
+      return v.components.map.clickableCanvas = $('canvas.graphics')[0];
     },
     cells: function(v) {
       var i, layer, len, ref, results, x, y;
@@ -306,6 +396,18 @@ View.prototype.initialize = {
           }
           return results1;
         })());
+      }
+      return results;
+    }
+  },
+  controlPanel: {
+    buttons: function(v) {
+      var building, buildingName, ref, results;
+      ref = config.model.actors.buildings.producers;
+      results = [];
+      for (buildingName in ref) {
+        building = ref[buildingName];
+        results.push($("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).html(building.readableName).appendTo("#construct-tab .buttons"));
       }
       return results;
     }

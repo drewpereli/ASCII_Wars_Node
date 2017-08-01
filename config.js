@@ -1,18 +1,35 @@
 
 var config = {
 	gameStartCountdownTime: 0, //In seconds
+	maxPlayers: 2,
 	model: {
 		map: {
-			height: 50,
-			width: 50,
+			height: 20,
+			width: 20,
 			generation: {
-				iterations: 30
+				iterations: 3
+			}
+		},
+		actors: {
+			units: {
+				Worker: {
+					readableName: 'Worker',
+					producer: 'ResidentialArea'
+				}
+			},
+			buildings: {
+				producers: {
+					ResidentialArea: {
+						readableName: 'Residential Area'
+					}
+				}
 			}
 		}
 	},
 	view: {
 		colors: {
 			black: '#000',
+			cellBorder: 'gray',
 			terrain: {
 				water: '#007',
 				forest: '#070',

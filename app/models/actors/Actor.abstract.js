@@ -2,7 +2,7 @@
 
 class Actor{
 
-	constructor(x, y){
+	constructor({}){
 		this.x = x;
 		this.y = y;
 		this.health = this.maxHealth; //max health must be set in child class

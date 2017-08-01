@@ -6,15 +6,27 @@ class Tile{
 		this.map = map;
 		this.x = x;
 		this.y = y;
-		this.terrain = 'water';
+		this.terrain = 'grassland';
 		this.elevation = 0;
+		this.actor = false;
 		this.siblings = [];
+		this.fieldsToSendToClient = ['x', 'y', 'terrain', 'elevation'];
 	}
 
 	setSiblings(){
 		for (var i = 0 ; i < 8 ; i++){
 			this.siblings.push(this.getTileInDirAwayFrom(i, 1));
 		}
+	}
+
+
+	getClientData(){
+		var returnObject = {};
+		for (var i in this.fieldsToSendToClient){
+			var field = this.fieldsToSendToClient[i];
+			returnObject[field] = this[field];
+		}
+		return returnObject;
 	}
 
 
@@ -78,6 +90,11 @@ class Tile{
 			return y % config.model.map.height;
 		}
 		return config.model.map.height - ((-1 * y) % config.model.map.height);
+	}
+
+
+	isOpen(){
+		return !this.actor && this.terrain !== 'water';
 	}
 }
 

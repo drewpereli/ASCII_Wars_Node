@@ -24,15 +24,20 @@ function initializeIORoutes(_io){
 	io = _io;
 	game = require('./controller/game')(io);
 	io.on('connection', (socket) => {
+		console.log('connecting...');
 		if (game.acceptingPlayers() && !authenticatePlayer(socket.id)){
 			game.addPlayer(socket);
 			initializePlayerSocketRoutes(socket);
 		}
 		else {
 			//This is super sketchy, because you could just open a new tab and spectate, but whatevs
-			game.addSpectator(socket);
-			initializeSpectatorSocketRoutes(socket);
+			//game.addSpectator(socket);
+			//initializeSpectatorSocketRoutes(socket);
 		}
+	});
+
+	io.on('disconnect', function () {
+	    console.log('disconnecting');
 	});
 }
 
@@ -41,7 +46,11 @@ function initializePlayerSocketRoutes(socket){
 
 	socket.on('next', () => {
 		var p = authenticatePlayer(socket);
-		if (!p) return;
+		if (!p){
+			console.log('Player is not validated');
+			return;
+		} 
+		console.log('Next');
 		game.playerReadyForNextTurn(p);
 	});
 
@@ -72,6 +81,7 @@ function initializePlayerSocketRoutes(socket){
 		if (!p) return;
 		game.playerQuit(p);
 	});
+
 
 	if (process.env.DEBUG_MODE){
 		socket.on('restart', () => {

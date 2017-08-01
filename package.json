@@ -14,7 +14,7 @@
     "express": "^4.15.3",
     "pug": "^2.0.0-rc.2",
     "random-seed": "^0.3.0",
-    "require-all": "^2.2.0",
+    "require-dir-all": "^0.4.12",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {

@@ -2,15 +2,16 @@
 const config = require('../../../config');
 const rand = require('random-seed').create();
 const Tile = require(__dirname + '/Tile');
-const actorClasses = require('require-all')({
-	dirname: __dirname + '/../actors',
-	pattern: '.*\.js',
-	recursive: true
-});
+
+var actorClasses = require('require-dir-all')(
+	'../actors', {recursive: true}
+);
+
 
 
 class Map{
-	constructor() {
+	constructor(game) {
+		this.game = game;
 		this.width = config.model.map.width;
 		this.height = config.model.map.height;
 		this.tiles = [];
@@ -21,6 +22,12 @@ class Map{
 			}
 		}
 		this.setTileSiblings();
+	}
+
+
+	//Gets an object containing the map data to send to the client
+	getClientData(team){
+		return this.tiles.map(tArray => tArray.map(t => t.getClientData()));
 	}
 
 
@@ -41,9 +48,9 @@ class Map{
 
 	//Create the terrain
 	generate() {
-		return new Promise((resolve, reject) => {
-			//For now just set random elevations
-			new Promise((resolve, reject) => {
+		//Helper functions
+		var setElevations = () => {
+			return new Promise((resolve, reject) => {
 				var iterate = (iteration) => {
 					if (iteration >= config.model.map.generation.iterations){
 						resolve();
@@ -56,14 +63,53 @@ class Map{
 				}
 				iterate(0);
 			})
+		}
+		var placeCommandCenters = () => {
+			return new Promise((resolve, reject) => {
+				//For each player
+				for (var i in this.game.players){
+					var p = this.game.players[i];
+					var t = this.getRandomOpenTile();
+					var commandCenter = new actorClasses.buildings.CommandCenter(t);
+					this.game.addActor(commandCenter);
+				}
+				resolve();
+			});
+		}
+		return new Promise((resolve, reject) => {
+			//For now just set random elevations
+			setElevations()
 			//Generate the command centers
 			.then(() => {
-				resolve();
+				return placeCommandCenters();
 			})
-			.catch(() => {
-				reject();
+			//Done
+			.then(() => {
+				resolve()
+			})
+			//Error
+			.catch(err => {
+				reject(err);
 			});
 		});
+
+
+	}
+
+
+
+	getRandomTile() {
+		return this.getTile(rand(this.width), rand(this.height));
+	}
+
+
+	getRandomOpenTile(){
+		var currentTile;
+		do{
+			currentTile = this.getRandomTile();
+		}
+		while (!currentTile.isOpen())
+		return currentTile;
 	}
 
 
