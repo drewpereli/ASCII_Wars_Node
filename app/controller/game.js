@@ -230,7 +230,7 @@ class Game{
 	*/
 	getActors(){
 		//Get actors for this game from the database
-		return this.actors;
+		return this.actors.slice();
 	}
 
 	setActors(a){
