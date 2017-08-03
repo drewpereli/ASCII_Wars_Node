@@ -1,0 +1,6 @@
+
+.btn.btn-default.btn-lg#restart-btn Restart
+script.
+	$('#restart-btn').click(() => {
+		app.socket.emit('restart');
+	});

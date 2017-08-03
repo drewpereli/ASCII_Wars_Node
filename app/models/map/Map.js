@@ -2,15 +2,16 @@
 const config = require('../../../config');
 const rand = require('random-seed').create();
 const Tile = require(__dirname + '/Tile');
-
+var Model = require('../Model.abstract');
 var actorClasses = require('require-dir-all')(
 	'../actors', {recursive: true}
 );
 
 
 
-class Map{
+class Map extends Model{
 	constructor(game) {
+		super();
 		this.game = game;
 		this.width = config.model.map.width;
 		this.height = config.model.map.height;
@@ -25,9 +26,10 @@ class Map{
 	}
 
 
+
 	//Gets an object containing the map data to send to the client
-	getClientData(team){
-		return this.tiles.map(tArray => tArray.map(t => t.getClientData()));
+	getClientDataFor(player){
+		return this.tiles.map(tArray => tArray.map(t => t.getClientDataFor(player)));
 	}
 
 
@@ -70,7 +72,7 @@ class Map{
 				for (var i in this.game.players){
 					var p = this.game.players[i];
 					var t = this.getRandomOpenTile();
-					var commandCenter = new actorClasses.buildings.CommandCenter(t);
+					var commandCenter = new actorClasses.buildings.CommandCenter({tile: t, player: p});
 					this.game.addActor(commandCenter);
 				}
 				resolve();
@@ -85,7 +87,9 @@ class Map{
 			})
 			//Done
 			.then(() => {
-				resolve()
+				//Place a random worker
+				this.game.addActor(new actorClasses.units.Worker({tile: this.getRandomOpenTile(), player: this.game.players[0]}));
+				resolve();
 			})
 			//Error
 			.catch(err => {

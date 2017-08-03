@@ -42,7 +42,7 @@ var config = {
 			height: 20,
 			width: 20,
 			initialCellLength: 20, //In pixels
-			layers: ['terrain', 'elevation', 'units', 'visibility', 'graphics']
+			layers: ['terrain',/* 'elevation',*/ 'actors'/*, 'visibility', 'graphics'*/]
 		},
 		messageFadeDelay: 3
 	},

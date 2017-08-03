@@ -4,7 +4,7 @@ var Actor = require('../Actor.abstract');
 class Building extends Actor{
 
 	constructor(){
-		super(...arguments);
+		super(arguments[0]);
 	}
 }
 

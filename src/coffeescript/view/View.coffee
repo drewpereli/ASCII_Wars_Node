@@ -47,11 +47,10 @@ class View
 			for row, y in layer
 				for cell, x in row
 					tile = @getTileFromCell(cell)
-					if tile
-						color = @getColorFromElevation(tile.elevation)
+					if !tile
+						continue
 					else
-						color = 'black'
-					cell.fill(color)
+						cell.drawTile(tile)
 
 
 	clearCell: (x, y) ->
@@ -71,7 +70,7 @@ class View
 
 
 	getTileFromCellCoordinates: (x, y) ->
-		app.map.getTile(x + @components.map.currentX, y + @components.map.currentY)
+		app.map.getTile((x + @components.map.currentX) % app.map.width, (y + @components.map.currentY) % app.map.height)
 
 
 	getColorFromElevation: (el) ->
@@ -86,6 +85,10 @@ class View
 			redHex = '0' + redHex
 		#Return hex code
 		"##{redHex}#{greenHex}00"
+
+	getPlayerColor: (clientFacingPlayer) -> 
+		color = ['red', 'blue', 'green']
+		return color[clientFacingPlayer.team - 1]
 
 
 

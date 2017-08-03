@@ -44,6 +44,7 @@ class Game{
 		.then(() => {
 			this.emitMessage('Map finished generating');
 			this.emitMap();
+			console.log(this.actors.length);
 		})
 		.catch( err => {
 			console.log(err);
@@ -79,7 +80,7 @@ class Game{
 
 
 	addPlayer(socket){
-		this.players.push(new Player(socket));
+		this.players.push(new Player({socket: socket, team: this.players.length + 1, game: this}));
 		//If this is at least the second player, start the game countdown if it hasn't already started
 		if (this.players.length >= process.env.MIN_PLAYERS && this.state !== 'counting down'){
 			this.beginGameStartCountdown(config.gameStartCountdownTime);
@@ -99,6 +100,9 @@ class Game{
 		this.actors.push(actor);
 	}
 
+	deleteActor(actor){
+		this.actors.splice(this.actors.indexOf(actor), 1);
+	}
 
 
 
@@ -118,7 +122,11 @@ class Game{
 
 
 	emitMap(){
-		this.io.emit('map updated', JSON.stringify(this.map.getClientData()));
+		//console.log(JSON.stringify(this.map.getClientDataFor(this.players[0])));
+		for (var i in this.players){
+			var player = this.players[i];
+			player.socket.emit('map updated', JSON.stringify(this.map.getClientDataFor(player)));
+		}
 	}
 
 
@@ -155,7 +163,16 @@ class Game{
 	updateSquadBehaviorParams(player, params){}
 
 
-	playerQuit(player){}
+	playerQuit(player){
+		//Kill all actors associated with this player
+		var actors = player.getActors();
+		for (var i in actors){
+			var actor = actors[i];
+			actor.die();
+			this.deleteActor(actor);
+		}
+		this.players.splice(this.players.indexOf(player), 1);
+	}
 
 
 
@@ -170,6 +187,7 @@ class Game{
 		this.processFluidTick();
 		this.processActorTicks();
 		this.ticks++;
+		this.emitMap();
 		if (this.allPlayersInPlayingTimeState())
 			setTimeout(this.tick, 0);
 	}
@@ -243,6 +261,16 @@ class Game{
 	*/
 	restart(){
 		console.log('Restarting....');
+		for (var i in this.players){
+			var player = this.players[i];
+			var actors = player.getActors();
+			for (var i in actors){
+				var actor = actors[i];
+				actor.die();
+				this.deleteActor(actor);
+			}
+			//this.players.splice(this.players.indexOf(player), 1);
+		}
 		this.start();
 	}
 

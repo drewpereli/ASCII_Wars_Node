@@ -31,13 +31,9 @@ function initializeIORoutes(_io){
 		}
 		else {
 			//This is super sketchy, because you could just open a new tab and spectate, but whatevs
-			//game.addSpectator(socket);
-			//initializeSpectatorSocketRoutes(socket);
+			game.addSpectator(socket);
+			initializeSpectatorSocketRoutes(socket);
 		}
-	});
-
-	io.on('disconnect', function () {
-	    console.log('disconnecting');
 	});
 }
 
@@ -50,7 +46,6 @@ function initializePlayerSocketRoutes(socket){
 			console.log('Player is not validated');
 			return;
 		} 
-		console.log('Next');
 		game.playerReadyForNextTurn(p);
 	});
 
@@ -82,9 +77,18 @@ function initializePlayerSocketRoutes(socket){
 		game.playerQuit(p);
 	});
 
+	socket.on('disconnect', () => {
+		console.log('socket disconnecting...');
+		var p = authenticatePlayer(socket);
+		if (!p) return;
+		//game.playerQuit(p);
+		game.restart();
+	});
+
 
 	if (process.env.DEBUG_MODE){
 		socket.on('restart', () => {
+			console.log('socket restarting');
 			var p = authenticatePlayer(socket);
 			if (!p) return;
 			game.restart();

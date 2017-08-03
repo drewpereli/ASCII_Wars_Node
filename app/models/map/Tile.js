@@ -1,16 +1,18 @@
 
 const config = require('../../../config');
+var Model = require('../Model.abstract');
 
-class Tile{
+class Tile extends Model{
 	constructor(map, x, y) {
+		super();
 		this.map = map;
 		this.x = x;
 		this.y = y;
-		this.terrain = 'grassland';
+		this.terrain = 'plains';
 		this.elevation = 0;
 		this.actor = false;
 		this.siblings = [];
-		this.fieldsToSendToClient = ['x', 'y', 'terrain', 'elevation'];
+		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor'];
 	}
 
 	setSiblings(){
@@ -20,14 +22,14 @@ class Tile{
 	}
 
 
-	getClientData(){
-		var returnObject = {};
-		for (var i in this.fieldsToSendToClient){
-			var field = this.fieldsToSendToClient[i];
-			returnObject[field] = this[field];
-		}
-		return returnObject;
+	setActor(actor=false){
+		this.actor = actor;
 	}
+
+	unsetActor(){
+		this.setActor(false);
+	}
+
 
 
 	/*
@@ -96,8 +98,14 @@ class Tile{
 	isOpen(){
 		return !this.actor && this.terrain !== 'water';
 	}
+
+
 }
 
 
 
 module.exports = Tile;
+
+
+
+

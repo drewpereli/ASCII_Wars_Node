@@ -179,7 +179,7 @@ Tile = (function() {
     this.y = y;
     this.terrain = 'water';
     this.elevation = 0;
-    this.unit = false;
+    this.actor = false;
   }
 
   return Tile;
@@ -194,6 +194,8 @@ Cell = (function() {
     this.y = y1;
     this.layer = layer;
     this.cleared = true;
+    this.layer.textBaseline = 'middle';
+    this.layer.textAlign = 'center';
   }
 
   Cell.prototype.fill = function(color, opacity) {
@@ -217,6 +219,12 @@ Cell = (function() {
     return this.cleared = false;
   };
 
+  Cell.prototype.write = function(char, color) {
+    this.layer.fillStyle = color;
+    this.layer.font = this.getFont;
+    return this.layer.fillText(char, this.getXPixel() + this.getCellLength() / 2, this.getYPixel() + this.getCellLength() / 2);
+  };
+
   Cell.prototype.clear = function() {
     var l, x, y;
     x = this.getXPixel();
@@ -225,8 +233,35 @@ Cell = (function() {
     return this.layer.clearRect(x, y, l, l);
   };
 
+  Cell.prototype.drawTile = function(tile) {
+    var char, charColor, fillColor;
+    fillColor = false;
+    charColor = false;
+    char = false;
+    switch (this.getLayerName()) {
+      case 'terrain':
+        fillColor = config.view.colors.terrain[tile.terrain];
+        break;
+      case 'actors':
+        if (tile.actor) {
+          char = tile.actor.character;
+          charColor = app.view.getPlayerColor(tile.actor.player);
+        }
+    }
+    if (fillColor) {
+      this.fill(fillColor);
+    }
+    if (char && charColor) {
+      return this.write(char, charColor);
+    }
+  };
+
   Cell.prototype.getCellLength = function() {
     return app.view.components.map.currentCellLength;
+  };
+
+  Cell.prototype.getFont = function() {
+    return this.getCellLength() + 'px monospace';
   };
 
   Cell.prototype.getXPixel = function() {
@@ -235,6 +270,16 @@ Cell = (function() {
 
   Cell.prototype.getYPixel = function() {
     return this.getCellLength() * this.y;
+  };
+
+  Cell.prototype.getLayerName = function() {
+    var mapLayers;
+    mapLayers = app.view.components.map.layers;
+    return Object.keys(mapLayers).find((function(_this) {
+      return function(name) {
+        return mapLayers[name] === _this.layer;
+      };
+    })(this));
   };
 
   return Cell;
@@ -282,7 +327,7 @@ View = (function() {
   };
 
   View.prototype.updateMap = function() {
-    var cell, cells, color, layer, layername, results, row, tile, x, y;
+    var cell, cells, layer, layername, results, row, tile, x, y;
     cells = this.components.map.cells;
     results = [];
     for (layername in cells) {
@@ -298,12 +343,11 @@ View = (function() {
             for (x = j = 0, len1 = row.length; j < len1; x = ++j) {
               cell = row[x];
               tile = this.getTileFromCell(cell);
-              if (tile) {
-                color = this.getColorFromElevation(tile.elevation);
+              if (!tile) {
+                continue;
               } else {
-                color = 'black';
+                results2.push(cell.drawTile(tile));
               }
-              results2.push(cell.fill(color));
             }
             return results2;
           }).call(this));
@@ -337,7 +381,7 @@ View = (function() {
   };
 
   View.prototype.getTileFromCellCoordinates = function(x, y) {
-    return app.map.getTile(x + this.components.map.currentX, y + this.components.map.currentY);
+    return app.map.getTile((x + this.components.map.currentX) % app.map.width, (y + this.components.map.currentY) % app.map.height);
   };
 
   View.prototype.getColorFromElevation = function(el) {
@@ -353,6 +397,12 @@ View = (function() {
       redHex = '0' + redHex;
     }
     return "#" + redHex + greenHex + "00";
+  };
+
+  View.prototype.getPlayerColor = function(clientFacingPlayer) {
+    var color;
+    color = ['red', 'blue', 'green'];
+    return color[clientFacingPlayer.team - 1];
   };
 
   return View;
