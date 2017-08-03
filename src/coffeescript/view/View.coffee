@@ -1,4 +1,5 @@
 
+
 class View
 	constructor: ->
 		#These are all the ui/visual components
@@ -41,6 +42,7 @@ class View
 ##############################
 
 	updateMap: ->
+		@clearCanvases()
 		#for each cell, render based on the layer
 		cells = @components.map.cells
 		for layername, layer of cells
@@ -57,6 +59,17 @@ class View
 		cells = @components.map.cells;
 		for layername, layer of cells
 			layer[y][x].clear()
+
+
+	clearCanvases: ->
+		for layername, layer of @components.map.layers
+			console.log(layer)
+			layer.clearRect(
+				0, 
+				0, 
+				config.view.map.width * @components.map.currentCellLength, 
+				config.view.map.height * @components.map.currentCellLength
+			)
 
 
 	getTileFromPixels: (x, y)-> 

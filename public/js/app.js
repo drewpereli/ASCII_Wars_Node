@@ -328,6 +328,7 @@ View = (function() {
 
   View.prototype.updateMap = function() {
     var cell, cells, layer, layername, results, row, tile, x, y;
+    this.clearCanvases();
     cells = this.components.map.cells;
     results = [];
     for (layername in cells) {
@@ -365,6 +366,18 @@ View = (function() {
     for (layername in cells) {
       layer = cells[layername];
       results.push(layer[y][x].clear());
+    }
+    return results;
+  };
+
+  View.prototype.clearCanvases = function() {
+    var layer, layername, ref, results;
+    ref = this.components.map.layers;
+    results = [];
+    for (layername in ref) {
+      layer = ref[layername];
+      console.log(layer);
+      results.push(layer.clearRect(0, 0, config.view.map.width * this.components.map.currentCellLength, config.view.map.height * this.components.map.currentCellLength));
     }
     return results;
   };
