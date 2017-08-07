@@ -242,6 +242,9 @@ Cell = (function() {
       case 'terrain':
         fillColor = config.view.colors.terrain[tile.terrain];
         break;
+      case 'elevation':
+        fillColor = app.view.getColorFromElevation(tile.elevation);
+        break;
       case 'actors':
         if (tile.actor) {
           char = tile.actor.character;

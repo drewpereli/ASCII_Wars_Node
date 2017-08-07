@@ -4,10 +4,10 @@ var config = {
 	maxPlayers: 2,
 	model: {
 		map: {
-			height: 20,
-			width: 20,
+			height: 40,
+			width: 40,
 			generation: {
-				iterations: 3
+				iterations: 60
 			}
 		},
 		actors: {
@@ -39,10 +39,10 @@ var config = {
 			}
 		},
 		map: {
-			height: 20,
-			width: 20,
-			initialCellLength: 20, //In pixels
-			layers: ['terrain',/* 'elevation',*/ 'actors'/*, 'visibility', 'graphics'*/]
+			height: 40,
+			width: 40,
+			initialCellLength: 10, //In pixels
+			layers: ['terrain', 'elevation', 'actors'/*, 'visibility', 'graphics'*/]
 		},
 		messageFadeDelay: 3
 	},

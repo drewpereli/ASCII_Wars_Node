@@ -9,7 +9,7 @@ class Tile extends Model{
 		this.x = x;
 		this.y = y;
 		this.terrain = 'plains';
-		this.elevation = 0;
+		this.elevation = 50;
 		this.actor = false;
 		this.siblings = [];
 		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor'];
@@ -95,8 +95,18 @@ class Tile extends Model{
 	}
 
 
+	getDistance(tile){
+		return Math.sqrt(Math.pow(tile.x - this.x, 2) + Math.pow(tile.y - this.y, 2));
+	}
+
+
 	isOpen(){
 		return !this.actor && this.terrain !== 'water';
+	}
+
+
+	setElevation(el){
+		this.elevation = el;
 	}
 
 

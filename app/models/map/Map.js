@@ -51,6 +51,7 @@ class Map extends Model{
 	//Create the terrain
 	generate() {
 		//Helper functions
+		/*
 		var setElevations = () => {
 			return new Promise((resolve, reject) => {
 				var iterate = (iteration) => {
@@ -62,6 +63,43 @@ class Map extends Model{
 					var t = this.tiles[rand.range(this.height)][rand.range(this.width)];
 					t.elevation = rand(100);
 					setTimeout(() => {iterate(iteration + 1);}, 100);
+				}
+				iterate(0);
+			})
+		}
+		*/
+		var setElevations = () => {
+			return new Promise((resolve, reject) => {
+				//Set x random points to random elevations
+				//Iterate through each cell. Set it to the average of the elevations of the surrounding cells
+				//Do this a few times
+
+				var anchorTiles = [];
+				this.forEachTile(t => {
+					if (rand(100) < 5){
+						t.setElevation(rand(101));
+						anchorTiles.push(t);
+					}
+				});
+
+
+				var iterate = (iteration) => {
+					if (iteration >= config.model.map.generation.iterations){
+						resolve();
+						return;
+					}
+					//Nudge each tile to average elevation of itself plus 8 surounding tiles
+					this.forEachTile(t => {
+						var elevationSum = t.elevation;
+						t.siblings.forEach(sib => {
+							elevationSum += sib.elevation;
+						})
+						var averageElevation = elevationSum / 9;
+						//Get the difference between the avg and current elevation
+						//Take 10%. Add it to the current elevation
+						t.setElevation(t.elevation + (averageElevation - t.elevation) / 100);
+					});
+					setTimeout(() => {iterate(iteration + 1);}, 0);
 				}
 				iterate(0);
 			})
@@ -117,6 +155,16 @@ class Map extends Model{
 	}
 
 
+
+	forEachTile(func){
+		for (var i in this.tiles){
+			var row = this.tiles[i];
+			for (var j in row){
+				var tile = row[j];
+				func(tile);
+			}
+		}
+	}
 
 
 

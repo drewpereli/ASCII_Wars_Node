@@ -37,6 +37,8 @@ class Cell
 		switch @getLayerName()
 			when 'terrain'
 				fillColor = config.view.colors.terrain[tile.terrain]
+			when 'elevation'
+				fillColor = app.view.getColorFromElevation(tile.elevation)
 			when 'actors'
 				if tile.actor
 					char = tile.actor.character
