@@ -4,8 +4,8 @@ var config = {
 	maxPlayers: 2,
 	model: {
 		map: {
-			height: 40,
-			width: 40,
+			height: 60,
+			width: 60,
 			generation: {
 				iterations: 60
 			}
@@ -39,8 +39,8 @@ var config = {
 			}
 		},
 		map: {
-			height: 40,
-			width: 40,
+			height: 60,
+			width: 60,
 			initialCellLength: 10, //In pixels
 			layers: ['terrain', 'elevation', 'actors'/*, 'visibility', 'graphics'*/]
 		},

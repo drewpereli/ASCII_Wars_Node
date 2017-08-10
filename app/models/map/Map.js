@@ -81,27 +81,32 @@ class Map extends Model{
 						anchorTiles.push(t);
 					}
 				});
-
-
+				this.forEachTile(t => {
+					if (anchorTiles.includes(t)){
+						return;
+					}
+					//Get weighted average of elevations of anchor tiles weighted by 1 / distance to t
+					var total = 0;
+					var totalElevation = 0;
+					anchorTiles.forEach(anchorTile => {
+						var d = anchorTile.getDistance(t);
+						var weight = Math.pow(.5, d); //As d increases, weight decreases. 
+						total += weight;
+						totalElevation += weight * anchorTile.elevation;
+					});
+					t.elevation = Math.round(totalElevation / total);
+				});
+				resolve();
+				/*
 				var iterate = (iteration) => {
 					if (iteration >= config.model.map.generation.iterations){
 						resolve();
 						return;
 					}
-					//Nudge each tile to average elevation of itself plus 8 surounding tiles
-					this.forEachTile(t => {
-						var elevationSum = t.elevation;
-						t.siblings.forEach(sib => {
-							elevationSum += sib.elevation;
-						})
-						var averageElevation = elevationSum / 9;
-						//Get the difference between the avg and current elevation
-						//Take 10%. Add it to the current elevation
-						t.setElevation(t.elevation + (averageElevation - t.elevation) / 100);
-					});
 					setTimeout(() => {iterate(iteration + 1);}, 0);
 				}
 				iterate(0);
+				*/
 			})
 		}
 		var placeCommandCenters = () => {

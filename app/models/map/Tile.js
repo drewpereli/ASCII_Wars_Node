@@ -96,7 +96,9 @@ class Tile extends Model{
 
 
 	getDistance(tile){
-		return Math.sqrt(Math.pow(tile.x - this.x, 2) + Math.pow(tile.y - this.y, 2));
+		var xDiff = Math.abs(tile.x - this.x) >= this.map.width / 2 ? this.map.width - Math.abs(tile.x - this.x) : tile.x - this.x;
+		var yDiff = Math.abs(tile.y - this.y) >= this.map.height / 2 ? this.map.height - Math.abs(tile.y - this.y) : tile.y - this.y;
+		return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
 	}
 
 
