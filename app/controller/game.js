@@ -154,6 +154,8 @@ class Game{
 
 
 	playerPlay(player){
+		if (player.timeState === 'playing')
+			return;
 		player.changeTimeState('playing');
 		player.readyForNextTurn = true;
 		this.play(); //Will only tick if all the players are in playing state
@@ -221,7 +223,14 @@ class Game{
 		}
 	}
 
-	processFluidTick(){}
+	processFluidTick(){
+		this.map.forEachTile((t) => {
+			t.prepareFluidTick(); //Prepares 'nextTurnsWaterDepth'
+		});
+		this.map.forEachTile((t) => {
+			t.processFluidTick(); //Sets 'waterDepth' to 'nextTurnsWaterDepth', and 'nextTurnsWaterDepth' to null
+		});
+	}
 
 
 	readyToTick(){

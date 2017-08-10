@@ -6,12 +6,15 @@ class Game
 		@currentlyConstructing = false
 
 	changeState: (state) ->
+		console.log('Changing state to ' + state)
 		@state = state
 
 
 	clickTile: (tile) ->
-
-
+		if @state is 'raising elevation'
+			app.socket.emit('raise elevation', tile)
+		else if @state is 'lowering elevation'
+			app.socket.emit('lower elevation', tile)
 
 	next: ->
 		app.socket.emit('next')

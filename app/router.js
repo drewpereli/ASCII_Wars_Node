@@ -93,6 +93,22 @@ function initializePlayerSocketRoutes(socket){
 			if (!p) return;
 			game.restart();
 		});
+
+		socket.on('raise elevation', (tile) => {
+			var p = authenticatePlayer(socket);
+			if (!p) return;
+			var t = game.map.getTile(tile.x, tile.y);
+			t.setElevation(t.elevation + 1);
+			game.emitMap();
+		});
+
+		socket.on('lower elevation', (tile) => {
+			var p = authenticatePlayer(socket);
+			if (!p) return;
+			var t = game.map.getTile(tile.x, tile.y);
+			t.setElevation(t.elevation - 1);
+			game.emitMap();
+		});
 	}
 }
 

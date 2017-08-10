@@ -17,10 +17,17 @@ Game = (function() {
   }
 
   Game.prototype.changeState = function(state) {
+    console.log('Changing state to ' + state);
     return this.state = state;
   };
 
-  Game.prototype.clickTile = function(tile) {};
+  Game.prototype.clickTile = function(tile) {
+    if (this.state === 'raising elevation') {
+      return app.socket.emit('raise elevation', tile);
+    } else if (this.state === 'lowering elevation') {
+      return app.socket.emit('lower elevation', tile);
+    }
+  };
 
   Game.prototype.next = function() {
     return app.socket.emit('next');
@@ -267,6 +274,11 @@ Cell = (function() {
           char = tile.actor.character;
           charColor = app.view.getPlayerColor(tile.actor.player);
         }
+        break;
+      case 'water':
+        if (tile.waterDepth > 0) {
+          fillColor = config.view.colors.terrain['water'];
+        }
     }
     if (fillColor) {
       this.fill(fillColor);
@@ -396,7 +408,6 @@ View = (function() {
     results = [];
     for (layername in ref) {
       layer = ref[layername];
-      console.log(layer);
       results.push(layer.clearRect(0, 0, config.view.map.width * this.components.map.currentCellLength, config.view.map.height * this.components.map.currentCellLength));
     }
     return results;

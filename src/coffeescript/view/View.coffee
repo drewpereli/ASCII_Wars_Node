@@ -63,7 +63,6 @@ class View
 
 	clearCanvases: ->
 		for layername, layer of @components.map.layers
-			console.log(layer)
 			layer.clearRect(
 				0, 
 				0, 

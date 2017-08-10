@@ -121,17 +121,25 @@ class Map extends Model{
 				resolve();
 			});
 		}
+		var addWater = () => {
+			this.getRandomTile().setWaterDepth(1);
+		}
+
 		return new Promise((resolve, reject) => {
 			//For now just set random elevations
 			setElevations()
+			.then(() => {
+				return addWater();
+			})
 			//Generate the command centers
 			.then(() => {
-				return placeCommandCenters();
+				//return placeCommandCenters();
+				return Promise.resolve();
 			})
 			//Done
 			.then(() => {
 				//Place a random worker
-				this.game.addActor(new actorClasses.units.Worker({tile: this.getRandomOpenTile(), player: this.game.players[0]}));
+				//this.game.addActor(new actorClasses.units.Worker({tile: this.getRandomOpenTile(), player: this.game.players[0]}));
 				resolve();
 			})
 			//Error
