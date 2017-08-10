@@ -53,14 +53,14 @@ function initializePlayerSocketRoutes(socket){
 	socket.on('play', () => {
 		var p = authenticatePlayer(socket);
 		if (!p) return;
-		game.changePlayerTimeState(p, 'play');
+		game.playerPlay(p);
 	});
 
 
 	socket.on('pause', () => {
 		var p = authenticatePlayer(socket);
 		if (!p) return;
-		game.changePlayerTimeState(p, 'pause');
+		game.playerPause(p);
 	});
 
 

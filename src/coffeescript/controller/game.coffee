@@ -14,8 +14,13 @@ class Game
 
 
 	next: ->
-		console.log('works2')
 		app.socket.emit('next')
+
+	play: ->
+		app.socket.emit('play')
+
+	pause: -> 
+		app.socket.emit('pause')
 
 	clickCreateBuildingButton: (building) ->
 		@changeState('constructing')

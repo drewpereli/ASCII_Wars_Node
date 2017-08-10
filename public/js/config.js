@@ -4,8 +4,8 @@ var config = {
 	maxPlayers: 2,
 	model: {
 		map: {
-			height: 60,
-			width: 60,
+			height: 20,
+			width: 20,
 			generation: {
 				iterations: 60
 			}
@@ -36,11 +36,12 @@ var config = {
 				desert: '#0aa',
 				plains: '#055',
 				mountain: '#777'
-			}
+			},
+			players: ['black', 'white']
 		},
 		map: {
-			height: 60,
-			width: 60,
+			height: 20,
+			width: 20,
 			initialCellLength: 10, //In pixels
 			layers: ['terrain', 'elevation', 'actors'/*, 'visibility', 'graphics'*/]
 		},

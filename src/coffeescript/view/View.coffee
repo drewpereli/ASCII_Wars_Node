@@ -100,8 +100,7 @@ class View
 		"##{redHex}#{greenHex}00"
 
 	getPlayerColor: (clientFacingPlayer) -> 
-		color = ['red', 'blue', 'green']
-		return color[clientFacingPlayer.team - 1]
+		return config.view.colors.players[clientFacingPlayer.team - 1]
 
 
 

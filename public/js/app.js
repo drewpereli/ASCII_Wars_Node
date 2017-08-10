@@ -23,8 +23,15 @@ Game = (function() {
   Game.prototype.clickTile = function(tile) {};
 
   Game.prototype.next = function() {
-    console.log('works2');
     return app.socket.emit('next');
+  };
+
+  Game.prototype.play = function() {
+    return app.socket.emit('play');
+  };
+
+  Game.prototype.pause = function() {
+    return app.socket.emit('pause');
   };
 
   Game.prototype.clickCreateBuildingButton = function(building) {
@@ -106,6 +113,16 @@ Input = (function() {
     $("#next-btn").click((function(_this) {
       return function() {
         return app.game.next();
+      };
+    })(this));
+    $("#play-btn").click((function(_this) {
+      return function() {
+        return app.game.play();
+      };
+    })(this));
+    $("#pause-btn").click((function(_this) {
+      return function() {
+        return app.game.pause();
       };
     })(this));
     $('.create-building-btn').click((function(_this) {
@@ -416,9 +433,7 @@ View = (function() {
   };
 
   View.prototype.getPlayerColor = function(clientFacingPlayer) {
-    var color;
-    color = ['red', 'blue', 'green'];
-    return color[clientFacingPlayer.team - 1];
+    return config.view.colors.players[clientFacingPlayer.team - 1];
   };
 
   return View;
