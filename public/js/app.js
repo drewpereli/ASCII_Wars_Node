@@ -122,16 +122,6 @@ Input = (function() {
         return app.game.next();
       };
     })(this));
-    $("#play-btn").click((function(_this) {
-      return function() {
-        return app.game.play();
-      };
-    })(this));
-    $("#pause-btn").click((function(_this) {
-      return function() {
-        return app.game.pause();
-      };
-    })(this));
     $('.create-building-btn').click((function(_this) {
       return function(e) {
         var building;
