@@ -27,7 +27,6 @@ class Actor extends Model{
 
 
 	tick(){
-		console.log(this.readableName, this.player.team);
 		this.timeUntilNextAction--;
 		if (this.timeUntilNextAction <= 0)
 			this.act();

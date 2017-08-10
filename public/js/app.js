@@ -17,14 +17,28 @@ Game = (function() {
   }
 
   Game.prototype.changeState = function(state) {
+    console.log('Changing state to ' + state);
     return this.state = state;
   };
 
-  Game.prototype.clickTile = function(tile) {};
+  Game.prototype.clickTile = function(tile) {
+    if (this.state === 'raising elevation') {
+      return app.socket.emit('raise elevation', tile);
+    } else if (this.state === 'lowering elevation') {
+      return app.socket.emit('lower elevation', tile);
+    }
+  };
 
   Game.prototype.next = function() {
-    console.log('works2');
     return app.socket.emit('next');
+  };
+
+  Game.prototype.play = function() {
+    return app.socket.emit('play');
+  };
+
+  Game.prototype.pause = function() {
+    return app.socket.emit('pause');
   };
 
   Game.prototype.clickCreateBuildingButton = function(building) {
@@ -242,10 +256,18 @@ Cell = (function() {
       case 'terrain':
         fillColor = config.view.colors.terrain[tile.terrain];
         break;
+      case 'elevation':
+        fillColor = app.view.getColorFromElevation(tile.elevation);
+        break;
       case 'actors':
         if (tile.actor) {
           char = tile.actor.character;
           charColor = app.view.getPlayerColor(tile.actor.player);
+        }
+        break;
+      case 'water':
+        if (tile.waterDepth > 0) {
+          fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
         }
     }
     if (fillColor) {
@@ -376,7 +398,6 @@ View = (function() {
     results = [];
     for (layername in ref) {
       layer = ref[layername];
-      console.log(layer);
       results.push(layer.clearRect(0, 0, config.view.map.width * this.components.map.currentCellLength, config.view.map.height * this.components.map.currentCellLength));
     }
     return results;
@@ -413,9 +434,7 @@ View = (function() {
   };
 
   View.prototype.getPlayerColor = function(clientFacingPlayer) {
-    var color;
-    color = ['red', 'blue', 'green'];
-    return color[clientFacingPlayer.team - 1];
+    return config.view.colors.players[clientFacingPlayer.team - 1];
   };
 
   return View;

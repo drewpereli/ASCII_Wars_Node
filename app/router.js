@@ -53,14 +53,14 @@ function initializePlayerSocketRoutes(socket){
 	socket.on('play', () => {
 		var p = authenticatePlayer(socket);
 		if (!p) return;
-		game.changePlayerTimeState(p, 'play');
+		game.playerPlay(p);
 	});
 
 
 	socket.on('pause', () => {
 		var p = authenticatePlayer(socket);
 		if (!p) return;
-		game.changePlayerTimeState(p, 'pause');
+		game.playerPause(p);
 	});
 
 
@@ -92,6 +92,22 @@ function initializePlayerSocketRoutes(socket){
 			var p = authenticatePlayer(socket);
 			if (!p) return;
 			game.restart();
+		});
+
+		socket.on('raise elevation', (tile) => {
+			var p = authenticatePlayer(socket);
+			if (!p) return;
+			var t = game.map.getTile(tile.x, tile.y);
+			t.setElevation(t.elevation + 1);
+			game.emitMap();
+		});
+
+		socket.on('lower elevation', (tile) => {
+			var p = authenticatePlayer(socket);
+			if (!p) return;
+			var t = game.map.getTile(tile.x, tile.y);
+			t.setElevation(t.elevation - 1);
+			game.emitMap();
 		});
 	}
 }

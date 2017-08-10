@@ -63,7 +63,6 @@ class View
 
 	clearCanvases: ->
 		for layername, layer of @components.map.layers
-			console.log(layer)
 			layer.clearRect(
 				0, 
 				0, 
@@ -100,8 +99,7 @@ class View
 		"##{redHex}#{greenHex}00"
 
 	getPlayerColor: (clientFacingPlayer) -> 
-		color = ['red', 'blue', 'green']
-		return color[clientFacingPlayer.team - 1]
+		return config.view.colors.players[clientFacingPlayer.team - 1]
 
 
 

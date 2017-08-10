@@ -37,10 +37,15 @@ class Cell
 		switch @getLayerName()
 			when 'terrain'
 				fillColor = config.view.colors.terrain[tile.terrain]
+			when 'elevation'
+				fillColor = app.view.getColorFromElevation(tile.elevation)
 			when 'actors'
 				if tile.actor
 					char = tile.actor.character
 					charColor = app.view.getPlayerColor(tile.actor.player)
+			when 'water'
+				if tile.waterDepth > 0
+					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
 
 
 		if fillColor

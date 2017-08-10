@@ -15,6 +15,12 @@ class Player extends Model{
 	getActors(){
 		return this.game.actors.filter(a => a.player === this);
 	}
+
+	changeTimeState(timeState){
+		if (!['playing', 'paused'].includes(timeState))
+			throw new Error("Time state must be 'playing' or 'paused'. '" + timeState + "' given");
+		this.timeState = timeState;
+	}
 }
 
 module.exports = Player;

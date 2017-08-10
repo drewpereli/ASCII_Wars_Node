@@ -11,6 +11,14 @@ class Input
 			app.game.next()
 		)
 
+		$("#play-btn").click( =>
+			app.game.play()
+		)
+
+		$("#pause-btn").click( =>
+			app.game.pause()
+		)
+
 		$('.create-building-btn').click((e) =>
 			building = $(e.target).data('building')
 			app.game.clickCreateBuildingButton(building)

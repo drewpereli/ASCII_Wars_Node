@@ -51,6 +51,7 @@ class Map extends Model{
 	//Create the terrain
 	generate() {
 		//Helper functions
+		/*
 		var setElevations = () => {
 			return new Promise((resolve, reject) => {
 				var iterate = (iteration) => {
@@ -66,6 +67,48 @@ class Map extends Model{
 				iterate(0);
 			})
 		}
+		*/
+		var setElevations = () => {
+			return new Promise((resolve, reject) => {
+				//Set x random points to random elevations
+				//Iterate through each cell. Set it to the average of the elevations of the surrounding cells
+				//Do this a few times
+
+				var anchorTiles = [];
+				this.forEachTile(t => {
+					if (rand(100) < 5){
+						t.setElevation(rand(101));
+						anchorTiles.push(t);
+					}
+				});
+				this.forEachTile(t => {
+					if (anchorTiles.includes(t)){
+						return;
+					}
+					//Get weighted average of elevations of anchor tiles weighted by 1 / distance to t
+					var total = 0;
+					var totalElevation = 0;
+					anchorTiles.forEach(anchorTile => {
+						var d = anchorTile.getDistance(t);
+						var weight = Math.pow(.5, d); //As d increases, weight decreases. 
+						total += weight;
+						totalElevation += weight * anchorTile.elevation;
+					});
+					t.elevation = Math.round(totalElevation / total);
+				});
+				resolve();
+				/*
+				var iterate = (iteration) => {
+					if (iteration >= config.model.map.generation.iterations){
+						resolve();
+						return;
+					}
+					setTimeout(() => {iterate(iteration + 1);}, 0);
+				}
+				iterate(0);
+				*/
+			})
+		}
 		var placeCommandCenters = () => {
 			return new Promise((resolve, reject) => {
 				//For each player
@@ -78,17 +121,27 @@ class Map extends Model{
 				resolve();
 			});
 		}
+		var addWater = () => {
+			for (var i = 0 ; i < 10 ; i++){
+				this.getRandomTile().setWaterDepth(1);
+			}
+		}
+
 		return new Promise((resolve, reject) => {
 			//For now just set random elevations
 			setElevations()
+			.then(() => {
+				return addWater();
+			})
 			//Generate the command centers
 			.then(() => {
-				return placeCommandCenters();
+				//return placeCommandCenters();
+				return Promise.resolve();
 			})
 			//Done
 			.then(() => {
 				//Place a random worker
-				this.game.addActor(new actorClasses.units.Worker({tile: this.getRandomOpenTile(), player: this.game.players[0]}));
+				//this.game.addActor(new actorClasses.units.Worker({tile: this.getRandomOpenTile(), player: this.game.players[0]}));
 				resolve();
 			})
 			//Error
@@ -117,6 +170,16 @@ class Map extends Model{
 	}
 
 
+
+	forEachTile(func){
+		for (var i in this.tiles){
+			var row = this.tiles[i];
+			for (var j in row){
+				var tile = row[j];
+				func(tile);
+			}
+		}
+	}
 
 
 

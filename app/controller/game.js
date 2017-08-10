@@ -153,10 +153,19 @@ class Game{
 	}
 
 
-	changePlayerTimeState(player, timeState){
-		if (!['playing', 'paused'].includes(timestate))
-			throw new Error("Time state must be 'playing' or 'paused'. '" + timeState + "' given");
-		player.timeState = timeState;
+	playerPlay(player){
+		if (player.timeState === 'playing')
+			return;
+		player.changeTimeState('playing');
+		player.readyForNextTurn = true;
+		this.play(); //Will only tick if all the players are in playing state
+	}
+
+
+	playerPause(player){
+		player.changeTimeState('paused');
+		console.log('pausing');
+		player.readyForNextTurn = false;
 	}
 
 
@@ -188,8 +197,18 @@ class Game{
 		this.processActorTicks();
 		this.ticks++;
 		this.emitMap();
-		if (this.allPlayersInPlayingTimeState())
-			setTimeout(this.tick, 0);
+		//Find each player not in the playing time state and set 'readyForNextTurn' to false
+		this.players.forEach((p) => {
+			if (p.timeState !== 'playing') 
+				p.readyForNextTurn = false;
+		});
+	}
+
+	play(){
+		if (this.readyToTick()){
+			this.tick();
+			setTimeout(() => {this.play();}, 500);
+		}
 	}
 
 
@@ -204,7 +223,14 @@ class Game{
 		}
 	}
 
-	processFluidTick(){}
+	processFluidTick(){
+		this.map.forEachTile((t) => {
+			t.prepareFluidTick(); //Prepares 'nextTurnsWaterDepth'
+		});
+		this.map.forEachTile((t) => {
+			t.processFluidTick(); //Sets 'waterDepth' to 'nextTurnsWaterDepth', and 'nextTurnsWaterDepth' to null
+		});
+	}
 
 
 	readyToTick(){
