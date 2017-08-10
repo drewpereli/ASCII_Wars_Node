@@ -45,7 +45,7 @@ class Cell
 					charColor = app.view.getPlayerColor(tile.actor.player)
 			when 'water'
 				if tile.waterDepth > 0
-					fillColor = config.view.colors.terrain['water'];
+					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
 
 
 		if fillColor

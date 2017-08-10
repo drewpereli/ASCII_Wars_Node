@@ -122,7 +122,9 @@ class Map extends Model{
 			});
 		}
 		var addWater = () => {
-			this.getRandomTile().setWaterDepth(1);
+			for (var i = 0 ; i < 10 ; i++){
+				this.getRandomTile().setWaterDepth(1);
+			}
 		}
 
 		return new Promise((resolve, reject) => {
