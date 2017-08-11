@@ -5,7 +5,7 @@ const Tile = require(__dirname + '/Tile');
 var Model = require('../Model.abstract');
 var actorClasses = require('require-dir-all')(
 	'../actors', {recursive: true}
-);
+	);
 
 
 
@@ -92,6 +92,8 @@ class Map extends Model{
 					//Set candidate elevation
 					candidate.elevation = rand(region.params.elevationRange) + region.params.minElevation;
 				}
+			}
+			var setElevations = regions => {
 			}
 			
 
@@ -184,7 +186,7 @@ class Map extends Model{
 			currentTile = this.getRandomTile();
 		}
 		while (!currentTile.isOpen())
-		return currentTile;
+			return currentTile;
 	}
 
 
