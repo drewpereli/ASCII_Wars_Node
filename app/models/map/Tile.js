@@ -24,7 +24,7 @@ class Tile extends Model{
 	}
 
 
-	prepareFluidTick(){
+	prepareFluidFlow(){
 		//If the tile has no water, do nothing
 		//Get sibs. 
 		//If none of them have surface elevation lower than this surface elevation - 1, continue
@@ -51,12 +51,32 @@ class Tile extends Model{
 	}
 
 
-	processFluidTick(){
+	processFluidFlow(){
 		if (this.nextTurnsWaterDepth !== false){
 			this.setWaterDepth(this.nextTurnsWaterDepth);
 			this.setNextTurnsWaterDepth(false);
 		}
 	}
+
+
+	processEvaporation(){
+		if (this.waterDepth === 0) continue;
+		//Evaporation is based on surface elevation
+		if (rand(1000) < this.getEvaporationProbability() * 1000){
+			this.evaporateWater();
+		}
+	}
+
+
+	processRain(){
+		if (rand(1000) < this.getRainProbability() * 1000){
+			this.getRainedOn();
+		}
+	}
+
+
+
+
 
 
 
@@ -185,6 +205,13 @@ class Tile extends Model{
 		return this.elevation + this.waterDepth;
 	}
 
+	getEvaporationProbability(){
+		//Should be .01 when surfaceDepth is 0
+		
+	}
+
+
+	getRainProbability(){}
 
 }
 

@@ -16,6 +16,9 @@ class Map extends Model{
 		this.width = config.model.map.width;
 		this.height = config.model.map.height;
 		this.tiles = [];
+
+		this.cloudWater = 0;
+
 		for (var y = 0 ; y < this.height ; y++){
 			this.tiles.push([]);
 			for (var x = 0 ; x < this.width ; x++){

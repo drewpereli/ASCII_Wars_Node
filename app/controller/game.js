@@ -224,11 +224,19 @@ class Game{
 	}
 
 	processFluidTick(){
-		this.map.forEachTile((t) => {
-			t.prepareFluidTick(); //Prepares 'nextTurnsWaterDepth'
+		//Process evaporation
+		this.map.forEachTile(t => {
+			t.processEvaporation();
 		});
-		this.map.forEachTile((t) => {
-			t.processFluidTick(); //Sets 'waterDepth' to 'nextTurnsWaterDepth', and 'nextTurnsWaterDepth' to null
+		//Process rain
+		this.map.forEachTile(t => {
+			t.processRain();
+		});
+		this.map.forEachTile(t => {
+			t.prepareFluidFlow(); //Prepares 'nextTurnsWaterDepth'
+		});
+		this.map.forEachTile(t => {
+			t.proccessFluidFlow(); //Sets 'waterDepth' to 'nextTurnsWaterDepth', and 'nextTurnsWaterDepth' to null
 		});
 	}
 
