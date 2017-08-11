@@ -51,63 +51,81 @@ class Map extends Model{
 	//Create the terrain
 	generate() {
 		//Helper functions
-		/*
 		var setElevations = () => {
-			return new Promise((resolve, reject) => {
-				var iterate = (iteration) => {
-					if (iteration >= config.model.map.generation.iterations){
-						resolve();
-						return;
-					}
-					//Set a random tile to elevation 50
-					var t = this.tiles[rand.range(this.height)][rand.range(this.width)];
-					t.elevation = rand(100);
-					setTimeout(() => {iterate(iteration + 1);}, 100);
-				}
-				iterate(0);
-			})
-		}
-		*/
-		var setElevations = () => {
-			return new Promise((resolve, reject) => {
-				//Set x random points to random elevations
-				//Iterate through each cell. Set it to the average of the elevations of the surrounding cells
-				//Do this a few times
-
-				var anchorTiles = [];
+			var getRandomElevationGenerationParams = () => {
+				return {
+					numAnchorTiles: rand(8) + 1,
+					minElevation: rand(80) + 0,
+					elevationRange: rand(35) + 5,
+					moisture: rand(60) + 20
+				};
+			}
+			var setRegionTiles = regions => {
+				//For each tile, see what region tile it's closest to, and add it to that region
 				this.forEachTile(t => {
-					if (rand(100) < 5){
-						t.setElevation(rand(101));
-						anchorTiles.push(t);
-					}
-				});
-				this.forEachTile(t => {
-					if (anchorTiles.includes(t)){
-						return;
-					}
-					//Get weighted average of elevations of anchor tiles weighted by 1 / distance to t
-					var total = 0;
-					var totalElevation = 0;
-					anchorTiles.forEach(anchorTile => {
-						var d = anchorTile.getDistance(t);
-						var weight = Math.pow(.5, d); //As d increases, weight decreases. 
-						total += weight;
-						totalElevation += weight * anchorTile.elevation;
+					var minDistance = false;
+					var regionCandidates = [];
+					regions.forEach(r => {
+						var d = r.mainTile.getDistance(t);
+						if (minDistance === false || d < minDistance){
+							minDistance = d;
+							regionCandidates = [r];
+						}
+						else if (d === minDistance){
+							regionCandidates.push(r);
+						}
 					});
-					t.elevation = Math.round(totalElevation / total);
+					//Pick a random region candidate
+					var region = regions[rand(regions.length)];
+					//Add this tile to the regions tiles
+					region.tiles.push(t);
 				});
-				resolve();
-				/*
-				var iterate = (iteration) => {
-					if (iteration >= config.model.map.generation.iterations){
-						resolve();
-						return;
+			}
+			var setRegionAnchorTiles = region => {
+				for (var i = 0 ; i < region.params.numAnchorTiles ; i++){
+					var candidate;
+					do{
+						candidate = region.tiles[rand(region.tiles.length)];
 					}
-					setTimeout(() => {iterate(iteration + 1);}, 0);
+					while (region.anchorTiles.includes(candidate));
+					region.anchorTiles.push(candidate);
+					//Set candidate elevation
+					candidate.elevation = rand(region.params.elevationRange) + region.params.minElevation;
 				}
-				iterate(0);
-				*/
-			})
+			}
+			
+
+			return new Promise((resolve, reject) => {
+				//Break up map into regions
+				//Each region will have different genereation paramaters
+				var numRegions = 5;
+				var regions = []; 
+				for (var i = 0 ; i < numRegions ; i++){
+					do{
+						var candidate = this.getRandomTile();
+						//If candidate is 
+						if (typeof regions.find(r => r.mainTile === candidate) !== 'undefined'){
+							continue;
+						}
+						else{
+							regions.push({
+								mainTile: candidate,
+								tiles: [candidate],
+								anchorTiles: [],
+								params: getRandomElevationGenerationParams()
+							});
+							break;
+						}
+					}
+					while (true);
+				}
+
+				//Set each regions tiles
+				setRegionTiles(regions);
+				//For each region, set the anchor tiles
+				regions.forEach(r => r.setRegionAnchorTiles());
+				var anchorTiles = regions.reduce((allAnchors, r) => {return allAnchors.concat(r.anchorTiles)}, []);
+			});
 		}
 		var placeCommandCenters = () => {
 			return new Promise((resolve, reject) => {
