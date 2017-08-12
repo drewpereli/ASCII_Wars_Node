@@ -16,11 +16,23 @@ class Tile extends Model{
 		this.waterDepth = 0;
 		this.nextTurnsWaterDepth = false;
 
+		this.region = false;
 		this.actor = false;
 
 		this.siblings = [];
 
 		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor', 'waterDepth'];
+
+		//Debug
+		if (config.debug.debugMode){
+			if (config.debug.showTileRegions){
+				this.clientFacingFields.push('region');
+			}
+			if (config.debug.showAnchorTiles){
+				this.isAnchor = false;
+				this.clientFacingFields.push('isAnchor');
+			}
+		}
 	}
 
 
@@ -178,6 +190,10 @@ class Tile extends Model{
 
 
 	setElevation(el){
+		if (el > config.model.map.maxElevation)
+			el = config.model.map.maxElevation;
+		if (el < config.model.map.minElevation)
+			el = config.model.map.minElevation;
 		this.elevation = el;
 	}
 

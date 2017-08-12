@@ -14,9 +14,10 @@ class Cell
 		x = @getXPixel()
 		y = @getYPixel()
 		l = @getCellLength()
-		@layer.fillRect(x + 1, y + 1, l - 2, l - 2)
-		@layer.fillStyle = config.view.colors.cellBorder
-		@layer.strokeRect(x, y, l, l)
+		@layer.fillRect(x, y, l, l)
+		if (config.view.map.cellBorders)
+			@layer.fillStyle = config.view.colors.cellBorder
+			@layer.strokeRect(x, y, l, l)
 		@cleared = false
 
 	write: (char, color) ->
@@ -47,6 +48,14 @@ class Cell
 				if tile.waterDepth > 0
 					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
 
+		if config.debug.debugMode
+			if config.debug.showTileRegions
+				if (@getLayerName() == 'debug')
+					char = tile.region
+					charColor = 'black';
+			if config.debug.showAnchorTiles
+				if tile.isAnchor
+					char = 'A'
 
 		if fillColor
 			@fill(fillColor)

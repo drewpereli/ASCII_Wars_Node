@@ -237,9 +237,11 @@ Cell = (function() {
     x = this.getXPixel();
     y = this.getYPixel();
     l = this.getCellLength();
-    this.layer.fillRect(x + 1, y + 1, l - 2, l - 2);
-    this.layer.fillStyle = config.view.colors.cellBorder;
-    this.layer.strokeRect(x, y, l, l);
+    this.layer.fillRect(x, y, l, l);
+    if (config.view.map.cellBorders) {
+      this.layer.fillStyle = config.view.colors.cellBorder;
+      this.layer.strokeRect(x, y, l, l);
+    }
     return this.cleared = false;
   };
 
@@ -279,6 +281,19 @@ Cell = (function() {
         if (tile.waterDepth > 0) {
           fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
         }
+    }
+    if (config.debug.debugMode) {
+      if (config.debug.showTileRegions) {
+        if (this.getLayerName() === 'debug') {
+          char = tile.region;
+          charColor = 'black';
+        }
+      }
+      if (config.debug.showAnchorTiles) {
+        if (tile.isAnchor) {
+          char = 'A';
+        }
+      }
     }
     if (fillColor) {
       this.fill(fillColor);

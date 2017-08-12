@@ -54,9 +54,10 @@ class Map extends Model{
 		var setElevations = () => {
 			var getRandomElevationGenerationParams = () => {
 				return {
-					numAnchorTiles: rand(8) + 1,
+					numAnchorTiles: rand(3) + 15,
 					minElevation: rand(80) + 0,
-					elevationRange: rand(35) + 5,
+					elevationRange: rand(70) + 20,
+					smoothness: (rand(6000) + 3000) / 10000,
 					moisture: rand(60) + 20
 				};
 			}
@@ -76,9 +77,10 @@ class Map extends Model{
 						}
 					});
 					//Pick a random region candidate
-					var region = regions[rand(regions.length)];
+					var region = regionCandidates[rand(regionCandidates.length)];
 					//Add this tile to the regions tiles
 					region.tiles.push(t);
+					t.region = regions.indexOf(region);
 				});
 			}
 			var setRegionAnchorTiles = region => {
@@ -90,17 +92,54 @@ class Map extends Model{
 					while (region.anchorTiles.includes(candidate));
 					region.anchorTiles.push(candidate);
 					//Set candidate elevation
-					candidate.elevation = rand(region.params.elevationRange) + region.params.minElevation;
+					candidate.setElevation(rand(region.params.elevationRange) + region.params.minElevation);
+					if (config.debug.debugMode){
+						if (config.debug.showAnchorTiles){
+							candidate.isAnchor = true;
+						}
+					}
 				}
 			}
 			var setElevations = regions => {
+				var anchorTiles = regions.reduce((allAnchors, r) => {return allAnchors.concat(r.anchorTiles)}, []);
+				this.forEachTile(t => {
+					if (anchorTiles.includes(t)){
+						return;
+					}
+					//Get weighted average of elevations of anchor tiles weighted by 1 / distance to t
+					var total = 0;
+					var totalElevation = 0;
+					anchorTiles.forEach(anchorTile => {
+						var d = anchorTile.getDistance(t);
+						var smoothness = regions[t.region].params.smoothness
+						var weight = Math.pow(smoothness, d); //As d increases, weight decreases. 
+						total += weight;
+						totalElevation += weight * anchorTile.elevation;
+					});
+					t.setElevation(Math.round(totalElevation / total));
+				});
+			}
+			var smoothElevations = () => {
+				var smoothingIterations = 6;
+				for (var i = 0 ; i < smoothingIterations ; i++){
+					this.forEachTile(t => {
+						//Get average elevation of containing 9 tile square
+						var average = (t.siblings.reduce((sum, sib) => {return sum + sib.elevation;}, 0) + t.elevation) / 9;
+						if (average > t.elevation){
+							t.setElevation(t.elevation + 1);
+						}
+						else if (average < t.elevation){
+							t.setElevation(t.elevation - 1);
+						}
+					});
+				}
 			}
 			
 
 			return new Promise((resolve, reject) => {
 				//Break up map into regions
 				//Each region will have different genereation paramaters
-				var numRegions = 5;
+				var numRegions = Math.round(this.width * this.height / 100);
 				var regions = []; 
 				for (var i = 0 ; i < numRegions ; i++){
 					do{
@@ -125,8 +164,10 @@ class Map extends Model{
 				//Set each regions tiles
 				setRegionTiles(regions);
 				//For each region, set the anchor tiles
-				regions.forEach(r => r.setRegionAnchorTiles());
-				var anchorTiles = regions.reduce((allAnchors, r) => {return allAnchors.concat(r.anchorTiles)}, []);
+				regions.forEach(r => setRegionAnchorTiles(r));
+				setElevations(regions);
+				smoothElevations();
+				resolve();
 			});
 		}
 		var placeCommandCenters = () => {
@@ -145,13 +186,15 @@ class Map extends Model{
 			for (var i = 0 ; i < 10 ; i++){
 				this.getRandomTile().setWaterDepth(1);
 			}
+			return Promise.resolve();
 		}
 
 		return new Promise((resolve, reject) => {
 			//For now just set random elevations
 			setElevations()
 			.then(() => {
-				return addWater();
+				//return addWater();
+				return Promise.resolve();
 			})
 			//Generate the command centers
 			.then(() => {

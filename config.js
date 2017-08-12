@@ -4,11 +4,10 @@ var config = {
 	maxPlayers: 2,
 	model: {
 		map: {
-			height: 20,
-			width: 20,
-			generation: {
-				iterations: 60
-			}
+			height: 200,
+			width: 200,
+			maxElevation: 100,
+			minElevation: 0
 		},
 		actors: {
 			units: {
@@ -40,18 +39,31 @@ var config = {
 			players: ['black', 'white']
 		},
 		map: {
-			height: 20,
-			width: 20,
-			initialCellLength: 10, //In pixels
-			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics']
+			height: 10,
+			width: 10,
+			initialCellLength: 2, //In pixels
+			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics'],
+			cellBorders: false
 		},
 		messageFadeDelay: 3
 	},
-	foo: 'bar'
+	debug: {
+		debugMode: true,
+		showTileRegions: false,
+		showAnchorTiles: false,
+		setViewDimensionsToMapDimensions: true
+	}
 }
 
-
-
+if (config.debug.debugMode){
+	if (config.debug.showTileRegions){
+		config.view.map.layers.push('debug');
+	}
+	if (config.debug.setViewDimensionsToMapDimensions){
+		config.view.map.height = config.model.map.height;
+		config.view.map.width = config.model.map.width;
+	}
+}
 
 
 
