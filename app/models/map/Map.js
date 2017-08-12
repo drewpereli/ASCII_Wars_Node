@@ -54,7 +54,7 @@ class Map extends Model{
 		var setElevations = () => {
 			var getRandomElevationGenerationParams = () => {
 				return {
-					numAnchorTiles: rand(3) + 15,
+					numAnchorTiles: rand(5) + 15,
 					minElevation: rand(80) + 0,
 					elevationRange: rand(70) + 20,
 					smoothness: (rand(6000) + 3000) / 10000,
@@ -139,7 +139,8 @@ class Map extends Model{
 			return new Promise((resolve, reject) => {
 				//Break up map into regions
 				//Each region will have different genereation paramaters
-				var numRegions = Math.round(this.width * this.height / 100);
+				var numRegions = Math.round(this.width * this.height / 3000);
+				console.log(numRegions);
 				var regions = []; 
 				for (var i = 0 ; i < numRegions ; i++){
 					do{
