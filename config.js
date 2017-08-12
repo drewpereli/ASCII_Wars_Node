@@ -2,7 +2,7 @@
 var config = {
 	gameStartCountdownTime: 0, //In seconds
 	maxPlayers: 2,
-	tickTime: 100, //In milliseconds
+	tickTime: 0, //In milliseconds
 	model: {
 		map: {
 			height: 100,

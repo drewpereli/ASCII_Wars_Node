@@ -7,8 +7,7 @@ class Socket
 			'map updated', 
 			((map) => 
 				map = JSON.parse(map)
-				app.map.update(map)
-				app.view.updateMap()
+				app.game.updateMap(map)
 			)
 		)
 		@io.on(

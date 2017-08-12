@@ -152,29 +152,11 @@ class Game{
 	*
 	*/
 	playerReadyForNextTurn(player){
-		//If the player is alrady in the "play" time state, we don't have to do anything
-		if (player.timeState === 'playing')
-			return;
 		player.readyForNextTurn = true;
 		if (this.readyToTick())
 			this.tick();
 	}
 
-
-	playerPlay(player){
-		if (player.timeState === 'playing')
-			return;
-		player.changeTimeState('playing');
-		player.readyForNextTurn = true;
-		this.play(); //Will only tick if all the players are in playing state
-	}
-
-
-	playerPause(player){
-		player.changeTimeState('paused');
-		console.log('pausing');
-		player.readyForNextTurn = false;
-	}
 
 
 	updateSquadBehaviorParams(player, params){}
@@ -207,16 +189,8 @@ class Game{
 		this.emitMap();
 		//Find each player not in the playing time state and set 'readyForNextTurn' to false
 		this.players.forEach((p) => {
-			if (p.timeState !== 'playing') 
-				p.readyForNextTurn = false;
+			p.readyForNextTurn = false;
 		});
-	}
-
-	play(){
-		if (this.readyToTick()){
-			this.tick();
-			setTimeout(() => {this.play();}, config.tickTime);
-		}
 	}
 
 
@@ -256,10 +230,6 @@ class Game{
 	}
 
 
-	//Returns true if all of the players have hit "play" and haven't hit pause
-	allPlayersInPlayingTimeState(){
-		return !this.players.find((p) => p.timeState !== 'playing');
-	}
 
 
 

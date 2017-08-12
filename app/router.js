@@ -50,19 +50,6 @@ function initializePlayerSocketRoutes(socket){
 	});
 
 
-	socket.on('play', () => {
-		var p = authenticatePlayer(socket);
-		if (!p) return;
-		game.playerPlay(p);
-	});
-
-
-	socket.on('pause', () => {
-		var p = authenticatePlayer(socket);
-		if (!p) return;
-		game.playerPause(p);
-	});
-
 
 	socket.on('update behavior params', (params) => {
 		var p = authenticatePlayer(socket);

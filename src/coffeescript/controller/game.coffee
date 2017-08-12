@@ -3,12 +3,27 @@ class Game
 
 	constructor: ->
 		@state
+		@timeState = 'paused'
 		@currentlyConstructing = false
+
 
 	changeState: (state) ->
 		console.log('Changing state to ' + state)
 		@state = state
 
+
+	changeTimeState: (state) ->
+		return if state is @timeState
+		@timeState = state
+		if @timeState is 'playing'
+			app.socket.emit('next')
+
+
+	################
+	#
+	# USER INPUT
+	#
+	################
 
 	clickTile: (tile) ->
 		if @state is 'raising elevation'
@@ -20,11 +35,27 @@ class Game
 		app.socket.emit('next')
 
 	play: ->
-		app.socket.emit('play')
+		@changeTimeState('playing')
 
 	pause: -> 
-		app.socket.emit('pause')
+		@changeTimeState('paused')
 
 	clickCreateBuildingButton: (building) ->
 		@changeState('constructing')
 		@currentlyConstructing = building
+
+
+
+	################
+	#
+	# SERVER RESPONSES
+	#
+	################
+
+	updateMap: (map) ->
+		app.map.update(map)
+		app.view.updateMap()
+		if @timeState is 'playing'
+			app.socket.emit('next')
+
+

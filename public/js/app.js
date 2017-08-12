@@ -13,12 +13,23 @@ var Game;
 Game = (function() {
   function Game() {
     this.state;
+    this.timeState = 'paused';
     this.currentlyConstructing = false;
   }
 
   Game.prototype.changeState = function(state) {
     console.log('Changing state to ' + state);
     return this.state = state;
+  };
+
+  Game.prototype.changeTimeState = function(state) {
+    if (state === this.timeState) {
+      return;
+    }
+    this.timeState = state;
+    if (this.timeState === 'playing') {
+      return app.socket.emit('next');
+    }
   };
 
   Game.prototype.clickTile = function(tile) {
@@ -34,16 +45,24 @@ Game = (function() {
   };
 
   Game.prototype.play = function() {
-    return app.socket.emit('play');
+    return this.changeTimeState('playing');
   };
 
   Game.prototype.pause = function() {
-    return app.socket.emit('pause');
+    return this.changeTimeState('paused');
   };
 
   Game.prototype.clickCreateBuildingButton = function(building) {
     this.changeState('constructing');
     return this.currentlyConstructing = building;
+  };
+
+  Game.prototype.updateMap = function(map) {
+    app.map.update(map);
+    app.view.updateMap();
+    if (this.timeState === 'playing') {
+      return app.socket.emit('next');
+    }
   };
 
   return Game;
@@ -63,8 +82,7 @@ Socket = (function() {
     this.io.on('map updated', ((function(_this) {
       return function(map) {
         map = JSON.parse(map);
-        app.map.update(map);
-        return app.view.updateMap();
+        return app.game.updateMap(map);
       };
     })(this)));
     this.io.on('tile update', ((function(_this) {
