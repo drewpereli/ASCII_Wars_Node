@@ -72,7 +72,7 @@ class Tile extends Model{
 
 
 	processEvaporation(){
-		if (this.waterDepth === 0) continue;
+		if (this.waterDepth === 0) return;
 		//Evaporation is based on surface elevation
 		if (rand(1000) < this.getEvaporationProbability() * 1000){
 			this.evaporateWater();

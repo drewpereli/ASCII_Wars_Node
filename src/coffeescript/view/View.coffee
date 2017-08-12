@@ -55,6 +55,12 @@ class View
 						cell.drawTile(tile)
 
 
+	updateTile: (tile) -> 
+		cells = @getCellsFromTile(tile);
+		for cell in cells
+			cell.drawTile(tile)
+
+
 	clearCell: (x, y) ->
 		cells = @components.map.cells;
 		for layername, layer of cells
@@ -79,6 +85,20 @@ class View
 
 	getTileFromCell: (cell) ->
 		return @getTileFromCellCoordinates(cell.x, cell.y)
+
+
+	getCellsFromTile: (tile) ->
+		if config.debug.debugMode and config.debug.setViewDimensionsToMapDimensions
+			x = (app.map.width + tile.x - @components.map.currentX) % app.map.width
+			y = (app.map.height + tile.y - @components.map.currentY) % app.map.height
+			cells = []
+
+			for layername, layer of @components.map.cells
+				cells.push(layer[y][x])
+			return cells
+		else
+			throw new Error('This function doesn\'t work without debug mode stuff yet');
+		
 
 
 	getTileFromCellCoordinates: (x, y) ->

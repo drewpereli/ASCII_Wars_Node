@@ -129,6 +129,14 @@ class Game{
 		}
 	}
 
+	emitTile(t){
+		console.log('emitting tile');
+		for (var i in this.players){
+			var player = this.players[i];
+			player.socket.emit('tile update', JSON.stringify(t.getClientDataFor(player)));
+		}
+	}
+
 
 
 
@@ -207,7 +215,7 @@ class Game{
 	play(){
 		if (this.readyToTick()){
 			this.tick();
-			setTimeout(() => {this.play();}, 500);
+			setTimeout(() => {this.play();}, config.tickTime);
 		}
 	}
 
@@ -236,7 +244,7 @@ class Game{
 			t.prepareFluidFlow(); //Prepares 'nextTurnsWaterDepth'
 		});
 		this.map.forEachTile(t => {
-			t.proccessFluidFlow(); //Sets 'waterDepth' to 'nextTurnsWaterDepth', and 'nextTurnsWaterDepth' to null
+			t.processFluidFlow(); //Sets 'waterDepth' to 'nextTurnsWaterDepth', and 'nextTurnsWaterDepth' to null
 		});
 	}
 

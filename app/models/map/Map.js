@@ -54,14 +54,14 @@ class Map extends Model{
 	//Create the terrain
 	generate() {
 		//Helper functions
-		var setElevations = () => {
+		var setElevationsAndWater = () => {
 			var getRandomElevationGenerationParams = () => {
 				return {
 					numAnchorTiles: rand(5) + 15,
 					minElevation: rand(80) + 0,
 					elevationRange: rand(70) + 20,
 					smoothness: (rand(6000) + 3000) / 10000,
-					moisture: rand(60) + 20
+					moistureChance: (rand(60) + 20) / 100
 				};
 			}
 			var setRegionTiles = regions => {
@@ -137,6 +137,17 @@ class Map extends Model{
 					});
 				}
 			}
+			var addWater = regions => {
+				/*
+				regions.forEach(r => {
+					r.tiles.forEach(t => {
+						if (rand(100) / 100 < r.params.moistureChance){
+							t.setWaterDepth(1);
+						}
+					});
+				});
+				*/
+			} 
 			
 
 			return new Promise((resolve, reject) => {
@@ -171,6 +182,7 @@ class Map extends Model{
 				regions.forEach(r => setRegionAnchorTiles(r));
 				setElevations(regions);
 				smoothElevations();
+				addWater(regions);
 				resolve();
 			});
 		}
@@ -186,20 +198,11 @@ class Map extends Model{
 				resolve();
 			});
 		}
-		var addWater = () => {
-			for (var i = 0 ; i < 10 ; i++){
-				this.getRandomTile().setWaterDepth(1);
-			}
-			return Promise.resolve();
-		}
+		
 
 		return new Promise((resolve, reject) => {
 			//For now just set random elevations
-			setElevations()
-			.then(() => {
-				//return addWater();
-				return Promise.resolve();
-			})
+			setElevationsAndWater()
 			//Generate the command centers
 			.then(() => {
 				//return placeCommandCenters();

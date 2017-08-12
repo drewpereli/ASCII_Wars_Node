@@ -67,6 +67,11 @@ Socket = (function() {
         return app.view.updateMap();
       };
     })(this)));
+    this.io.on('tile update', ((function(_this) {
+      return function(tile) {
+        return app.view.updateTile(JSON.parse(tile));
+      };
+    })(this)));
     return this.io;
   }
 
@@ -406,6 +411,17 @@ View = (function() {
     return results;
   };
 
+  View.prototype.updateTile = function(tile) {
+    var cell, cells, i, len, results;
+    cells = this.getCellsFromTile(tile);
+    results = [];
+    for (i = 0, len = cells.length; i < len; i++) {
+      cell = cells[i];
+      results.push(cell.drawTile(tile));
+    }
+    return results;
+  };
+
   View.prototype.clearCell = function(x, y) {
     var cells, layer, layername, results;
     cells = this.components.map.cells;
@@ -437,6 +453,23 @@ View = (function() {
 
   View.prototype.getTileFromCell = function(cell) {
     return this.getTileFromCellCoordinates(cell.x, cell.y);
+  };
+
+  View.prototype.getCellsFromTile = function(tile) {
+    var cells, layer, layername, ref, x, y;
+    if (config.debug.debugMode && config.debug.setViewDimensionsToMapDimensions) {
+      x = (app.map.width + tile.x - this.components.map.currentX) % app.map.width;
+      y = (app.map.height + tile.y - this.components.map.currentY) % app.map.height;
+      cells = [];
+      ref = this.components.map.cells;
+      for (layername in ref) {
+        layer = ref[layername];
+        cells.push(layer[y][x]);
+      }
+      return cells;
+    } else {
+      throw new Error('This function doesn\'t work without debug mode stuff yet');
+    }
   };
 
   View.prototype.getTileFromCellCoordinates = function(x, y) {

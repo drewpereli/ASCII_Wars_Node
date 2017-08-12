@@ -98,16 +98,17 @@ function initializePlayerSocketRoutes(socket){
 			var p = authenticatePlayer(socket);
 			if (!p) return;
 			var t = game.map.getTile(tile.x, tile.y);
-			t.setElevation(t.elevation + 1);
-			game.emitMap();
+			t.setElevation(t.elevation + 50);
+			game.emitTile(t);
 		});
 
 		socket.on('lower elevation', (tile) => {
+			//console.log('lowering elevation of tile at ' + tile.x + ', ' + tile.y);
 			var p = authenticatePlayer(socket);
 			if (!p) return;
 			var t = game.map.getTile(tile.x, tile.y);
-			t.setElevation(t.elevation - 1);
-			game.emitMap();
+			t.setElevation(t.elevation - 50);
+			game.emitTile(t);
 		});
 	}
 }

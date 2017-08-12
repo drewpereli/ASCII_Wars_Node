@@ -2,10 +2,11 @@
 var config = {
 	gameStartCountdownTime: 0, //In seconds
 	maxPlayers: 2,
+	tickTime: 100, //In milliseconds
 	model: {
 		map: {
-			height: 200,
-			width: 200,
+			height: 100,
+			width: 100,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -41,7 +42,7 @@ var config = {
 		map: {
 			height: 10,
 			width: 10,
-			initialCellLength: 2, //In pixels
+			initialCellLength: 5, //In pixels
 			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics'],
 			cellBorders: false
 		},
