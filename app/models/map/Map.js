@@ -138,7 +138,6 @@ class Map extends Model{
 				}
 			}
 			var addWater = regions => {
-				/*
 				regions.forEach(r => {
 					r.tiles.forEach(t => {
 						if (rand(100) / 100 < r.params.moistureChance){
@@ -146,7 +145,6 @@ class Map extends Model{
 						}
 					});
 				});
-				*/
 			} 
 			
 
