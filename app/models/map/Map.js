@@ -10,6 +10,7 @@ var actorClasses = require('require-dir-all')(
 
 
 class Map extends Model{
+
 	constructor(game) {
 		super();
 		this.game = game;
@@ -28,6 +29,21 @@ class Map extends Model{
 		this.setTileSiblings();
 	}
 
+
+	incrementCloudWater(){
+		this.cloudWater++;
+	}
+
+	decrementCloudWater(){
+		this.cloudWater--;
+	}
+
+
+	//Return top ten percent of tiles by elevation
+	getRainTiles(){
+		var sortedTiles = this.getTiles().sort((t1, t2) => t2.elevation - t1.elevation);
+		return sortedTiles.slice(0, Math.round(sortedTiles.length / 1000));
+	}
 
 
 	//Gets an object containing the map data to send to the client
@@ -57,11 +73,11 @@ class Map extends Model{
 		var setElevationsAndWater = () => {
 			var getRandomElevationGenerationParams = () => {
 				return {
-					numAnchorTiles: rand(5) + 15,
+					numAnchorTiles: rand(15) + 10,
 					minElevation: rand(80) + 0,
-					elevationRange: rand(70) + 20,
+					elevationRange: rand(80) + 20,
 					smoothness: (rand(6000) + 3000) / 10000,
-					moistureChance: (rand(60) + 20) / 100
+					moistureChance: (rand(70) + 30) / 100
 				};
 			}
 			var setRegionTiles = regions => {
@@ -105,7 +121,7 @@ class Map extends Model{
 			}
 			var setElevations = regions => {
 				var anchorTiles = regions.reduce((allAnchors, r) => {return allAnchors.concat(r.anchorTiles)}, []);
-				this.forEachTile(t => {
+				this.forEachTile((t, i) => {
 					if (anchorTiles.includes(t)){
 						return;
 					}
@@ -120,6 +136,21 @@ class Map extends Model{
 						totalElevation += weight * anchorTile.elevation;
 					});
 					t.setElevation(Math.round(totalElevation / total));
+					//get percent done
+					var percentDone = 100 * i / (this.width * this.height);
+					if (percentDone % 5 === 0){
+						console.log(percentDone + '% done');
+					}
+				});
+			}
+			var smoothAnchorTiles = regions => {
+				regions.forEach(r => {
+					r.anchorTiles.forEach(t => {
+						//Get average elevation of sibs
+						var sum = t.siblings.reduce((sum, sib) => {return sum + sib.elevation;}, 0);
+						var average = Math.round(sum / 8);
+						t.setElevation(average);
+					})
 				});
 			}
 			var smoothElevations = () => {
@@ -137,6 +168,21 @@ class Map extends Model{
 					});
 				}
 			}
+
+			var normalizeElevations = () => {
+				var currentMin = Math.min(...this.getTiles().map(t => t.elevation));
+				var currentMax = Math.max(...this.getTiles().map(t => t.elevation));
+				var targetMin = config.model.map.minElevation;
+				var targetMax = config.model.map.maxElevation;
+
+				var normalize = t => {
+					var newElevation = (t.elevation - currentMin) / (currentMax - currentMin) * (targetMax - targetMin);
+					t.setElevation(Math.round(newElevation));
+				}
+
+				this.forEachTile(t => normalize(t));
+			}
+
 			var addWater = regions => {
 				regions.forEach(r => {
 					r.tiles.forEach(t => {
@@ -145,13 +191,62 @@ class Map extends Model{
 						}
 					});
 				});
+
+				var flowIterations = 200;
+				var erosionIterations = 100;
+
+				var processFlow = iteration => {
+					if (iteration > flowIterations){
+						return Promise.resolve();
+					}
+					this.forEachTile(t => {
+						t.prepareFluidFlow();
+					});
+					this.forEachTile(t => {
+						t.processFluidFlow();
+					});
+					return processFlow(iteration + 1);
+				}
+
+
+				var processRainErosion = iteration => {
+					if (iteration > erosionIterations){
+						return Promise.resolve();
+					}
+					this.forEachTile(t => {
+						t.processEvaporation();
+					});
+					//Process rain
+					//Should be tiles in random order
+					this.getRainTiles().forEach(t => {
+						t.processRain();
+					});
+					this.forEachTile(t => {
+						t.prepareFluidFlow();
+					});
+					//Proces erosion
+					this.forEachTile(t => {
+						t.processErosion();
+					})
+					this.forEachTile(t => {
+						t.processFluidFlow();
+					});
+					return processRainErosion(iteration + 1);
+				}
+
+				return new Promise((resolve, reject) => {
+					processFlow(0)
+					.then(() => processRainErosion(0))
+					.then(() => resolve())
+					.catch(err => reject(err));
+				})
 			} 
 			
 
 			return new Promise((resolve, reject) => {
 				//Break up map into regions
 				//Each region will have different genereation paramaters
-				var numRegions = Math.round(this.width * this.height / 3000);
+				var numRegions = Math.round(this.width * this.height / 1000);
 				console.log(numRegions);
 				var regions = []; 
 				for (var i = 0 ; i < numRegions ; i++){
@@ -175,13 +270,23 @@ class Map extends Model{
 				}
 
 				//Set each regions tiles
+				console.log('setting region tiles...');
 				setRegionTiles(regions);
 				//For each region, set the anchor tiles
+				console.log('setting region anchor tiles');
 				regions.forEach(r => setRegionAnchorTiles(r));
+				console.log('setting elevation');
 				setElevations(regions);
+				console.log('smoothing anchor tiles');
+				smoothAnchorTiles(regions);
+				console.log('smoothing elevations');
 				smoothElevations();
-				addWater(regions);
-				resolve();
+				console.log('normalizing elevations');
+				normalizeElevations();
+				console.log('adding water');
+				addWater(regions)
+				.then(() => resolve())
+				.catch(err => reject(err));
 			});
 		}
 		var placeCommandCenters = () => {
@@ -203,6 +308,7 @@ class Map extends Model{
 			setElevationsAndWater()
 			//Generate the command centers
 			.then(() => {
+				console.log('water added');
 				//return placeCommandCenters();
 				return Promise.resolve();
 			})
@@ -240,13 +346,33 @@ class Map extends Model{
 
 
 	forEachTile(func){
+		var count = 0;
 		for (var i in this.tiles){
 			var row = this.tiles[i];
 			for (var j in row){
 				var tile = row[j];
-				func(tile);
+				count++;
+				func(tile, count);
 			}
 		}
+	}
+
+
+	getShuffledTiles(){
+		var tiles = this.getTiles();
+		var shuffled = [];
+		do{
+			var index = rand(tiles.length);
+			shuffled.push(tiles[index]);
+			tiles.splice(index, 1);
+		}
+		while(tiles.length > 0);
+		return shuffled;
+	}
+
+
+	getTiles(){
+		return this.tiles.reduce((all, row) => {return all.concat(row);}, []);
 	}
 
 

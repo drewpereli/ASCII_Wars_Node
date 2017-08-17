@@ -211,7 +211,8 @@ class Game{
 			t.processEvaporation();
 		});
 		//Process rain
-		this.map.forEachTile(t => {
+		//Should be tiles in random order
+		this.map.getRainTiles().forEach(t => {
 			t.processRain();
 		});
 		this.map.forEachTile(t => {

@@ -71,6 +71,13 @@ class Tile extends Model{
 	}
 
 
+	processErosion(){
+		if (this.waterDepth === 0 && this.nextTurnsWaterDepth === 1 && rand(100) <= 20){
+			this.setElevation(this.elevation - 1);
+		}
+	}
+
+
 	processEvaporation(){
 		if (this.waterDepth === 0) return;
 		//Evaporation is based on surface elevation
@@ -80,12 +87,24 @@ class Tile extends Model{
 	}
 
 
+	evaporateWater(){
+		this.map.incrementCloudWater();
+		this.setWaterDepth(this.waterDepth - 1);
+	}
+
+
 	processRain(){
+		if (this.map.cloudWater === 0) return;
 		if (rand(1000) < this.getRainProbability() * 1000){
 			this.getRainedOn();
 		}
 	}
 
+
+	getRainedOn(){
+		this.map.decrementCloudWater();
+		this.setWaterDepth(this.waterDepth + 1);
+	}
 
 
 
@@ -222,12 +241,40 @@ class Tile extends Model{
 	}
 
 	getEvaporationProbability(){
-		//Should be .01 when surfaceDepth is 0
-		
+		//Should be .5 when elevation is min, and .0001 when elevation is max
+		//f(el) = prop. Two points (min, .5), (max, .0001)
+		//Let's y = mx + b this bitch
+		// prob = m * el + b
+		// maxProb = m * minEl + b
+		// minProb = m * maxEl + b
+		// maxProb - m * minEl = minProb - m * maxEl
+		// maxProb = minProb - m * maxEl + m * minEl
+		// maxProb = minProb + m * (minEl - maxEl)
+		// (maxProb - minProb) / (minEl - maxEl) = m
+		// b = y - mx
+		var minProb = .001;
+		var maxProb = .01;
+		var minEl = config.model.map.minElevation + 1; //Surface elevation
+		var maxEl = config.model.map.maxElevation + 10; //Surface elevation
+		var m = (maxProb - minProb) / (minEl - maxEl);
+		var b = maxProb - m * minEl;
+		var prob = m * this.getSurfaceElevation() + b;
+		return prob;
 	}
 
 
-	getRainProbability(){}
+	//Should be inversely correlated with evap prob
+	getRainProbability(){
+		return 1;
+		var minProb = 0;
+		var maxProb = .02;
+		var minEl = config.model.map.minElevation; //Terrain elevation
+		var maxEl = config.model.map.maxElevation + 10; //Surface elevation
+		var m = (maxProb - minProb) / (maxEl - minEl);
+		var b = maxProb - m * maxEl;
+		var prob = m * this.getSurfaceElevation() + b;
+		return prob;
+	}
 
 }
 
