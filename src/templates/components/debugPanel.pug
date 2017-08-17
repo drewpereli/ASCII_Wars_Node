@@ -1,7 +1,7 @@
-
-.btn.btn-default.btn-lg#restart-btn Restart
-.btn.btn-default.btn-lg#raise-elevation-btn Raise Elevation
-.btn.btn-default.btn-lg#lower-elevation-btn Lower Elevation
+#debug-container
+	.btn.btn-default.btn-lg#restart-btn Restart
+	.btn.btn-default.btn-lg#raise-elevation-btn Raise Elevation
+	.btn.btn-default.btn-lg#lower-elevation-btn Lower Elevation
 script.
 	$('#restart-btn').click(() => {
 		app.socket.emit('restart');

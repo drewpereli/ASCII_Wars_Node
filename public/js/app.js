@@ -521,6 +521,7 @@ View.prototype.initialize = {
   map: {
     canvases: function(v) {
       var c, i, layerName, len, ref;
+      $('#canvas-container').css('height', config.view.map.height * config.view.map.initialCellLength);
       ref = config.view.map.layers;
       for (i = 0, len = ref.length; i < len; i++) {
         layerName = ref[i];

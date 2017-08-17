@@ -132,6 +132,7 @@ class View
 View.prototype.initialize = 
 	map:
 		canvases: (v) ->
+			$('#canvas-container').css('height', config.view.map.height * config.view.map.initialCellLength)
 			for layerName in config.view.map.layers
 				c = $("<canvas>").addClass(layerName)
 				c.attr('width', config.view.map.width * config.view.map.initialCellLength)
