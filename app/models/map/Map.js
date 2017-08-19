@@ -302,7 +302,6 @@ class Map extends Model{
 			});
 		}
 		
-		return Promise.resolve();
 		return new Promise((resolve, reject) => {
 			//For now just set random elevations
 			setElevationsAndWater()

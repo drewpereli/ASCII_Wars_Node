@@ -25,6 +25,13 @@ class Game
 	#
 	################
 
+	moveMap: (dirIndex) ->
+		app.view.moveMap(dirIndex)
+
+	zoom: (direction) ->
+		app.view.zoom(direction)
+
+
 	clickTile: (tile) ->
 		if @state is 'raising elevation'
 			app.socket.emit('raise elevation', tile)

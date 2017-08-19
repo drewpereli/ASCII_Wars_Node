@@ -5,8 +5,8 @@ var config = {
 	tickTime: 0, //In milliseconds
 	model: {
 		map: {
-			height: 60,
-			width: 60,
+			height: 64,
+			width: 64,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -42,7 +42,7 @@ var config = {
 		map: {
 			//height: 10,
 			//width: 10,
-			initialCellLength: 10, //In pixels
+			initialCellLength: 8, //In pixels
 			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics'],
 			cellBorders: false
 		},

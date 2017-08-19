@@ -7,6 +7,7 @@ class View
 			map: 
 				currentX: 0 #Coordinates of top left corner
 				currentY: 0
+				currentZoom: 3
 				layers: {}
 				cells: {}
 				currentCellLength: config.view.map.initialCellLength
@@ -32,6 +33,24 @@ class View
 				complete: =>
 					m.empty().show().removeClass('has-message')
 			})
+
+
+
+	moveMap: (dirIndex) ->
+		switch dirIndex
+			when 0 then @components.map.currentY -= 5
+			when 1 then @components.map.currentX += 5
+			when 2 then @components.map.currentY += 5
+			when 3 then @components.map.currentX -= 5
+		if (@components.map.currentY < 0)
+			@components.map.currentY += app.map.height
+		if (@components.map.currentX < 0)
+			@components.map.currentX += app.map.width
+		if (@components.map.currentY >= app.map.height)
+			@components.map.currentY -= app.map.height
+		if (@components.map.currentX >= app.map.width)
+			@components.map.currentX -= app.map.width
+		@updateMap();
 
 
 

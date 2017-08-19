@@ -3,6 +3,10 @@ class Input
 
 	constructor: ->
 
+		$('body').keydown((e) => 
+			@processKeyDown(e)
+		)
+
 		$(app.view.components.map.clickableCanvas).mousedown((e) => 
 			app.game.clickTile(@getTileClicked(e))
 		)
@@ -42,3 +46,21 @@ class Input
 		y -= canvas.offsetTop
 		return app.view.getTileFromPixels(x, y)
 		###
+
+
+
+	processKeyDown: (event)->
+		event.preventDefault()
+		console.log(event.key)
+		switch event.key
+			when "ArrowUp" then app.game.moveMap(0)
+			when "ArrowRight" then app.game.moveMap(1)
+			when "ArrowDown" then app.game.moveMap(2)
+			when "ArrowLeft" then app.game.moveMap(3)
+			when '-' then app.game.zoom('out')
+			when '=' then app.game.zoom('in')
+
+
+
+
+

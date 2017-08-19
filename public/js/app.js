@@ -32,6 +32,14 @@ Game = (function() {
     }
   };
 
+  Game.prototype.moveMap = function(dirIndex) {
+    return app.view.moveMap(dirIndex);
+  };
+
+  Game.prototype.zoom = function(direction) {
+    return app.view.zoom(direction);
+  };
+
   Game.prototype.clickTile = function(tile) {
     if (this.state === 'raising elevation') {
       return app.socket.emit('raise elevation', tile);
@@ -135,6 +143,11 @@ var Input;
 
 Input = (function() {
   function Input() {
+    $('body').keydown((function(_this) {
+      return function(e) {
+        return _this.processKeyDown(e);
+      };
+    })(this));
     $(app.view.components.map.clickableCanvas).mousedown((function(_this) {
       return function(e) {
         return app.game.clickTile(_this.getTileClicked(e));
@@ -181,6 +194,25 @@ Input = (function() {
     		y -= canvas.offsetTop
     		return app.view.getTileFromPixels(x, y)
      */
+  };
+
+  Input.prototype.processKeyDown = function(event) {
+    event.preventDefault();
+    console.log(event.key);
+    switch (event.key) {
+      case "ArrowUp":
+        return app.game.moveMap(0);
+      case "ArrowRight":
+        return app.game.moveMap(1);
+      case "ArrowDown":
+        return app.game.moveMap(2);
+      case "ArrowLeft":
+        return app.game.moveMap(3);
+      case '-':
+        return app.game.zoom('out');
+      case '=':
+        return app.game.zoom('in');
+    }
   };
 
   return Input;
@@ -364,6 +396,7 @@ View = (function() {
       map: {
         currentX: 0,
         currentY: 0,
+        currentZoom: 3,
         layers: {},
         cells: {},
         currentCellLength: config.view.map.initialCellLength,
@@ -394,6 +427,35 @@ View = (function() {
         };
       })(this)
     });
+  };
+
+  View.prototype.moveMap = function(dirIndex) {
+    switch (dirIndex) {
+      case 0:
+        this.components.map.currentY -= 5;
+        break;
+      case 1:
+        this.components.map.currentX += 5;
+        break;
+      case 2:
+        this.components.map.currentY += 5;
+        break;
+      case 3:
+        this.components.map.currentX -= 5;
+    }
+    if (this.components.map.currentY < 0) {
+      this.components.map.currentY += app.map.height;
+    }
+    if (this.components.map.currentX < 0) {
+      this.components.map.currentX += app.map.width;
+    }
+    if (this.components.map.currentY >= app.map.height) {
+      this.components.map.currentY -= app.map.height;
+    }
+    if (this.components.map.currentX >= app.map.width) {
+      this.components.map.currentX -= app.map.width;
+    }
+    return this.updateMap();
   };
 
   View.prototype.updateMap = function() {
