@@ -54,7 +54,9 @@ function initializePlayerSocketRoutes(socket){
 	socket.on('update behavior params', (params) => {
 		var p = authenticatePlayer(socket);
 		if (!p) return;
-		game.updateSquadBehaviorParams(p, params);
+		var squad = params.squad;
+		delete params.squad;
+		game.updateSquadBehaviorParams(p, squad, params);
 	});
 
 

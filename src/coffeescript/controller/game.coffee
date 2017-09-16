@@ -5,6 +5,7 @@ class Game
 		@state
 		@timeState = 'paused'
 		@currentlyConstructing = false
+		@selectedTile = null
 
 
 	changeState: (state) ->
@@ -37,6 +38,18 @@ class Game
 			app.socket.emit('raise elevation', tile)
 		else if @state is 'lowering elevation'
 			app.socket.emit('lower elevation', tile)
+
+	rightClickTile: (tile) ->
+		selectedSquad = $('#squad-select').val()
+		app.socket.emit(
+			'update behavior params', 
+			{
+				squad: selectedSquad,
+				movingTo: {x: tile.x, y: tile.y}
+			}
+		)
+
+	controlClickTile: (tile) ->
 
 	next: ->
 		app.socket.emit('next')

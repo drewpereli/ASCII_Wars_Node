@@ -3,6 +3,7 @@ var config = {
 	gameStartCountdownTime: 0, //In seconds
 	maxPlayers: 2,
 	tickTime: 0, //In milliseconds
+	maxSquads: 100,
 	model: {
 		map: {
 			height: 64,
@@ -30,6 +31,7 @@ var config = {
 		colors: {
 			black: '#000',
 			cellBorder: 'gray',
+			selectedTileBorder: 'gold',
 			terrain: {
 				water: '#007',
 				forest: '#070',
@@ -52,7 +54,8 @@ var config = {
 		debugMode: true,
 		showTileRegions: false,
 		showAnchorTiles: false,
-		setViewDimensionsToMapDimensions: true
+		setViewDimensionsToMapDimensions: true,
+		water: false
 	}
 }
 

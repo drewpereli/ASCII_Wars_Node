@@ -3,10 +3,9 @@ var Model = require('../Model.abstract');
 
 class Actor extends Model{
 
-	constructor(){
-		super(arguments);
+	constructor(args){
 
-		var args = {
+		var defaultArgs = {
 			name: null,
 			readableName: null,
 			character: null,
@@ -16,7 +15,9 @@ class Actor extends Model{
 			moveTime: 0,
 			clientFacingFields: ['player', 'maxHealth', 'health', 'character']
 		};
-		Object.assign(args, arguments[0]);
+		Object.assign(defaultArgs, args);
+
+		super(defaultArgs);
 
 		Object.assign(this, args);
 		this.tile.setActor(this);

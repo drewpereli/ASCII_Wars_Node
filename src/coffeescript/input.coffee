@@ -8,8 +8,13 @@ class Input
 		)
 
 		$(app.view.components.map.clickableCanvas).mousedown((e) => 
-			app.game.clickTile(@getTileClicked(e))
+			e.preventDefault()
+			switch e.which
+				when 1 then app.game.clickTile(@getTileClicked(e))
+				when 3 then app.game.rightClickTile(@getTileClicked(e))
 		)
+
+		$(app.view.components.map.clickableCanvas).contextmenu( => return false)
 
 		$("#next-btn").click( =>
 			app.game.next()
@@ -27,6 +32,8 @@ class Input
 			building = $(e.target).data('building')
 			app.game.clickCreateBuildingButton(building)
 		)
+
+
 
 
 	getTileClicked: (event) ->

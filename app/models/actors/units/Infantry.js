@@ -3,16 +3,16 @@ var Unit = require('./Unit.abstract');
 
 class Infantry extends Unit {
 
-	constructor(){
-		this.maxHealth = 100;
-		this.moveTime = 10;
-		this.damage = 10;
-		this.range = 5;
-		this.accuracy = 5;
-		this.defense = 4;
-		this.armor = 0;
-		this.fireTime = 5;
-		super.constructor(...arguments);
+	constructor(args){
+		args.maxHealth = 100;
+		args.moveTime = 10;
+		args.damage = 10;
+		args.range = 5;
+		args.accuracy = 5;
+		args.defense = 4;
+		args.armor = 0;
+		args.fireTime = 5;
+		super.constructor(args);
 	}
 
 	getMoveWeight(tile1, tile2){

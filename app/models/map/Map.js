@@ -184,6 +184,9 @@ class Map extends Model{
 			}
 
 			var addWater = regions => {
+				if (config.debug.debugMode && !config.debug.water){
+					return Promise.resolve();
+				}
 				regions.forEach(r => {
 					r.tiles.forEach(t => {
 						if (rand(100) / 100 < r.params.moistureChance){
@@ -308,13 +311,21 @@ class Map extends Model{
 			//Generate the command centers
 			.then(() => {
 				console.log('water added');
-				//return placeCommandCenters();
-				return Promise.resolve();
+				return placeCommandCenters();
 			})
 			//Done
 			.then(() => {
-				//Place a random worker
-				//this.game.addActor(new actorClasses.units.Worker({tile: this.getRandomOpenTile(), player: this.game.players[0]}));
+				for (var i = 0 ; i < 30 ; i++){
+					//Place a random worker
+					this.game.addActor(
+						new actorClasses.units.Worker({
+							tile: this.getRandomOpenTile(), 
+							player: this.game.players[0],
+							squad: 0
+						})
+					);
+				}
+				
 				resolve();
 			})
 			//Error

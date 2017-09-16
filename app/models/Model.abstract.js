@@ -1,7 +1,9 @@
 
 class Model{
 
-	
+	constructor(args){
+		Object.assign(this, args);
+	}
 
 	getClientDataFor(player){
 		if (typeof this.clientFacingFields === 'undefined'){

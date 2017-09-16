@@ -159,7 +159,9 @@ class Game{
 
 
 
-	updateSquadBehaviorParams(player, params){}
+	updateSquadBehaviorParams(player, squad, params){
+		player.getSquad(squad).setBehaviorParams(params);
+	}
 
 
 	playerQuit(player){

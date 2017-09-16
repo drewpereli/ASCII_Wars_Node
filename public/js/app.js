@@ -15,6 +15,7 @@ Game = (function() {
     this.state;
     this.timeState = 'paused';
     this.currentlyConstructing = false;
+    this.selectedTile = null;
   }
 
   Game.prototype.changeState = function(state) {
@@ -47,6 +48,20 @@ Game = (function() {
       return app.socket.emit('lower elevation', tile);
     }
   };
+
+  Game.prototype.rightClickTile = function(tile) {
+    var selectedSquad;
+    selectedSquad = $('#squad-select').val();
+    return app.socket.emit('update behavior params', {
+      squad: selectedSquad,
+      movingTo: {
+        x: tile.x,
+        y: tile.y
+      }
+    });
+  };
+
+  Game.prototype.controlClickTile = function(tile) {};
 
   Game.prototype.next = function() {
     return app.socket.emit('next');
@@ -150,7 +165,18 @@ Input = (function() {
     })(this));
     $(app.view.components.map.clickableCanvas).mousedown((function(_this) {
       return function(e) {
-        return app.game.clickTile(_this.getTileClicked(e));
+        e.preventDefault();
+        switch (e.which) {
+          case 1:
+            return app.game.clickTile(_this.getTileClicked(e));
+          case 3:
+            return app.game.rightClickTile(_this.getTileClicked(e));
+        }
+      };
+    })(this));
+    $(app.view.components.map.clickableCanvas).contextmenu((function(_this) {
+      return function() {
+        return false;
       };
     })(this));
     $("#next-btn").click((function(_this) {
@@ -400,7 +426,8 @@ View = (function() {
         layers: {},
         cells: {},
         currentCellLength: config.view.map.initialCellLength,
-        clickableCanvas: {}
+        clickableCanvas: {},
+        selectedTile: null
       },
       control: {},
       info: {},
@@ -408,7 +435,7 @@ View = (function() {
     };
     this.initialize.map.canvases(this);
     this.initialize.map.cells(this);
-    this.initialize.controlPanel.buttons(this);
+    this.initialize.controlPanel(this);
     $('.tabs').tabs();
   }
 
@@ -552,6 +579,15 @@ View = (function() {
     }
   };
 
+  View.prototype.getCellFromTile = function(tile, layer) {
+    var layerIndex;
+    layerIndex = config.view.map.layers.indexOf(layer);
+    if (layerIndex === -1) {
+      throw new Error(layer + ' is not a valid layer');
+    }
+    return this.getCellsFromTile(tile)[layerIndex];
+  };
+
   View.prototype.getTileFromCellCoordinates = function(x, y) {
     return app.map.getTile((x + this.components.map.currentX) % app.map.width, (y + this.components.map.currentY) % app.map.height);
   };
@@ -621,16 +657,18 @@ View.prototype.initialize = {
       return results;
     }
   },
-  controlPanel: {
-    buttons: function(v) {
-      var building, buildingName, ref, results;
-      ref = config.model.actors.buildings.producers;
-      results = [];
-      for (buildingName in ref) {
-        building = ref[buildingName];
-        results.push($("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).html(building.readableName).appendTo("#construct-tab .buttons"));
-      }
-      return results;
+  controlPanel: function(v) {
+    var building, buildingName, i, ref, ref1, results, squadNum;
+    ref = config.model.actors.buildings.producers;
+    for (buildingName in ref) {
+      building = ref[buildingName];
+      $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).html(building.readableName).appendTo("#construct-tab .buttons");
     }
+    results = [];
+    for (squadNum = i = 1, ref1 = config.maxSquads; 1 <= ref1 ? i <= ref1 : i >= ref1; squadNum = 1 <= ref1 ? ++i : --i) {
+      console.log(squadNum);
+      results.push($("<option>").attr('value', squadNum - 1).html(squadNum).appendTo('#squad-select'));
+    }
+    return results;
   }
 };

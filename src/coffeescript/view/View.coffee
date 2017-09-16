@@ -12,12 +12,13 @@ class View
 				cells: {}
 				currentCellLength: config.view.map.initialCellLength
 				clickableCanvas: {}
+				selectedTile: null
 			control: {}
 			info: {}	
 			message: $('.message')
 		@initialize.map.canvases(this)
 		@initialize.map.cells(this)
-		@initialize.controlPanel.buttons(this)
+		@initialize.controlPanel(this)
 		$('.tabs').tabs()
 
 
@@ -117,6 +118,13 @@ class View
 			return cells
 		else
 			throw new Error('This function doesn\'t work without debug mode stuff yet');
+
+
+	getCellFromTile: (tile, layer) ->
+		layerIndex = config.view.map.layers.indexOf(layer)
+		if layerIndex is -1
+			throw new Error(layer + ' is not a valid layer')
+		return @getCellsFromTile(tile)[layerIndex]
 		
 
 
@@ -168,13 +176,21 @@ View.prototype.initialize =
 					v.components.map.cells[layer][y] = [];
 					for x in [0..(config.view.map.width - 1)]
 						v.components.map.cells[layer][y][x] = new Cell(x, y, v.components.map.layers[layer])
-	controlPanel:
-		buttons: (v) -> 
-			for buildingName, building of config.model.actors.buildings.producers
-				$("<div>").addClass('btn btn-default create-building-btn')
-					.data('building', buildingName)
-					.html(building.readableName)
-					.appendTo("#construct-tab .buttons")
+	controlPanel: (v) ->
+		#Building Tab
+		for buildingName, building of config.model.actors.buildings.producers
+			$("<div>").addClass('btn btn-default create-building-btn')
+				.data('building', buildingName)
+				.html(building.readableName)
+				.appendTo("#construct-tab .buttons")
+		#Command Tab
+		#Add an dropdown menu for squads
+		for squadNum in [1..config.maxSquads]
+			console.log squadNum
+			$("<option>")
+				.attr('value', squadNum - 1)
+				.html(squadNum)
+				.appendTo('#squad-select')
 
 
 

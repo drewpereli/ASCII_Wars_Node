@@ -4,14 +4,14 @@ var rand = require('random-seed').create();
 
 class Worker extends Unit {
 
-	constructor(){
-		arguments[0].name = 'worker';
-		arguments[0].readableName = 'Worker';
-		arguments[0].maxHealth = 100;
-		arguments[0].moveTime = 1;
-		arguments[0].defense = 4;
-		arguments[0].character = 'w';
-		super(...arguments);
+	constructor(args){
+		args.name = 'worker';
+		args.readableName = 'Worker';
+		args.maxHealth = 100;
+		args.moveTime = 1;
+		args.defense = 4;
+		args.character = 'w';
+		super(args);
 	}
 
 	getMoveWeight(tile1, tile2){
@@ -19,7 +19,8 @@ class Worker extends Unit {
 	}
 
 	act(){
-		this.move(this.tile.siblings[rand.range(this.tile.siblings.length )]);
+		//this.move(this.tile.siblings[rand.range(this.tile.siblings.length )]);
+		this.moveTowardsSquadMovePoint();
 	}
 }
 
