@@ -1,5 +1,5 @@
 var Model = require('../Model.abstract');
-
+var rand = require('random-seed').create();
 
 class Actor extends Model{
 
@@ -23,7 +23,7 @@ class Actor extends Model{
 		this.tile.setActor(this);
 		this.health = this.maxHealth; //max health must be set in child class
 		this.dead = false;
-		this.timeUntilNextAction = 0;
+		this.timeUntilNextAction = rand.range(this.moveTime);
 	}
 
 

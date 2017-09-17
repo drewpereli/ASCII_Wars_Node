@@ -7,7 +7,9 @@ class Squad extends Model{
 		this.number = args.squadNumber;
 		this.units = [];
 		this.behaviorParams = {
-			movingTo: null
+			movingTo: null,
+			digging: false,
+			diggingDirection: 0
 		};
 	}
 

@@ -316,9 +316,9 @@ class Map extends Model{
 			//Done
 			.then(() => {
 				for (var i = 0 ; i < 30 ; i++){
-					//Place a random worker
+					//Place a random unit
 					this.game.addActor(
-						new actorClasses.units.Worker({
+						new actorClasses.Unit({
 							tile: this.getRandomOpenTile(), 
 							player: this.game.players[0],
 							squad: 0

@@ -49,6 +49,26 @@ class Game
 			}
 		)
 
+	clickDiggingCheckbox: (checked) ->
+		selectedSquad = $('#squad-select').val()
+		app.socket.emit(
+			'update behavior params', 
+			{
+				squad: selectedSquad,
+				digging: checked
+			}
+		)
+
+	changeDiggingDirection: (dir) ->
+		selectedSquad = $('#squad-select').val()
+		app.socket.emit(
+			'update behavior params', 
+			{
+				squad: selectedSquad,
+				diggingDirection: dir
+			}
+		)
+
 	controlClickTile: (tile) ->
 
 	next: ->

@@ -24,3 +24,16 @@
 			.div
 				h3 Selected Squad
 				select#squad-select
+				div
+					label(for="#digging-checkbox") Dig
+					input#digging-checkbox(type="checkbox")
+					label(for="#digging-direction-select") Direction
+					select#digging-direction-select
+						option(value=0) N
+						option(value=1) NE
+						option(value=2) E
+						option(value=3) SE
+						option(value=4) S
+						option(value=5) SW
+						option(value=6) W
+						option(value=7) NW

@@ -3,6 +3,8 @@ class Input
 
 	constructor: ->
 
+		@usedKeys = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', '-', '='];
+
 		$('body').keydown((e) => 
 			@processKeyDown(e)
 		)
@@ -12,6 +14,14 @@ class Input
 			switch e.which
 				when 1 then app.game.clickTile(@getTileClicked(e))
 				when 3 then app.game.rightClickTile(@getTileClicked(e))
+		)
+
+		$('#digging-checkbox').change( => 
+			app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'))
+		)
+
+		$('#digging-direction-select').change( => 
+			app.game.changeDiggingDirection($('#digging-direction-select').val())
 		)
 
 		$(app.view.components.map.clickableCanvas).contextmenu( => return false)
@@ -57,6 +67,8 @@ class Input
 
 
 	processKeyDown: (event)->
+		if !@usedKeys.includes(event.key)
+			return
 		event.preventDefault()
 		console.log(event.key)
 		switch event.key

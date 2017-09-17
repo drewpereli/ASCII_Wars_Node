@@ -276,6 +276,15 @@ class Tile extends Model{
 		return prob;
 	}
 
+
+	incrementElevation(){
+		this.setElevation(this.elevation + 1);
+	}
+
+	decrementElevation(){
+		this.setElevation(this.elevation - 1);
+	}
+
 }
 
 

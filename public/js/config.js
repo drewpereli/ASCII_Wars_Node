@@ -6,8 +6,8 @@ var config = {
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 64,
-			width: 64,
+			height: 164,
+			width: 164,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -42,8 +42,8 @@ var config = {
 			players: ['black', 'white']
 		},
 		map: {
-			//height: 10,
-			//width: 10,
+			height: 64,
+			width: 64,
 			initialCellLength: 8, //In pixels
 			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics'],
 			cellBorders: false
@@ -54,7 +54,7 @@ var config = {
 		debugMode: true,
 		showTileRegions: false,
 		showAnchorTiles: false,
-		setViewDimensionsToMapDimensions: true,
+		setViewDimensionsToMapDimensions: false,
 		water: false
 	}
 }

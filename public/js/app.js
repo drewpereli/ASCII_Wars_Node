@@ -61,6 +61,24 @@ Game = (function() {
     });
   };
 
+  Game.prototype.clickDiggingCheckbox = function(checked) {
+    var selectedSquad;
+    selectedSquad = $('#squad-select').val();
+    return app.socket.emit('update behavior params', {
+      squad: selectedSquad,
+      digging: checked
+    });
+  };
+
+  Game.prototype.changeDiggingDirection = function(dir) {
+    var selectedSquad;
+    selectedSquad = $('#squad-select').val();
+    return app.socket.emit('update behavior params', {
+      squad: selectedSquad,
+      diggingDirection: dir
+    });
+  };
+
   Game.prototype.controlClickTile = function(tile) {};
 
   Game.prototype.next = function() {
@@ -158,6 +176,7 @@ var Input;
 
 Input = (function() {
   function Input() {
+    this.usedKeys = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', '-', '='];
     $('body').keydown((function(_this) {
       return function(e) {
         return _this.processKeyDown(e);
@@ -172,6 +191,16 @@ Input = (function() {
           case 3:
             return app.game.rightClickTile(_this.getTileClicked(e));
         }
+      };
+    })(this));
+    $('#digging-checkbox').change((function(_this) {
+      return function() {
+        return app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'));
+      };
+    })(this));
+    $('#digging-direction-select').change((function(_this) {
+      return function() {
+        return app.game.changeDiggingDirection($('#digging-direction-select').val());
       };
     })(this));
     $(app.view.components.map.clickableCanvas).contextmenu((function(_this) {
@@ -223,6 +252,9 @@ Input = (function() {
   };
 
   Input.prototype.processKeyDown = function(event) {
+    if (!this.usedKeys.includes(event.key)) {
+      return;
+    }
     event.preventDefault();
     console.log(event.key);
     switch (event.key) {
