@@ -16,7 +16,7 @@ class Unit extends Actor{
 
 	act(){
 		var randomNum = rand.random();
-		if (randomNum < .01){
+		if (randomNum < .00){
 			return;
 		}
 		var behaviorParams = this.getBehaviorParams();
@@ -24,7 +24,7 @@ class Unit extends Actor{
 			this.dig(behaviorParams.diggingDirection);
 		}
 		else if (behaviorParams.movingTo){
-			if (randomNum > .1)
+			if (randomNum >= .0)
 				this.moveTowardsSquadMovePoint();
 			else
 				this.moveRandomly();
@@ -48,6 +48,7 @@ class Unit extends Actor{
 		}
 	}
 
+	/*
 	moveTowardsSquadMovePoint(){
 		var target = this.getBehaviorParams().movingTo;
 		if (!target) return;
@@ -106,6 +107,80 @@ class Unit extends Actor{
 			return this.move(candidates[0]);
 		}
 		//Get random candidate
+		this.move(candidates[rand(candidates.length)]);
+	}
+	*/
+
+	moveTowardsSquadMovePoint(){
+		var behaviorParams = this.getBehaviorParams();
+		var target = behaviorParams.movingTo;
+		if (!target) return;
+		if (this.tile.siblings.includes(target) && this.canOccupy(target))
+			return this.move(target);
+		var scores = [0,0,0,0,0,0,0,0];
+		//Get which sib is closest to tile
+		var tileInfos = [];
+		var uniqueDistances = [];
+		var uniqueSurroundingSquadMates = [];
+		//Get tile info
+		this.tile.siblings.concat(this.tile).forEach(t =>{
+			//If the tile can't be occupied and it's not the current tile we're on, reject it
+			if (!this.canOccupy(t) && t !== this.tile){
+				return;
+			}
+			var dist = t.getDistance(target);
+			var surroundingSquadMates = t.siblings.reduce((a, sib) => {
+				if (sib === t) return a; //Don't count the currently inspected tile
+				if (sib.actor && sib.actor.squad && sib.actor.squad === this.squad && sib.actor !== this)
+					return a + 1;
+				else
+					return a;
+			}, 0);
+			tileInfos.push({
+				tile: t,
+				distance: dist,
+				surroundingSquadMates: surroundingSquadMates,
+				score: null
+			});
+			if (!uniqueDistances.includes(dist)) uniqueDistances.push(dist);
+			if (!uniqueSurroundingSquadMates.includes(surroundingSquadMates)) uniqueSurroundingSquadMates.push(surroundingSquadMates);
+		});
+		//Sort unique distances and surroudnign squad mates arrays
+		//Surrounding squad mates lowest to highest, and distance highest to lowest, so that the best ones are at the highest indeces
+		uniqueDistances.sort((a, b) => b - a);
+		uniqueSurroundingSquadMates.sort((a, b) => a - b);
+		//console.log(uniqueDistances);
+		//Set the scores
+		//This part is a bit tricky
+		//For distance and num surrounding mates
+		//	Get the index of this value in the corresponding array, and divide it by the length of the array
+		// Multiply this value by the corresponding weight
+		// Add result to the score
+		tileInfos.forEach(tInfo => {
+			var distIndex = uniqueDistances.indexOf(tInfo.distance);
+			var distanceScoreContribution = distIndex / uniqueDistances.length * behaviorParams.moveTowardsPointWeight;
+			var matesIndex = uniqueSurroundingSquadMates.indexOf(tInfo.surroundingSquadMates);
+			var matesScoreContribution = matesIndex / uniqueSurroundingSquadMates.length * behaviorParams.moveTowardsSquadMatesWeight;
+			tInfo.score = distanceScoreContribution + matesScoreContribution;
+		});
+		//Get highest score
+		var maxScore = -1;
+		var candidates = [];
+		tileInfos.forEach(tInfo => {
+			if (tInfo.score > maxScore){
+				maxScore = tInfo.score;
+				candidates = [tInfo.tile];
+			}
+			else if (tInfo.score === maxScore){
+				candidates.push(tInfo.tile);
+			}
+		});
+		//console.log('Candidates: ' + candidates.length);
+		if (candidates.length === 1){
+			if (candidates[0] === this.tile) return;
+			//console.log('y');
+			this.move(candidates[0]);
+		}
 		this.move(candidates[rand(candidates.length)]);
 	}
 

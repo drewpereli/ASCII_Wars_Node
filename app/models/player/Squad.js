@@ -8,6 +8,8 @@ class Squad extends Model{
 		this.units = [];
 		this.behaviorParams = {
 			movingTo: null,
+			moveTowardsPointWeight: 1,
+			moveTowardsSquadMatesWeight: 1,
 			digging: false,
 			diggingDirection: 0
 		};
