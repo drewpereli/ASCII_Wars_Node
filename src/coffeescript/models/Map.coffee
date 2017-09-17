@@ -9,8 +9,9 @@ class Map
 				@tiles[y].push(new Tile(x, y))
 
 
-	update: (tiles) -> 
-		@tiles = tiles
+	update: (mapInfo) -> 
+		for tile in mapInfo.changedTiles
+			@tiles[tile.y][tile.x] = tile
 	
 
 

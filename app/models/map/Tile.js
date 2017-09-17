@@ -120,6 +120,7 @@ class Tile extends Model{
 
 	setActor(actor=false){
 		this.actor = actor;
+		this.setAsChanged();
 	}
 
 	unsetActor(){
@@ -131,6 +132,7 @@ class Tile extends Model{
 			throw new Error('Water depth must be an integer. Received ' + depth);
 		}
 		this.waterDepth = depth;
+		this.setAsChanged();
 	}
 
 	setNextTurnsWaterDepth(depth = false){
@@ -234,6 +236,7 @@ class Tile extends Model{
 		if (el < config.model.map.minElevation)
 			el = config.model.map.minElevation;
 		this.elevation = el;
+		this.setAsChanged();
 	}
 
 	getSurfaceElevation(){
@@ -283,6 +286,12 @@ class Tile extends Model{
 
 	decrementElevation(){
 		this.setElevation(this.elevation - 1);
+	}
+
+
+	setAsChanged(){
+		if (!this.map.changedTiles.includes(this))
+			this.map.changedTiles.push(this);
 	}
 
 }

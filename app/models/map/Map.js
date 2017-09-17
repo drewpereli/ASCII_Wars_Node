@@ -17,6 +17,7 @@ class Map extends Model{
 		this.width = config.model.map.width;
 		this.height = config.model.map.height;
 		this.tiles = [];
+		this.changedTiles = [];
 
 		this.cloudWater = 0;
 
@@ -48,7 +49,7 @@ class Map extends Model{
 
 	//Gets an object containing the map data to send to the client
 	getClientDataFor(player){
-		return this.tiles.map(tArray => tArray.map(t => t.getClientDataFor(player)));
+		return {changedTiles: this.changedTiles.map(t => t.getClientDataFor(player))};
 	}
 
 
@@ -315,7 +316,7 @@ class Map extends Model{
 			})
 			//Done
 			.then(() => {
-				for (var i = 0 ; i < 30 ; i++){
+				for (var i = 0 ; i < 300 ; i++){
 					//Place a random unit
 					this.game.addActor(
 						new actorClasses.Unit({

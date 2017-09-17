@@ -66,6 +66,7 @@ function initializePlayerSocketRoutes(socket){
 		game.playerQuit(p);
 	});
 
+	/*
 	socket.on('disconnect', () => {
 		console.log('socket disconnecting...');
 		var p = authenticatePlayer(socket);
@@ -73,6 +74,7 @@ function initializePlayerSocketRoutes(socket){
 		//game.playerQuit(p);
 		game.restart();
 	});
+	*/
 
 
 	if (process.env.DEBUG_MODE){

@@ -70,7 +70,6 @@ class Input
 		if !@usedKeys.includes(event.key)
 			return
 		event.preventDefault()
-		console.log(event.key)
 		switch event.key
 			when "ArrowUp" then app.game.moveMap(0)
 			when "ArrowRight" then app.game.moveMap(1)

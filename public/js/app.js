@@ -126,7 +126,7 @@ Socket = (function() {
         return app.game.updateMap(map);
       };
     })(this)));
-    this.io.on('tile update', ((function(_this) {
+    this.io.on('tile updated', ((function(_this) {
       return function(tile) {
         return app.view.updateTile(JSON.parse(tile));
       };
@@ -256,7 +256,6 @@ Input = (function() {
       return;
     }
     event.preventDefault();
-    console.log(event.key);
     switch (event.key) {
       case "ArrowUp":
         return app.game.moveMap(0);
@@ -293,8 +292,15 @@ Map = (function() {
     }
   }
 
-  Map.prototype.update = function(tiles) {
-    return this.tiles = tiles;
+  Map.prototype.update = function(mapInfo) {
+    var i, len, ref, results, tile;
+    ref = mapInfo.changedTiles;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      tile = ref[i];
+      results.push(this.tiles[tile.y][tile.x] = tile);
+    }
+    return results;
   };
 
   Map.prototype.getTile = function(x, y) {

@@ -125,15 +125,17 @@ class Game{
 		//console.log(JSON.stringify(this.map.getClientDataFor(this.players[0])));
 		for (var i in this.players){
 			var player = this.players[i];
-			player.socket.emit('map updated', JSON.stringify(this.map.getClientDataFor(player)));
+			var mapInfo = this.map.getClientDataFor(player);
+			player.socket.emit('map updated', JSON.stringify(mapInfo));
 		}
+		this.map.changedTiles = [];
 	}
 
 	emitTile(t){
 		console.log('emitting tile');
 		for (var i in this.players){
 			var player = this.players[i];
-			player.socket.emit('tile update', JSON.stringify(t.getClientDataFor(player)));
+			player.socket.emit('tile updated', JSON.stringify(t.getClientDataFor(player)));
 		}
 	}
 
