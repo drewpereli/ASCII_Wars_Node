@@ -16,14 +16,22 @@ class Cell
 		l = @getCellLength()
 		@layer.fillRect(x, y, l, l)
 		if (config.view.map.cellBorders)
-			@layer.fillStyle = config.view.colors.cellBorder
-			@layer.strokeRect(x, y, l, l)
+			@stroke(config.view.colors.cellBorder)
 		@cleared = false
 
 	write: (char, color) ->
+		l = @getCellLength()
+		x = @getXPixel()
+		y = @getYPixel()
 		@layer.fillStyle = color
-		@layer.font = @getFont
 		@layer.fillText(char, @getXPixel() + @getCellLength() / 2, @getYPixel() + @getCellLength() / 2)
+
+	stroke: (color) ->
+		x = @getXPixel()
+		y = @getYPixel()
+		l = @getCellLength()
+		@layer.fillStyle = color
+		@layer.strokeRect(x, y, l, l)
 
 	clear: ->
 		x = @getXPixel()
@@ -34,7 +42,10 @@ class Cell
 	drawTile: (tile) ->
 		fillColor = false
 		charColor = false
+		borderColor = false
 		char = false
+		xOffset = 0
+		yOffset = 0
 		switch @getLayerName()
 			when 'terrain'
 				fillColor = config.view.colors.terrain[tile.terrain]
@@ -42,8 +53,11 @@ class Cell
 				fillColor = app.view.getColorFromElevation(tile.elevation)
 			when 'actors'
 				if tile.actor
-					char = tile.actor.character
-					charColor = app.view.getPlayerColor(tile.actor.player)
+					a = tile.actor
+					char = a.character
+					charColor = app.view.getPlayerColor(a.player)
+					if a.type is 'building'
+						borderColor = charColor
 			when 'water'
 				if tile.waterDepth > 0
 					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
@@ -60,7 +74,9 @@ class Cell
 		if fillColor
 			@fill(fillColor)
 		if char and charColor
-			@write(char, charColor)
+			@write(char, charColor, xOffset, yOffset)
+		if borderColor
+			@stroke(borderColor)
 
 	getCellLength: ->
 		app.view.components.map.currentCellLength

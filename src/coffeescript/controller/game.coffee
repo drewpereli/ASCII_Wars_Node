@@ -38,6 +38,8 @@ class Game
 			app.socket.emit('raise elevation', tile)
 		else if @state is 'lowering elevation'
 			app.socket.emit('lower elevation', tile)
+		else if @state is 'creating wall'
+			app.socket.emit('create wall', tile)
 
 	rightClickTile: (tile) ->
 		selectedSquad = $('#squad-select').val()

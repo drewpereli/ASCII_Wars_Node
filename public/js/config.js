@@ -6,8 +6,8 @@ var config = {
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 70,
-			width: 70,
+			height: 100,
+			width: 100,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -58,6 +58,11 @@ var config = {
 		water: false
 	}
 }
+
+if (config.view.map.height > config.model.map.height)
+	config.view.map.height = config.model.map.height;
+if (config.view.map.width > config.model.map.width)
+	config.view.map.width = config.model.map.width;
 
 if (config.debug.debugMode){
 	if (config.debug.showTileRegions){

@@ -316,7 +316,7 @@ class Map extends Model{
 			})
 			//Done
 			.then(() => {
-				for (var i = 0 ; i < 1 ; i++){
+				for (var i = 0 ; i < 300 ; i++){
 					//Place a random unit
 					this.game.addActor(
 						new actorClasses.Unit({

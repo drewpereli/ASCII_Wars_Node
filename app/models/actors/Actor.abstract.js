@@ -12,8 +12,8 @@ class Actor extends Model{
 			tile: null,
 			player: null,
 			maxHealth: null,
-			moveTime: 0,
-			clientFacingFields: ['player', 'maxHealth', 'health', 'character']
+			moveTime: null,
+			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type']
 		};
 		Object.assign(defaultArgs, args);
 
@@ -23,7 +23,7 @@ class Actor extends Model{
 		this.tile.setActor(this);
 		this.health = this.maxHealth; //max health must be set in child class
 		this.dead = false;
-		this.timeUntilNextAction = rand.range(this.moveTime);
+		this.timeUntilNextAction = Math.floor(Math.random() * this.moveTime);//rand.range(this.moveTime);
 	}
 
 

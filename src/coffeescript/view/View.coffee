@@ -108,16 +108,13 @@ class View
 
 
 	getCellsFromTile: (tile) ->
-		if config.debug.debugMode and config.debug.setViewDimensionsToMapDimensions
-			x = (app.map.width + tile.x - @components.map.currentX) % app.map.width
-			y = (app.map.height + tile.y - @components.map.currentY) % app.map.height
-			cells = []
+		x = (app.map.width + tile.x - @components.map.currentX) % app.map.width
+		y = (app.map.height + tile.y - @components.map.currentY) % app.map.height
+		cells = []
 
-			for layername, layer of @components.map.cells
-				cells.push(layer[y][x])
-			return cells
-		else
-			throw new Error('This function doesn\'t work without debug mode stuff yet');
+		for layername, layer of @components.map.cells
+			cells.push(layer[y][x])
+		return cells
 
 
 	getCellFromTile: (tile, layer) ->
@@ -166,7 +163,8 @@ View.prototype.initialize =
 					.attr('height', config.view.map.height * config.view.map.initialCellLength)
 					.css('width', "#{config.view.map.width * config.view.map.initialCellLength}px")
 					.css('height', "#{config.view.map.height * config.view.map.initialCellLength}px")
-				v.components.map.layers[layerName] = c[0].getContext('2d')
+				context = c[0].getContext('2d')
+				v.components.map.layers[layerName] = context
 				c.appendTo("#canvas-container")
 			v.components.map.clickableCanvas = $('canvas.graphics')[0]
 		cells: (v) ->

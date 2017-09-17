@@ -46,6 +46,8 @@ Game = (function() {
       return app.socket.emit('raise elevation', tile);
     } else if (this.state === 'lowering elevation') {
       return app.socket.emit('lower elevation', tile);
+    } else if (this.state === 'creating wall') {
+      return app.socket.emit('create wall', tile);
     }
   };
 
@@ -358,16 +360,27 @@ Cell = (function() {
     l = this.getCellLength();
     this.layer.fillRect(x, y, l, l);
     if (config.view.map.cellBorders) {
-      this.layer.fillStyle = config.view.colors.cellBorder;
-      this.layer.strokeRect(x, y, l, l);
+      this.stroke(config.view.colors.cellBorder);
     }
     return this.cleared = false;
   };
 
   Cell.prototype.write = function(char, color) {
+    var l, x, y;
+    l = this.getCellLength();
+    x = this.getXPixel();
+    y = this.getYPixel();
     this.layer.fillStyle = color;
-    this.layer.font = this.getFont;
     return this.layer.fillText(char, this.getXPixel() + this.getCellLength() / 2, this.getYPixel() + this.getCellLength() / 2);
+  };
+
+  Cell.prototype.stroke = function(color) {
+    var l, x, y;
+    x = this.getXPixel();
+    y = this.getYPixel();
+    l = this.getCellLength();
+    this.layer.fillStyle = color;
+    return this.layer.strokeRect(x, y, l, l);
   };
 
   Cell.prototype.clear = function() {
@@ -379,10 +392,13 @@ Cell = (function() {
   };
 
   Cell.prototype.drawTile = function(tile) {
-    var char, charColor, fillColor;
+    var a, borderColor, char, charColor, fillColor, xOffset, yOffset;
     fillColor = false;
     charColor = false;
+    borderColor = false;
     char = false;
+    xOffset = 0;
+    yOffset = 0;
     switch (this.getLayerName()) {
       case 'terrain':
         fillColor = config.view.colors.terrain[tile.terrain];
@@ -392,8 +408,12 @@ Cell = (function() {
         break;
       case 'actors':
         if (tile.actor) {
-          char = tile.actor.character;
-          charColor = app.view.getPlayerColor(tile.actor.player);
+          a = tile.actor;
+          char = a.character;
+          charColor = app.view.getPlayerColor(a.player);
+          if (a.type === 'building') {
+            borderColor = charColor;
+          }
         }
         break;
       case 'water':
@@ -418,7 +438,10 @@ Cell = (function() {
       this.fill(fillColor);
     }
     if (char && charColor) {
-      return this.write(char, charColor);
+      this.write(char, charColor, xOffset, yOffset);
+    }
+    if (borderColor) {
+      return this.stroke(borderColor);
     }
   };
 
@@ -602,19 +625,15 @@ View = (function() {
 
   View.prototype.getCellsFromTile = function(tile) {
     var cells, layer, layername, ref, x, y;
-    if (config.debug.debugMode && config.debug.setViewDimensionsToMapDimensions) {
-      x = (app.map.width + tile.x - this.components.map.currentX) % app.map.width;
-      y = (app.map.height + tile.y - this.components.map.currentY) % app.map.height;
-      cells = [];
-      ref = this.components.map.cells;
-      for (layername in ref) {
-        layer = ref[layername];
-        cells.push(layer[y][x]);
-      }
-      return cells;
-    } else {
-      throw new Error('This function doesn\'t work without debug mode stuff yet');
+    x = (app.map.width + tile.x - this.components.map.currentX) % app.map.width;
+    y = (app.map.height + tile.y - this.components.map.currentY) % app.map.height;
+    cells = [];
+    ref = this.components.map.cells;
+    for (layername in ref) {
+      layer = ref[layername];
+      cells.push(layer[y][x]);
     }
+    return cells;
   };
 
   View.prototype.getCellFromTile = function(tile, layer) {
@@ -656,14 +675,15 @@ View = (function() {
 View.prototype.initialize = {
   map: {
     canvases: function(v) {
-      var c, i, layerName, len, ref;
+      var c, context, i, layerName, len, ref;
       $('#canvas-container').css('height', config.view.map.height * config.view.map.initialCellLength);
       ref = config.view.map.layers;
       for (i = 0, len = ref.length; i < len; i++) {
         layerName = ref[i];
         c = $("<canvas>").addClass(layerName);
         c.attr('width', config.view.map.width * config.view.map.initialCellLength).attr('height', config.view.map.height * config.view.map.initialCellLength).css('width', (config.view.map.width * config.view.map.initialCellLength) + "px").css('height', (config.view.map.height * config.view.map.initialCellLength) + "px");
-        v.components.map.layers[layerName] = c[0].getContext('2d');
+        context = c[0].getContext('2d');
+        v.components.map.layers[layerName] = context;
         c.appendTo("#canvas-container");
       }
       return v.components.map.clickableCanvas = $('canvas.graphics')[0];

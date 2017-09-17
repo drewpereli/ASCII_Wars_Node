@@ -78,6 +78,9 @@ function initializePlayerSocketRoutes(socket){
 
 
 	if (process.env.DEBUG_MODE){
+		var actorClasses = require('require-dir-all')(
+			'models/actors', {recursive: true}
+		);
 		socket.on('restart', () => {
 			console.log('socket restarting');
 			var p = authenticatePlayer(socket);
@@ -101,6 +104,22 @@ function initializePlayerSocketRoutes(socket){
 			t.setElevation(t.elevation - 50);
 			game.emitTile(t);
 		});
+
+		socket.on('create wall', (tile) => {
+			//console.log('lowering elevation of tile at ' + tile.x + ', ' + tile.y);
+			var p = authenticatePlayer(socket);
+			if (!p) return;
+			var t = game.map.getTile(tile.x, tile.y);
+			if (t.actor) return;
+			game.addActor(
+				new actorClasses.buildings.Wall({
+					tile: t,
+					player: game.players[0]
+				})
+			);
+			game.emitTile(t);
+		});
+
 	}
 }
 

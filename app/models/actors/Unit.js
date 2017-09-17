@@ -9,6 +9,7 @@ class Unit extends Actor{
 		args.moveTime = 1;
 		args.defense = 4;
 		args.character = '\u2022';
+		args.type = 'unit';
 		super(args);
 		this.clientFacingFields.push('squad');
 		this.squad = args.squad;
@@ -24,10 +25,10 @@ class Unit extends Actor{
 			this.dig(behaviorParams.diggingDirection);
 		}
 		else if (behaviorParams.movingTo){
-			if (randomNum >= .0)
-				this.moveTowardsSquadMovePoint();
-			else
+			if (randomNum < .3)
 				this.moveRandomly();
+			else
+				this.moveTowardsSquadMovePoint();
 		}
 	}
 
@@ -48,68 +49,6 @@ class Unit extends Actor{
 		}
 	}
 
-	/*
-	moveTowardsSquadMovePoint(){
-		var target = this.getBehaviorParams().movingTo;
-		if (!target) return;
-		//Get which sib is closest to tile
-		var shortestDistance = Infinity;
-		var candidates = [];
-		for (var i = 0 ; i < this.tile.siblings.length ; i++){
-			var t = this.tile.siblings[i];
-			//if (!this.canOccupy(t))	break;
-			if (t === target){
-				candidates = [target];
-				break;
-			}
-			var dist = t.getDistance(target);
-			if (dist < shortestDistance){
-				shortestDistance = dist;
-				candidates = [t];
-			}
-			else if (dist === shortestDistance){
-				candidates.push(t);
-			}
-		}
-		//Filter out the candidates that can't be moved to
-		candidates = candidates.filter(t => this.canOccupy(t));
-		//If there are no candidates left, move to the sib that has the most friendly units surrounding it
-		if (candidates.length === 0) {
-			//Check number of friendlies currently around self
-			var maxFriendlies = 0;
-			this.tile.siblings.forEach(sib => {
-				if (sib.actor && sib.actor.squad === this.squad)
-					maxFriendlies++;
-			});
-			candidates = [this.tile];
-			for (var i = 0 ; i < this.tile.siblings.length ; i++){
-				//Get number of surrounding friendlies for this tile
-				var t = this.tile.siblings[i];
-				if (!this.canOccupy(t)) continue;
-				var friendlyCount = 0;
-				t.siblings.forEach(sib => {
-					//Don't count this tile
-					if (sib === this.tile) return;
-					if (sib.actor && sib.actor.squad === this.squad)
-						friendlyCount++;
-				});
-				if (friendlyCount > maxFriendlies){
-					maxFriendlies = friendlyCount;
-					candidates = [t];
-				}
-				else if (friendlyCount === maxFriendlies)
-					candidates.push(t)
-			}
-		}
-		if (candidates.length === 1){
-			if (candidates[0] === this.tile)
-				return;
-			return this.move(candidates[0]);
-		}
-		//Get random candidate
-		this.move(candidates[rand(candidates.length)]);
-	}
-	*/
 
 	moveTowardsSquadMovePoint(){
 		var behaviorParams = this.getBehaviorParams();
@@ -175,12 +114,8 @@ class Unit extends Actor{
 				candidates.push(tInfo.tile);
 			}
 		});
-		//console.log('Candidates: ' + candidates.length);
-		if (candidates.length === 1){
-			if (candidates[0] === this.tile) return;
-			//console.log('y');
-			this.move(candidates[0]);
-		}
+		//Don't work harder than you have to
+		if (candidates.includes(this.tile)) return;
 		this.move(candidates[rand(candidates.length)]);
 	}
 
