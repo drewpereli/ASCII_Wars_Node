@@ -37,6 +37,7 @@ class Unit extends Actor{
 		this.tile = tile;
 		tile.setActor(this);
 		this.timeUntilNextAction = Math.ceil(this.moveTime * this.getMoveWeight(this.tile, tile));
+		this.setVisibleTiles();
 	}
 
 	moveRandomly(){

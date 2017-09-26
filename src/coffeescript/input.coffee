@@ -48,7 +48,12 @@ class Input
 
 	getTileClicked: (event) ->
 
-		return app.view.getTileFromPixels(event.offsetX, event.offsetY)
+		cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
+		cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);
+		x = cellX + app.view.components.map.currentX % app.map.width
+		y = cellY + app.view.components.map.currentY % app.map.height
+		return {x: x, y: y}
+		#return app.view.getTileFromPixels(event.offsetX, event.offsetY)
 		###
 		x = new Number()
 		y = new Number()

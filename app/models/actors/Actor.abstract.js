@@ -1,5 +1,6 @@
 var Model = require('../Model.abstract');
 var rand = require('random-seed').create();
+var config = require('../../../config');
 
 class Actor extends Model{
 
@@ -13,6 +14,7 @@ class Actor extends Model{
 			player: null,
 			maxHealth: null,
 			moveTime: null,
+			sightRange: 3,
 			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type']
 		};
 		Object.assign(defaultArgs, args);
@@ -24,6 +26,8 @@ class Actor extends Model{
 		this.health = this.maxHealth; //max health must be set in child class
 		this.dead = false;
 		this.timeUntilNextAction = Math.floor(Math.random() * this.moveTime);//rand.range(this.moveTime);
+		this.visibleTiles = [];
+		this.setVisibleTiles();
 	}
 
 
@@ -42,6 +46,23 @@ class Actor extends Model{
 		this.tile = false;
 		this.dead = true;
 	}
+
+
+	setVisibleTiles(){
+		this.visibleTiles = [];
+		var mapHeight = config.model.map.height;
+		var mapWidth = config.model.map.width;
+		for (var x = this.tile.x - this.sightRange ; x <= this.tile.x + this.sightRange ; x++){
+			for (var y = this.tile.y - this.sightRange ; y <= this.tile.y + this.sightRange ; y++){
+				var realX = (x + mapWidth) % mapWidth;
+				var realY = (y + mapHeight) % mapHeight;
+				this.visibleTiles.push(this.tile.map.getTile(realX, realY));
+			}
+		}
+	}
+
+
+	getVisibleTiles(){ return this.visibleTiles; }
 
 }
 

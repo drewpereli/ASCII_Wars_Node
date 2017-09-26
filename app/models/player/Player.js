@@ -24,6 +24,16 @@ class Player extends Model{
 		return this.squads[num];
 	}
 
+	getVisibleTiles(){
+		var visibleTiles = [];
+		this.getActors().forEach(a => {
+			a.getVisibleTiles().forEach(t => {
+				if (!visibleTiles.includes(t)) visibleTiles.push(t);
+			})
+		});
+		return visibleTiles;
+	}
+
 }
 
 module.exports = Player;

@@ -128,7 +128,7 @@ class Game{
 			var mapInfo = this.map.getClientDataFor(player);
 			player.socket.emit('map updated', JSON.stringify(mapInfo));
 		}
-		this.map.changedTiles = [];
+		//this.map.visibleTiles = [];
 	}
 
 	emitTile(t){

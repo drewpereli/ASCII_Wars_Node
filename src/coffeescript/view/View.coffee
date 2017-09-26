@@ -69,10 +69,10 @@ class View
 			for row, y in layer
 				for cell, x in row
 					tile = @getTileFromCell(cell)
-					if !tile
-						continue
-					else
+					if tile
 						cell.drawTile(tile)
+					else if layername is 'visibility'
+						cell.fill('#000')
 
 
 	updateTile: (tile) -> 

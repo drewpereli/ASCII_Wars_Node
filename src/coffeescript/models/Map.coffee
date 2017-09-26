@@ -6,11 +6,16 @@ class Map
 		for y in [0..@height]
 			@tiles.push([])
 			for x in [0..@width]
-				@tiles[y].push(new Tile(x, y))
+				@tiles[y].push(false)
 
 
 	update: (mapInfo) -> 
-		for tile in mapInfo.changedTiles
+		for row in @tiles
+			for tile in row
+				if tile
+					tile.visible = false
+		for tile in mapInfo.visibleTiles
+			tile.visible = true
 			@tiles[tile.y][tile.x] = tile
 	
 

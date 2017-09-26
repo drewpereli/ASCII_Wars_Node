@@ -42,6 +42,7 @@ class Game
 			app.socket.emit('create wall', tile)
 
 	rightClickTile: (tile) ->
+		console.log('right clicking tile ' + JSON.stringify(tile))
 		selectedSquad = $('#squad-select').val()
 		app.socket.emit(
 			'update behavior params', 
@@ -99,5 +100,16 @@ class Game
 		app.view.updateMap()
 		if @timeState is 'playing'
 			app.socket.emit('next')
+
+
+
+
+
+
+
+
+
+
+
 
 

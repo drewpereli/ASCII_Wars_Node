@@ -60,7 +60,10 @@ class Cell
 						borderColor = charColor
 			when 'water'
 				if tile.waterDepth > 0
-					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
+					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')'
+			when 'visibility'
+				if !tile.visible
+					fillColor = 'rgba(0,0,0,.2)'
 
 		if config.debug.debugMode
 			if config.debug.showTileRegions

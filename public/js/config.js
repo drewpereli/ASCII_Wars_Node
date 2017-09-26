@@ -6,8 +6,8 @@ var config = {
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 100,
-			width: 100,
+			height: 64,
+			width: 64,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -45,7 +45,7 @@ var config = {
 			height: 64,
 			width: 64,
 			initialCellLength: 8, //In pixels
-			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics'],
+			layers: ['terrain', 'elevation', 'water', 'actors', 'visibility', 'graphics'],
 			cellBorders: false
 		},
 		messageFadeDelay: 3

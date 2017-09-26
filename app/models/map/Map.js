@@ -49,7 +49,8 @@ class Map extends Model{
 
 	//Gets an object containing the map data to send to the client
 	getClientDataFor(player){
-		return {changedTiles: this.changedTiles.map(t => t.getClientDataFor(player))};
+		//return {changedTiles: this.changedTiles.map(t => t.getClientDataFor(player))};
+		return {visibleTiles: player.getVisibleTiles().map(t => t.getClientDataFor(player))};
 	}
 
 
@@ -316,7 +317,7 @@ class Map extends Model{
 			})
 			//Done
 			.then(() => {
-				for (var i = 0 ; i < 300 ; i++){
+				for (var i = 0 ; i < 100 ; i++){
 					//Place a random unit
 					this.game.addActor(
 						new actorClasses.Unit({

@@ -53,6 +53,7 @@ Game = (function() {
 
   Game.prototype.rightClickTile = function(tile) {
     var selectedSquad;
+    console.log('right clicking tile ' + JSON.stringify(tile));
     selectedSquad = $('#squad-select').val();
     return app.socket.emit('update behavior params', {
       squad: selectedSquad,
@@ -235,7 +236,15 @@ Input = (function() {
   }
 
   Input.prototype.getTileClicked = function(event) {
-    return app.view.getTileFromPixels(event.offsetX, event.offsetY);
+    var cellX, cellY, x, y;
+    cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
+    cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);
+    x = cellX + app.view.components.map.currentX % app.map.width;
+    y = cellY + app.view.components.map.currentY % app.map.height;
+    return {
+      x: x,
+      y: y
+    };
 
     /*
     		x = new Number()
@@ -289,17 +298,28 @@ Map = (function() {
     for (y = i = 0, ref = this.height; 0 <= ref ? i <= ref : i >= ref; y = 0 <= ref ? ++i : --i) {
       this.tiles.push([]);
       for (x = j = 0, ref1 = this.width; 0 <= ref1 ? j <= ref1 : j >= ref1; x = 0 <= ref1 ? ++j : --j) {
-        this.tiles[y].push(new Tile(x, y));
+        this.tiles[y].push(false);
       }
     }
   }
 
   Map.prototype.update = function(mapInfo) {
-    var i, len, ref, results, tile;
-    ref = mapInfo.changedTiles;
-    results = [];
+    var i, j, k, len, len1, len2, ref, ref1, results, row, tile;
+    ref = this.tiles;
     for (i = 0, len = ref.length; i < len; i++) {
-      tile = ref[i];
+      row = ref[i];
+      for (j = 0, len1 = row.length; j < len1; j++) {
+        tile = row[j];
+        if (tile) {
+          tile.visible = false;
+        }
+      }
+    }
+    ref1 = mapInfo.visibleTiles;
+    results = [];
+    for (k = 0, len2 = ref1.length; k < len2; k++) {
+      tile = ref1[k];
+      tile.visible = true;
       results.push(this.tiles[tile.y][tile.x] = tile);
     }
     return results;
@@ -419,6 +439,11 @@ Cell = (function() {
       case 'water':
         if (tile.waterDepth > 0) {
           fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')';
+        }
+        break;
+      case 'visibility':
+        if (!tile.visible) {
+          fillColor = 'rgba(0,0,0,.2)';
         }
     }
     if (config.debug.debugMode) {
@@ -564,10 +589,12 @@ View = (function() {
             for (x = j = 0, len1 = row.length; j < len1; x = ++j) {
               cell = row[x];
               tile = this.getTileFromCell(cell);
-              if (!tile) {
-                continue;
-              } else {
+              if (tile) {
                 results2.push(cell.drawTile(tile));
+              } else if (layername === 'visibility') {
+                results2.push(cell.fill('#000'));
+              } else {
+                results2.push(void 0);
               }
             }
             return results2;
