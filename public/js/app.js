@@ -431,6 +431,7 @@ Cell = (function() {
           a = tile.actor;
           char = a.character;
           charColor = app.view.getPlayerColor(a.player);
+          console.log(charColor);
           if (a.type === 'building') {
             borderColor = charColor;
           }
@@ -443,7 +444,7 @@ Cell = (function() {
         break;
       case 'visibility':
         if (!tile.visible) {
-          fillColor = 'rgba(0,0,0,.2)';
+          fillColor = 'rgba(0,0,0,.5)';
         }
     }
     if (config.debug.debugMode) {
@@ -692,7 +693,7 @@ View = (function() {
   };
 
   View.prototype.getPlayerColor = function(clientFacingPlayer) {
-    return config.view.colors.players[clientFacingPlayer.team - 1];
+    return config.view.colors.players[clientFacingPlayer.team];
   };
 
   return View;
@@ -751,7 +752,6 @@ View.prototype.initialize = {
     }
     results = [];
     for (squadNum = i = 1, ref1 = config.maxSquads; 1 <= ref1 ? i <= ref1 : i >= ref1; squadNum = 1 <= ref1 ? ++i : --i) {
-      console.log(squadNum);
       results.push($("<option>").attr('value', squadNum - 1).html(squadNum).appendTo('#squad-select'));
     }
     return results;

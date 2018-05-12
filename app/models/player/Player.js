@@ -1,3 +1,5 @@
+var  arrayDiff = require('simple-array-diff');
+
 var config = require('../../../config')
 var Model = require('../Model.abstract');
 var Squad = require('./Squad');
@@ -14,6 +16,8 @@ class Player extends Model{
 		for (var i = 0 ; i < config.maxSquads ; i++){
 			this.squads.push(new Squad({squadNum: i}));
 		}
+		this.visibleTilesLastEmit = [];
+		//this.visibleTilesThisEmit = [];
 	}
 
 	getActors(){
@@ -34,6 +38,19 @@ class Player extends Model{
 		return visibleTiles;
 	}
 
+	getNewlyVisibleAndInvisibleTiles(){
+		//Tiles in "visibleLastEmit" but not visible now are newly invisible
+		//Tiles visible not in "visibleLastEmit" are newly visible
+		var result = arrayDiff(this.visibleTilesLastEmit, this.getVisibleTiles());
+		return {
+			newlyVisible: result.added,
+			newlyInvisible = result.removed
+		}
+	}
+
 }
 
 module.exports = Player;
+
+
+

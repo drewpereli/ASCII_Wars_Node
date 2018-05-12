@@ -44,7 +44,7 @@ class Game{
 		.then(() => {
 			this.emitMessage('Map finished generating');
 			this.emitMap();
-			console.log(this.actors.length);
+			console.log('Actor length: ' + this.actors.length);
 		})
 		.catch( err => {
 			console.log(err);
@@ -80,7 +80,7 @@ class Game{
 
 
 	addPlayer(socket){
-		this.players.push(new Player({socket: socket, team: this.players.length + 1, game: this}));
+		this.players.push(new Player({socket: socket, team: this.players.length, game: this}));
 		//If this is at least the second player, start the game countdown if it hasn't already started
 		if (this.players.length >= process.env.MIN_PLAYERS && this.state !== 'counting down'){
 			this.beginGameStartCountdown(config.gameStartCountdownTime);
@@ -127,6 +127,7 @@ class Game{
 			var player = this.players[i];
 			var mapInfo = this.map.getClientDataFor(player);
 			player.socket.emit('map updated', JSON.stringify(mapInfo));
+			player.tilesVisibleLastEmit = mapInfo.visibleTiles;
 		}
 		//this.map.visibleTiles = [];
 	}

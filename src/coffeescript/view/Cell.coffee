@@ -56,6 +56,7 @@ class Cell
 					a = tile.actor
 					char = a.character
 					charColor = app.view.getPlayerColor(a.player)
+					console.log charColor
 					if a.type is 'building'
 						borderColor = charColor
 			when 'water'
@@ -63,7 +64,7 @@ class Cell
 					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')'
 			when 'visibility'
 				if !tile.visible
-					fillColor = 'rgba(0,0,0,.2)'
+					fillColor = 'rgba(0,0,0,.5)'
 
 		if config.debug.debugMode
 			if config.debug.showTileRegions

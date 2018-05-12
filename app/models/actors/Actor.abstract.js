@@ -22,7 +22,10 @@ class Actor extends Model{
 		super(defaultArgs);
 
 		Object.assign(this, args);
+		this.game = this.tile.map.game;
+		this.map = this.game.map;
 		this.tile.setActor(this);
+		this.team = this.player ? this.player.team : null;
 		this.health = this.maxHealth; //max health must be set in child class
 		this.dead = false;
 		this.timeUntilNextAction = Math.floor(Math.random() * this.moveTime);//rand.range(this.moveTime);
@@ -56,7 +59,13 @@ class Actor extends Model{
 			for (var y = this.tile.y - this.sightRange ; y <= this.tile.y + this.sightRange ; y++){
 				var realX = (x + mapWidth) % mapWidth;
 				var realY = (y + mapHeight) % mapHeight;
-				this.visibleTiles.push(this.tile.map.getTile(realX, realY));
+				var t = this.tile.map.getTile(realX, realY)
+				this.visibleTiles.push(t);
+				/*
+				if (!this.player.visibleTilesThisTurn.includes(t)){
+					this.player.visibleTilesThisTurn.push(t);
+				}
+				*/
 			}
 		}
 	}

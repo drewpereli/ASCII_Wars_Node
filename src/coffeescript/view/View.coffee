@@ -143,7 +143,7 @@ class View
 		"##{redHex}#{greenHex}00"
 
 	getPlayerColor: (clientFacingPlayer) -> 
-		return config.view.colors.players[clientFacingPlayer.team - 1]
+		return config.view.colors.players[clientFacingPlayer.team]
 
 
 
@@ -184,7 +184,6 @@ View.prototype.initialize =
 		#Command Tab
 		#Add an dropdown menu for squads
 		for squadNum in [1..config.maxSquads]
-			console.log squadNum
 			$("<option>")
 				.attr('value', squadNum - 1)
 				.html(squadNum)

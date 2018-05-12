@@ -18,6 +18,16 @@ class Map extends Model{
 		this.height = config.model.map.height;
 		this.tiles = [];
 		this.changedTiles = [];
+		this.discoveredTiles = [];
+		game.players.forEach((p, i) => {
+			this.discoveredTiles[i] = [];
+			for (var y = 0 ; y < this.height ; y++){
+				this.discoveredTiles.push([]);
+				for (var x = 0 ; x < this.width ; x++){
+					this.discoveredTiles[y] = false;
+				}
+			}
+		});
 
 		this.cloudWater = 0;
 
@@ -317,6 +327,7 @@ class Map extends Model{
 			})
 			//Done
 			.then(() => {
+				
 				for (var i = 0 ; i < 100 ; i++){
 					//Place a random unit
 					this.game.addActor(
