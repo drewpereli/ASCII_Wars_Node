@@ -48,6 +48,8 @@ Game = (function() {
       return app.socket.emit('lower elevation', tile);
     } else if (this.state === 'creating wall') {
       return app.socket.emit('create wall', tile);
+    } else if (this.state === 'creating water pump') {
+      return app.socket.emit('create water pump', tile);
     }
   };
 

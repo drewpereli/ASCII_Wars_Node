@@ -40,6 +40,8 @@ class Game
 			app.socket.emit('lower elevation', tile)
 		else if @state is 'creating wall'
 			app.socket.emit('create wall', tile)
+		else if @state is 'creating water pump'
+			app.socket.emit('create water pump', tile)
 
 	rightClickTile: (tile) ->
 		console.log('right clicking tile ' + JSON.stringify(tile))

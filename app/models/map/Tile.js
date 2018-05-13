@@ -47,12 +47,13 @@ class Tile extends Model{
 
 	prepareFluidFlow(){
 		//If the tile has no water, do nothing
+		//If the tile has a pump on it, do nothing
 		//Get sibs. 
-		//If none of them have surface elevation lower than this surface elevation - 1, continue
+		//If none of them have surface elevation lower than this surface elevation - 1, do nothing
 		//Else, find tile with lowest elevation + waterdepth and move one water from this to that tile
 		//If there is more than one tile tied for lowest elevation + waterdepth, pick one randomly
-		if (this.waterDepth === 0)
-			return;
+		if (this.waterDepth === 0) return;
+		if (this.actor && this.actor.name === 'water_pump') return
 		var lowerSibs = this.siblings.filter((t) => t.getSurfaceElevation() < this.getSurfaceElevation() - 1);
 		if (lowerSibs.length === 0){
 			return;

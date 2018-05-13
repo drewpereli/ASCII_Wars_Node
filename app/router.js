@@ -120,6 +120,22 @@ function initializePlayerSocketRoutes(socket){
 			game.emitTile(t);
 		});
 
+		socket.on('create water pump', (tile) => {
+			//console.log('lowering elevation of tile at ' + tile.x + ', ' + tile.y);
+			var p = authenticatePlayer(socket);
+			if (!p) return;
+			var t = game.map.getTile(tile.x, tile.y);
+			if (t.actor) return;
+			game.addActor(
+				new actorClasses.buildings.WaterPump({
+					tile: t,
+					player: game.players[0],
+					direction: 0
+				})
+			);
+			game.emitTile(t);
+		});
+
 	}
 }
 

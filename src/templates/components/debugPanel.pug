@@ -4,6 +4,8 @@
 	.btn.btn-default.btn-lg#raise-elevation-btn Raise Elevation
 	.btn.btn-default.btn-lg#lower-elevation-btn Lower Elevation
 	.btn.btn-default.btn-lg#create-wall-btn Create Wall
+	.btn.btn-default.btn-lg#create-water-pump-btn Create Water Pump
+
 script.
 	$('#restart-btn').click(() => {
 		app.socket.emit('restart');
@@ -23,4 +25,8 @@ script.
 
 	$('#create-wall-btn').click(() => {
 		app.game.changeState('creating wall');
+	});
+
+	$('#create-water-pump-btn').click(() => {
+		app.game.changeState('creating water pump');
 	});
