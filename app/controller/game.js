@@ -122,14 +122,11 @@ class Game{
 
 
 	emitMap(){
-		//console.log(JSON.stringify(this.map.getClientDataFor(this.players[0])));
 		for (var i in this.players){
 			var player = this.players[i];
 			var mapInfo = this.map.getClientDataFor(player);
 			player.socket.emit('map updated', JSON.stringify(mapInfo));
-			player.tilesVisibleLastEmit = mapInfo.visibleTiles;
 		}
-		//this.map.visibleTiles = [];
 	}
 
 	emitTile(t){
