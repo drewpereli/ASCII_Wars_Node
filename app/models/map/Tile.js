@@ -237,7 +237,12 @@ class Tile extends Model{
 
 
 	isOpen(){
-		return !this.actor && this.terrain !== 'water';
+		return !this.actor && !this.hasWater();
+	}
+
+
+	hasWater(){
+		return this.waterDepth > 0;
 	}
 
 
@@ -267,6 +272,11 @@ class Tile extends Model{
 		// maxProb = minProb + m * (minEl - maxEl)
 		// (maxProb - minProb) / (minEl - maxEl) = m
 		// b = y - mx
+
+		//
+		return 0;
+		//
+
 		var minProb = .001;
 		var maxProb = .02;
 		var minEl = config.model.map.minElevation + 1; //Surface elevation
@@ -280,7 +290,11 @@ class Tile extends Model{
 
 	//Should be inversely correlated with evap prob
 	getRainProbability(){
-		return 1;
+
+		//
+		return 0;
+		//
+
 		var minProb = 0;
 		var maxProb = .05;
 		var minEl = config.model.map.minElevation; //Terrain elevation

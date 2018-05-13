@@ -6,8 +6,8 @@ var config = {
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 90,
-			width: 90,
+			height: 60,
+			width: 60,
 			maxElevation: 100,
 			minElevation: 0
 		},
