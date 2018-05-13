@@ -44,7 +44,7 @@ var config = {
 		map: {
 			height: 50,
 			width: 50,
-			initialCellLength: 3, //In pixels
+			initialCellLength: 10, //In pixels
 			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics'],
 			cellBorders: false
 		},
@@ -55,7 +55,8 @@ var config = {
 		showTileRegions: false,
 		showAnchorTiles: false,
 		setViewDimensionsToMapDimensions: false,
-		water: false
+		water: true,
+		allTilesVisible: true
 	}
 }
 

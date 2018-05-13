@@ -1,4 +1,4 @@
-var  arrayDiff = require('simple-array-diff');
+
 
 var config = require('../../../config')
 var Model = require('../Model.abstract');
@@ -29,6 +29,9 @@ class Player extends Model{
 	}
 
 	getVisibleTiles(){
+		if (config.debug.debugMode && config.debug.allTilesVisible){
+			return this.game.map.tiles.reduce((a, current) => {return a.concat(current)}, []);
+		}
 		var visibleTiles = [];
 		this.getActors().forEach(a => {
 			a.getVisibleTiles().forEach(t => {

@@ -97,7 +97,7 @@ function initializePlayerSocketRoutes(socket){
 		});
 
 		socket.on('lower elevation', (tile) => {
-			//console.log('lowering elevation of tile at ' + tile.x + ', ' + tile.y);
+			console.log('lowering elevation of tile at ' + tile.x + ', ' + tile.y);
 			var p = authenticatePlayer(socket);
 			if (!p) return;
 			var t = game.map.getTile(tile.x, tile.y);

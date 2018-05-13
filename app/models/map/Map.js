@@ -29,7 +29,7 @@ class Map extends Model{
 			}
 		});
 
-		this.cloudWater = 0;
+		this.cloudWater = 200;
 
 		for (var y = 0 ; y < this.height ; y++){
 			this.tiles.push([]);
@@ -327,7 +327,7 @@ class Map extends Model{
 			})
 			//Done
 			.then(() => {
-				
+				/*
 				for (var i = 0 ; i < 100 ; i++){
 					//Place a random unit
 					this.game.addActor(
@@ -338,7 +338,7 @@ class Map extends Model{
 						})
 					);
 				}
-				
+				*/
 				resolve();
 			})
 			//Error
