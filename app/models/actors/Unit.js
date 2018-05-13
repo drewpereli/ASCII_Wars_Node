@@ -62,6 +62,7 @@ class Unit extends Actor{
 		var tileInfos = [];
 		var uniqueDistances = [];
 		var uniqueSurroundingSquadMates = [];
+		var uniqueAlignmentScores = [];
 		//Get tile info
 		this.tile.siblings.concat(this.tile).forEach(t =>{
 			//If the tile can't be occupied and it's not the current tile we're on, reject it
@@ -76,10 +77,24 @@ class Unit extends Actor{
 				else
 					return a;
 			}, 0);
+			var alignmentScore = 0;
+			if (behaviorParams.alignment) {
+				if (behaviorParams.alignment === 'E-W'){
+					//Score should be proportional absolute value of cosign
+					alignmentScore = Math.abs((target.x - t.x) / dist);
+				}
+				else if (behaviorParams.alignment === 'N-S'){
+					//Score should be proportional absolute value of cosign
+					alignmentScore = Math.abs((target.y - t.y) / dist); 
+				}
+				if (!uniqueAlignmentScores.includes(alignmentScore)) uniqueAlignmentScores.push(alignmentScore);
+
+			}
 			tileInfos.push({
 				tile: t,
 				distance: dist,
 				surroundingSquadMates: surroundingSquadMates,
+				alignmentScore: alignmentScore,
 				score: null
 			});
 			if (!uniqueDistances.includes(dist)) uniqueDistances.push(dist);
@@ -89,6 +104,7 @@ class Unit extends Actor{
 		//Surrounding squad mates lowest to highest, and distance highest to lowest, so that the best ones are at the highest indeces
 		uniqueDistances.sort((a, b) => b - a);
 		uniqueSurroundingSquadMates.sort((a, b) => a - b);
+		uniqueAlignmentScores.sort((a, b) => a - b);
 		//console.log(uniqueDistances);
 		//Set the scores
 		//This part is a bit tricky
@@ -97,11 +113,14 @@ class Unit extends Actor{
 		// Multiply this value by the corresponding weight
 		// Add result to the score
 		tileInfos.forEach(tInfo => {
-			var distIndex = uniqueDistances.indexOf(tInfo.distance);
+			//The further in the array each score is, the better
+			var distIndex = uniqueDistances.indexOf(tInfo.distance); //The rank in the sorted array
 			var distanceScoreContribution = distIndex / uniqueDistances.length * behaviorParams.moveTowardsPointWeight;
 			var matesIndex = uniqueSurroundingSquadMates.indexOf(tInfo.surroundingSquadMates);
 			var matesScoreContribution = matesIndex / uniqueSurroundingSquadMates.length * behaviorParams.moveTowardsSquadMatesWeight;
-			tInfo.score = distanceScoreContribution + matesScoreContribution;
+			var alignmentIndex = uniqueAlignmentScores.indexOf(tInfo.alignmentScore);
+			var alignmentContribution = alignmentIndex / uniqueAlignmentScores.length * behaviorParams.alignmentWeight;
+			tInfo.score = distanceScoreContribution + matesScoreContribution + alignmentContribution;
 		});
 		//Get highest score
 		var maxScore = -1;

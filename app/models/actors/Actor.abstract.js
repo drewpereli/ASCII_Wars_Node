@@ -77,6 +77,10 @@ class Actor extends Model{
 		return tile.isOpen();
 	}
 
+	canOccupy(tile){
+		return this.constructor.canOccupy(tile);
+	}
+
 }
 
 
