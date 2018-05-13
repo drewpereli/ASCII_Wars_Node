@@ -56,7 +56,6 @@ class Cell
 					a = tile.actor
 					char = a.character
 					charColor = app.view.getPlayerColor(a.player)
-					console.log charColor
 					if a.type is 'building'
 						borderColor = charColor
 			when 'water'

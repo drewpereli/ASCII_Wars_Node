@@ -431,7 +431,6 @@ Cell = (function() {
           a = tile.actor;
           char = a.character;
           charColor = app.view.getPlayerColor(a.player);
-          console.log(charColor);
           if (a.type === 'building') {
             borderColor = charColor;
           }
