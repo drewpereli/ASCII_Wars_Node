@@ -3,9 +3,28 @@ class Input
 
 	constructor: ->
 
-		$(app.view.components.map.clickableCanvas).mousedown((e) => 
-			app.game.clickTile(@getTileClicked(e))
+		@usedKeys = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', '-', '='];
+
+		$('body').keydown((e) => 
+			@processKeyDown(e)
 		)
+
+		$(app.view.components.map.clickableCanvas).mousedown((e) => 
+			e.preventDefault()
+			switch e.which
+				when 1 then app.game.clickTile(@getTileClicked(e))
+				when 3 then app.game.rightClickTile(@getTileClicked(e))
+		)
+
+		$('#digging-checkbox').change( => 
+			app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'))
+		)
+
+		$('#digging-direction-select').change( => 
+			app.game.changeDiggingDirection($('#digging-direction-select').val())
+		)
+
+		$(app.view.components.map.clickableCanvas).contextmenu( => return false)
 
 		$("#next-btn").click( =>
 			app.game.next()
@@ -25,9 +44,16 @@ class Input
 		)
 
 
+
+
 	getTileClicked: (event) ->
 
-		return app.view.getTileFromPixels(event.offsetX, event.offsetY)
+		cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
+		cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);
+		x = cellX + app.view.components.map.currentX % app.map.width
+		y = cellY + app.view.components.map.currentY % app.map.height
+		return {x: x, y: y}
+		#return app.view.getTileFromPixels(event.offsetX, event.offsetY)
 		###
 		x = new Number()
 		y = new Number()
@@ -42,3 +68,22 @@ class Input
 		y -= canvas.offsetTop
 		return app.view.getTileFromPixels(x, y)
 		###
+
+
+
+	processKeyDown: (event)->
+		if !@usedKeys.includes(event.key)
+			return
+		event.preventDefault()
+		switch event.key
+			when "ArrowUp" then app.game.moveMap(0)
+			when "ArrowRight" then app.game.moveMap(1)
+			when "ArrowDown" then app.game.moveMap(2)
+			when "ArrowLeft" then app.game.moveMap(3)
+			when '-' then app.game.zoom('out')
+			when '=' then app.game.zoom('in')
+
+
+
+
+

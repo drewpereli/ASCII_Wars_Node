@@ -44,7 +44,7 @@ class Game{
 		.then(() => {
 			this.emitMessage('Map finished generating');
 			this.emitMap();
-			console.log(this.actors.length);
+			console.log('Actor length: ' + this.actors.length);
 		})
 		.catch( err => {
 			console.log(err);
@@ -80,7 +80,7 @@ class Game{
 
 
 	addPlayer(socket){
-		this.players.push(new Player({socket: socket, team: this.players.length + 1, game: this}));
+		this.players.push(new Player({socket: socket, team: this.players.length, game: this}));
 		//If this is at least the second player, start the game countdown if it hasn't already started
 		if (this.players.length >= process.env.MIN_PLAYERS && this.state !== 'counting down'){
 			this.beginGameStartCountdown(config.gameStartCountdownTime);
@@ -122,10 +122,10 @@ class Game{
 
 
 	emitMap(){
-		//console.log(JSON.stringify(this.map.getClientDataFor(this.players[0])));
 		for (var i in this.players){
 			var player = this.players[i];
-			player.socket.emit('map updated', JSON.stringify(this.map.getClientDataFor(player)));
+			var mapInfo = this.map.getClientDataFor(player);
+			player.socket.emit('map updated', JSON.stringify(mapInfo));
 		}
 	}
 
@@ -133,7 +133,7 @@ class Game{
 		console.log('emitting tile');
 		for (var i in this.players){
 			var player = this.players[i];
-			player.socket.emit('tile update', JSON.stringify(t.getClientDataFor(player)));
+			player.socket.emit('tile updated', JSON.stringify(t.getClientDataFor(player)));
 		}
 	}
 
@@ -159,7 +159,9 @@ class Game{
 
 
 
-	updateSquadBehaviorParams(player, params){}
+	updateSquadBehaviorParams(player, squad, params){
+		player.getSquad(squad).setBehaviorParams(params);
+	}
 
 
 	playerQuit(player){

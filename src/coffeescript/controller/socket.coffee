@@ -11,7 +11,7 @@ class Socket
 			)
 		)
 		@io.on(
-			'tile update', 
+			'tile updated', 
 			((tile) => 
 				app.view.updateTile(JSON.parse(tile))
 			)

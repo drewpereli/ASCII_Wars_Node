@@ -15,6 +15,11 @@ gulp.task('sass', () => {
 
 
 
+gulp.task('lib', () => {
+	return gulp.src('./src/lib/**/*')
+	.pipe(gulp.dest('./app/lib'))
+})
+
 
 gulp.task('coffee', () => {
 	return gulp.src('./src/coffeescript/**/*.coffee')
@@ -34,6 +39,7 @@ gulp.task('config', () => {
 
 gulp.task('server', function() {
   gulp.run('sass')
+  gulp.run('lib')
   gulp.run('config')
   gulp.run('coffee')
   if (node) node.kill()

@@ -1,5 +1,8 @@
+var  arrayDiff = require('simple-array-diff');
 
+var config = require('../../../config')
 var Model = require('../Model.abstract');
+var Squad = require('./Squad');
 
 class Player extends Model{
 	constructor(args){
@@ -9,12 +12,35 @@ class Player extends Model{
 		this.readyForNextTurn = false;
 		this.clientFacingFields = ['team'];
 		this.game = args.game;
+		this.squads = [];
+		for (var i = 0 ; i < config.maxSquads ; i++){
+			this.squads.push(new Squad({squadNum: i}));
+		}
+		this.visibleTilesLastEmit = [];
+		//this.visibleTilesThisEmit = [];
 	}
 
 	getActors(){
 		return this.game.actors.filter(a => a.player === this);
 	}
 
+	getSquad(num){
+		return this.squads[num];
+	}
+
+	getVisibleTiles(){
+		var visibleTiles = [];
+		this.getActors().forEach(a => {
+			a.getVisibleTiles().forEach(t => {
+				if (!visibleTiles.includes(t)) visibleTiles.push(t);
+			})
+		});
+		return visibleTiles;
+	}
+
 }
 
 module.exports = Player;
+
+
+

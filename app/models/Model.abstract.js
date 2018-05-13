@@ -1,7 +1,9 @@
 
 class Model{
 
-	
+	constructor(args){
+		Object.assign(this, args);
+	}
 
 	getClientDataFor(player){
 		if (typeof this.clientFacingFields === 'undefined'){
@@ -13,7 +15,10 @@ class Model{
 			var field = fieldsToSendToClient[i];
 			var val = this[field];
 			if (typeof val === 'object'){
-				returnObject[field] = val.getClientDataFor(player);
+				if ('getClientDataFor' in val)
+					returnObject[field] = val.getClientDataFor(player);
+				else
+					returnObject[field] = val;
 			}
 			else{
 				returnObject[field] = val;

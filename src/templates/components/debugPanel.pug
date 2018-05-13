@@ -1,10 +1,16 @@
-
-.btn.btn-default.btn-lg#restart-btn Restart
-.btn.btn-default.btn-lg#raise-elevation-btn Raise Elevation
-.btn.btn-default.btn-lg#lower-elevation-btn Lower Elevation
+#debug-container
+	.btn.btn-default.btn-lg#restart-btn Restart
+	.btn.btn-default.btn-lg#default-state-btn Default State
+	.btn.btn-default.btn-lg#raise-elevation-btn Raise Elevation
+	.btn.btn-default.btn-lg#lower-elevation-btn Lower Elevation
+	.btn.btn-default.btn-lg#create-wall-btn Create Wall
 script.
 	$('#restart-btn').click(() => {
 		app.socket.emit('restart');
+	});
+
+	$('#default-state-btn').click(() => {
+		app.game.changeState('default');
 	});
 
 	$('#raise-elevation-btn').click(() => {
@@ -13,4 +19,8 @@ script.
 
 	$('#lower-elevation-btn').click(() => {
 		app.game.changeState('lowering elevation');
+	});
+
+	$('#create-wall-btn').click(() => {
+		app.game.changeState('creating wall');
 	});

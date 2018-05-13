@@ -7,16 +7,18 @@ class View
 			map: 
 				currentX: 0 #Coordinates of top left corner
 				currentY: 0
+				currentZoom: 3
 				layers: {}
 				cells: {}
 				currentCellLength: config.view.map.initialCellLength
 				clickableCanvas: {}
+				selectedTile: null
 			control: {}
 			info: {}	
 			message: $('.message')
 		@initialize.map.canvases(this)
 		@initialize.map.cells(this)
-		@initialize.controlPanel.buttons(this)
+		@initialize.controlPanel(this)
 		$('.tabs').tabs()
 
 
@@ -35,6 +37,24 @@ class View
 
 
 
+	moveMap: (dirIndex) ->
+		switch dirIndex
+			when 0 then @components.map.currentY -= 5
+			when 1 then @components.map.currentX += 5
+			when 2 then @components.map.currentY += 5
+			when 3 then @components.map.currentX -= 5
+		if (@components.map.currentY < 0)
+			@components.map.currentY += app.map.height
+		if (@components.map.currentX < 0)
+			@components.map.currentX += app.map.width
+		if (@components.map.currentY >= app.map.height)
+			@components.map.currentY -= app.map.height
+		if (@components.map.currentX >= app.map.width)
+			@components.map.currentX -= app.map.width
+		@updateMap();
+
+
+
 ##############################
 #
 #	RENDER FUNCTIONS
@@ -49,10 +69,10 @@ class View
 			for row, y in layer
 				for cell, x in row
 					tile = @getTileFromCell(cell)
-					if !tile
-						continue
-					else
+					if tile
 						cell.drawTile(tile)
+					else if layername is 'visibility'
+						cell.fill('#000')
 
 
 	updateTile: (tile) -> 
@@ -88,16 +108,20 @@ class View
 
 
 	getCellsFromTile: (tile) ->
-		if config.debug.debugMode and config.debug.setViewDimensionsToMapDimensions
-			x = (app.map.width + tile.x - @components.map.currentX) % app.map.width
-			y = (app.map.height + tile.y - @components.map.currentY) % app.map.height
-			cells = []
+		x = (app.map.width + tile.x - @components.map.currentX) % app.map.width
+		y = (app.map.height + tile.y - @components.map.currentY) % app.map.height
+		cells = []
 
-			for layername, layer of @components.map.cells
-				cells.push(layer[y][x])
-			return cells
-		else
-			throw new Error('This function doesn\'t work without debug mode stuff yet');
+		for layername, layer of @components.map.cells
+			cells.push(layer[y][x])
+		return cells
+
+
+	getCellFromTile: (tile, layer) ->
+		layerIndex = config.view.map.layers.indexOf(layer)
+		if layerIndex is -1
+			throw new Error(layer + ' is not a valid layer')
+		return @getCellsFromTile(tile)[layerIndex]
 		
 
 
@@ -119,7 +143,7 @@ class View
 		"##{redHex}#{greenHex}00"
 
 	getPlayerColor: (clientFacingPlayer) -> 
-		return config.view.colors.players[clientFacingPlayer.team - 1]
+		return config.view.colors.players[clientFacingPlayer.team]
 
 
 
@@ -132,13 +156,15 @@ class View
 View.prototype.initialize = 
 	map:
 		canvases: (v) ->
+			$('#canvas-container').css('height', config.view.map.height * config.view.map.initialCellLength)
 			for layerName in config.view.map.layers
 				c = $("<canvas>").addClass(layerName)
 				c.attr('width', config.view.map.width * config.view.map.initialCellLength)
 					.attr('height', config.view.map.height * config.view.map.initialCellLength)
 					.css('width', "#{config.view.map.width * config.view.map.initialCellLength}px")
 					.css('height', "#{config.view.map.height * config.view.map.initialCellLength}px")
-				v.components.map.layers[layerName] = c[0].getContext('2d')
+				context = c[0].getContext('2d')
+				v.components.map.layers[layerName] = context
 				c.appendTo("#canvas-container")
 			v.components.map.clickableCanvas = $('canvas.graphics')[0]
 		cells: (v) ->
@@ -148,13 +174,20 @@ View.prototype.initialize =
 					v.components.map.cells[layer][y] = [];
 					for x in [0..(config.view.map.width - 1)]
 						v.components.map.cells[layer][y][x] = new Cell(x, y, v.components.map.layers[layer])
-	controlPanel:
-		buttons: (v) -> 
-			for buildingName, building of config.model.actors.buildings.producers
-				$("<div>").addClass('btn btn-default create-building-btn')
-					.data('building', buildingName)
-					.html(building.readableName)
-					.appendTo("#construct-tab .buttons")
+	controlPanel: (v) ->
+		#Building Tab
+		for buildingName, building of config.model.actors.buildings.producers
+			$("<div>").addClass('btn btn-default create-building-btn')
+				.data('building', buildingName)
+				.html(building.readableName)
+				.appendTo("#construct-tab .buttons")
+		#Command Tab
+		#Add an dropdown menu for squads
+		for squadNum in [1..config.maxSquads]
+			$("<option>")
+				.attr('value', squadNum - 1)
+				.html(squadNum)
+				.appendTo('#squad-select')
 
 
 

@@ -6,8 +6,8 @@ const rand = require('random-seed').create();
 class Tile extends Model{
 	constructor(map, x, y) {
 		super();
-
 		this.map = map;
+		this.game = this.map.game;
 		this.x = x;
 		this.y = y;
 
@@ -20,6 +20,15 @@ class Tile extends Model{
 		this.actor = false;
 
 		this.siblings = [];
+
+		this.discoveredBy = this.game.players.map(() => false);
+		this.visibilityChangedFor = this.game.players.map(() => true);
+		//this.visibleTo = this.game.players.map(() => false);
+		this.changed = {
+			'terrain': true,
+			'elevation': true,
+			'actor': true,
+		}
 
 		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor', 'waterDepth'];
 
@@ -120,6 +129,8 @@ class Tile extends Model{
 
 	setActor(actor=false){
 		this.actor = actor;
+		this.setAsChanged();
+		this.changed.actor = true;
 	}
 
 	unsetActor(){
@@ -131,6 +142,8 @@ class Tile extends Model{
 			throw new Error('Water depth must be an integer. Received ' + depth);
 		}
 		this.waterDepth = depth;
+		this.setAsChanged();
+		this.changed.water = true;
 	}
 
 	setNextTurnsWaterDepth(depth = false){
@@ -234,6 +247,8 @@ class Tile extends Model{
 		if (el < config.model.map.minElevation)
 			el = config.model.map.minElevation;
 		this.elevation = el;
+		this.setAsChanged();
+		this.changed.elevation = true;
 	}
 
 	getSurfaceElevation(){
@@ -274,6 +289,21 @@ class Tile extends Model{
 		var b = maxProb - m * maxEl;
 		var prob = m * this.getSurfaceElevation() + b;
 		return prob;
+	}
+
+
+	incrementElevation(){
+		this.setElevation(this.elevation + 1);
+	}
+
+	decrementElevation(){
+		this.setElevation(this.elevation - 1);
+	}
+
+
+	setAsChanged(){
+		if (!this.map.changedTiles.includes(this))
+			this.map.changedTiles.push(this);
 	}
 
 }

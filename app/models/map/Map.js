@@ -17,6 +17,17 @@ class Map extends Model{
 		this.width = config.model.map.width;
 		this.height = config.model.map.height;
 		this.tiles = [];
+		this.changedTiles = [];
+		this.discoveredTiles = [];
+		game.players.forEach((p, i) => {
+			this.discoveredTiles[i] = [];
+			for (var y = 0 ; y < this.height ; y++){
+				this.discoveredTiles.push([]);
+				for (var x = 0 ; x < this.width ; x++){
+					this.discoveredTiles[y] = false;
+				}
+			}
+		});
 
 		this.cloudWater = 0;
 
@@ -48,7 +59,8 @@ class Map extends Model{
 
 	//Gets an object containing the map data to send to the client
 	getClientDataFor(player){
-		return this.tiles.map(tArray => tArray.map(t => t.getClientDataFor(player)));
+		//return {changedTiles: this.changedTiles.map(t => t.getClientDataFor(player))};
+		return {visibleTiles: player.getVisibleTiles().map(t => t.getClientDataFor(player))};
 	}
 
 
@@ -184,6 +196,9 @@ class Map extends Model{
 			}
 
 			var addWater = regions => {
+				if (config.debug.debugMode && !config.debug.water){
+					return Promise.resolve();
+				}
 				regions.forEach(r => {
 					r.tiles.forEach(t => {
 						if (rand(100) / 100 < r.params.moistureChance){
@@ -302,20 +317,28 @@ class Map extends Model{
 			});
 		}
 		
-
 		return new Promise((resolve, reject) => {
 			//For now just set random elevations
 			setElevationsAndWater()
 			//Generate the command centers
 			.then(() => {
 				console.log('water added');
-				//return placeCommandCenters();
-				return Promise.resolve();
+				return placeCommandCenters();
 			})
 			//Done
 			.then(() => {
-				//Place a random worker
-				//this.game.addActor(new actorClasses.units.Worker({tile: this.getRandomOpenTile(), player: this.game.players[0]}));
+				
+				for (var i = 0 ; i < 100 ; i++){
+					//Place a random unit
+					this.game.addActor(
+						new actorClasses.Unit({
+							tile: this.getRandomOpenTile(), 
+							player: this.game.players[0],
+							squad: 0
+						})
+					);
+				}
+				
 				resolve();
 			})
 			//Error
