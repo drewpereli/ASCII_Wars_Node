@@ -7,22 +7,22 @@ class Wall extends Building{
 		args.name = 'water_pump';
 		args.readableName = 'Water Pump';
 		args.maxHealth = 1000;
-		super(args);
-		this.direction = args.direction;
-		switch (this.direction){
+		args.direction = 0;
+		switch (args.direction){
 			case 0: 
-				this.character = '\u21e1';
+				args.character = '\u21e1';
 				break;
 			case 1: 
-				this.character = '\u21e2';
+				args.character = '\u21e2';
 				break;
 			case 2: 
-				this.character = '\u21e3';
+				args.character = '\u21e3';
 				break;
 			case 3:
-				this.character = '\u21e0';
+				args.character = '\u21e0';
 				break;
 		}
+		super(args);
 	}
 
 	act(){

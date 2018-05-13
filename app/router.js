@@ -66,6 +66,15 @@ function initializePlayerSocketRoutes(socket){
 		game.playerQuit(p);
 	});
 
+
+	socket.on('construct', (params) => {
+		var p = authenticatePlayer(socket);
+		if (!p) return;
+		var t = game.map.getTile(params.tile.x, params.tile.y);
+		game.attemptBuildingConstruction(p, t, params.building);
+	});
+
+
 	/*
 	socket.on('disconnect', () => {
 		console.log('socket disconnecting...');

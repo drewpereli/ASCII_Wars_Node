@@ -32,6 +32,7 @@ var config = {
 					},
 					WaterPump: {
 						readableName: 'Water Pump',
+						character: '\u21e1'
 					}
 				}
 			}
@@ -65,7 +66,7 @@ var config = {
 		showTileRegions: false,
 		showAnchorTiles: false,
 		setViewDimensionsToMapDimensions: false,
-		water: true,
+		water: false,
 		allTilesVisible: true,
 		testActors: 0
 	}

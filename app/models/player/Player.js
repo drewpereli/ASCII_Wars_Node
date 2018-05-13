@@ -3,6 +3,10 @@
 var config = require('../../../config')
 var Model = require('../Model.abstract');
 var Squad = require('./Squad');
+var actorClasses = require('require-dir-all')(
+	'../actors', {recursive: true}
+	);
+
 
 class Player extends Model{
 	constructor(args){
@@ -39,6 +43,19 @@ class Player extends Model{
 			})
 		});
 		return visibleTiles;
+	}
+
+
+	attemptBuildingConstruction(tile, buildingName){
+		if (!(buildingName in actorClasses.buildings)){
+			console.log('No class for building name : ' + buildingName);
+			return false;
+		}
+		if (!tile.isOpen()) return false;
+		//Construct building!
+		console.log('Constructing new ' + buildingName);
+		var building = new actorClasses.buildings[buildingName]({player: this, tile: tile});
+		return true;
 	}
 
 }

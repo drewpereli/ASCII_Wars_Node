@@ -158,6 +158,11 @@ class Game{
 	}
 
 
+	attemptBuildingConstruction(player, tile, buildingName){
+		var success = player.attemptBuildingConstruction(tile, buildingName);
+		if (success) this.emitTile(tile);
+	}
+
 
 	updateSquadBehaviorParams(player, squad, params){
 		player.getSquad(squad).setBehaviorParams(params);
