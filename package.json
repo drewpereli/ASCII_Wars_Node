@@ -29,6 +29,7 @@
     "gulp-util": "^3.0.8",
     "include-all": "^4.0.3",
     "mocha": "^3.4.2",
+    "opn": "^5.3.0",
     "require-all": "^2.2.0"
   }
 }

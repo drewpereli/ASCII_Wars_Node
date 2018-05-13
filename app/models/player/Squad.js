@@ -9,9 +9,9 @@ class Squad extends Model{
 		this.behaviorParams = {
 			movingTo: null,
 			moveTowardsPointWeight: 1,
-			moveTowardsSquadMatesWeight: 0,
-			alignment: 'N-S',
-			alignmentWeight: 5,
+			moveTowardsSquadMatesWeight: 1,
+			alignment: 'E-W',
+			alignmentWeight: 2,
 			digging: false,
 			diggingDirection: 0
 		};

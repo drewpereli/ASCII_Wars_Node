@@ -25,7 +25,7 @@ class Unit extends Actor{
 			this.dig(behaviorParams.diggingDirection);
 		}
 		else if (behaviorParams.movingTo){
-			if (randomNum < .3)
+			if (randomNum < .2)
 				this.moveRandomly();
 			else
 				this.moveTowardsSquadMovePoint();
@@ -81,7 +81,24 @@ class Unit extends Actor{
 			if (behaviorParams.alignment) {
 				if (behaviorParams.alignment === 'E-W'){
 					//Score should be proportional absolute value of cosign
-					alignmentScore = Math.abs((target.x - t.x) / dist);
+					//var angle = Math.abs((target.x - t.x) / dist); //1 is best, 0 is worst
+					var distanceFromLine = Math.abs(target.y - t.y); //0 is best, infinity is worst
+					//var angleScore = .0001 * angle;
+					//var distanceFromLineScore = Math.pow(2, -.1 * distanceFromLine) / 2; //1 is best, 0 is worst
+					//
+					//The score is a lot better if the tile is within the rectangle of the wall
+					var distanceFromLineScore = distanceFromLine > 1 ? Math.pow(2, -.1 * distanceFromLine) / 2 : 2;
+					alignmentScore = distanceFromLineScore;
+					//If the candidate tile has squadmates to the east and west of it, it's good
+					//If to the east or west, it's alright
+					//If neither, it's bad
+					/*
+					var eActor = t.siblings[6].actor;
+					eActor &= eActor.squad === this.squad;
+					var wActor = t.siblings[3].actor;
+					wActor &= wActor.squad === this.squad;
+					alignmentScore = eActor && wActor ? 2 : eActor || wActor ? 1 : 0;
+					*/
 				}
 				else if (behaviorParams.alignment === 'N-S'){
 					//Score should be proportional absolute value of cosign
@@ -104,7 +121,8 @@ class Unit extends Actor{
 		//Surrounding squad mates lowest to highest, and distance highest to lowest, so that the best ones are at the highest indeces
 		uniqueDistances.sort((a, b) => b - a);
 		uniqueSurroundingSquadMates.sort((a, b) => a - b);
-		uniqueAlignmentScores.sort((a, b) => a - b);
+		if (behaviorParams.alignment)
+			uniqueAlignmentScores.sort((a, b) => a - b);
 		//console.log(uniqueDistances);
 		//Set the scores
 		//This part is a bit tricky
@@ -116,11 +134,16 @@ class Unit extends Actor{
 			//The further in the array each score is, the better
 			var distIndex = uniqueDistances.indexOf(tInfo.distance); //The rank in the sorted array
 			var distanceScoreContribution = distIndex / uniqueDistances.length * behaviorParams.moveTowardsPointWeight;
+			//If we're trying to align, there's a certain chance that the distance doesn't matter at all
+			if (behaviorParams.alignment && Math.random() < .9) distanceScoreContribution = 0;
 			var matesIndex = uniqueSurroundingSquadMates.indexOf(tInfo.surroundingSquadMates);
 			var matesScoreContribution = matesIndex / uniqueSurroundingSquadMates.length * behaviorParams.moveTowardsSquadMatesWeight;
-			var alignmentIndex = uniqueAlignmentScores.indexOf(tInfo.alignmentScore);
-			var alignmentContribution = alignmentIndex / uniqueAlignmentScores.length * behaviorParams.alignmentWeight;
-			tInfo.score = distanceScoreContribution + matesScoreContribution + alignmentContribution;
+			tInfo.score = distanceScoreContribution + matesScoreContribution;
+			if (behaviorParams.alignment) {
+				var alignmentIndex = uniqueAlignmentScores.indexOf(tInfo.alignmentScore);
+				var alignmentContribution = alignmentIndex / uniqueAlignmentScores.length * behaviorParams.alignmentWeight;
+				tInfo.score += alignmentContribution;
+			}
 		});
 		//Get highest score
 		var maxScore = -1;
@@ -134,6 +157,10 @@ class Unit extends Actor{
 				candidates.push(tInfo.tile);
 			}
 		});
+		if (candidates.length === 0) {
+			this.moveRandomly();
+			return;
+		}
 		//Don't work harder than you have to
 		if (candidates.includes(this.tile)) return;
 		this.move(candidates[rand(candidates.length)]);
