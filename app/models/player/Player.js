@@ -51,10 +51,12 @@ class Player extends Model{
 			console.log('No class for building name : ' + buildingName);
 			return false;
 		}
-		if (!tile.isOpen()) return false;
+		var buildingClass = actorClasses.buildings[buildingName];
+		if (!buildingClass.canOccupy(tile)) return false;
 		//Construct building!
 		console.log('Constructing new ' + buildingName);
-		var building = new actorClasses.buildings[buildingName]({player: this, tile: tile});
+		var building = new buildingClass({player: this, tile: tile});
+		this.game.addActor(building);
 		return true;
 	}
 

@@ -11,9 +11,9 @@ class Cell
 		@clear() unless @cleared
 		color = hexToRGBA(color, opacity) unless opacity is 1
 		@layer.fillStyle = color
-		x = @getXPixel()
-		y = @getYPixel()
-		l = @getCellLength()
+		x = @getXPixel() - 1
+		y = @getYPixel() - 1
+		l = @getCellLength() + 2
 		@layer.fillRect(x, y, l, l)
 		if (config.view.map.cellBorders)
 			@stroke(config.view.colors.cellBorder)

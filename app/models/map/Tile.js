@@ -241,6 +241,10 @@ class Tile extends Model{
 		return !this.actor && !this.hasWater();
 	}
 
+	isOccupied(){
+		return !!this.actor;
+	}
+
 
 	hasWater(){
 		return this.waterDepth > 0;

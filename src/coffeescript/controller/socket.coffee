@@ -13,7 +13,8 @@ class Socket
 		@io.on(
 			'tile updated', 
 			((tile) => 
-				app.view.updateTile(JSON.parse(tile))
+				tile = JSON.parse(tile)
+				app.game.updateTile(tile)
 			)
 		)
 		return @io

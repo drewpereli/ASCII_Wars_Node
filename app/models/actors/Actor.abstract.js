@@ -73,6 +73,10 @@ class Actor extends Model{
 
 	getVisibleTiles(){ return this.visibleTiles; }
 
+	static canOccupy(tile){
+		return tile.isOpen();
+	}
+
 }
 
 

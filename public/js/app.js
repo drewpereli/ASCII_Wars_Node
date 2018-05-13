@@ -74,6 +74,9 @@ Game = (function() {
   };
 
   Game.prototype.hoverTile = function(tile) {
+    if (!tile) {
+      return;
+    }
     if (tile === this.hoveredTile) {
       return;
     }
@@ -137,6 +140,11 @@ Game = (function() {
     }
   };
 
+  Game.prototype.updateTile = function(tile) {
+    app.map.updateTile(tile.x, tile.y, tile);
+    return app.view.updateTile(tile);
+  };
+
   return Game;
 
 })();
@@ -159,7 +167,8 @@ Socket = (function() {
     })(this)));
     this.io.on('tile updated', ((function(_this) {
       return function(tile) {
-        return app.view.updateTile(JSON.parse(tile));
+        tile = JSON.parse(tile);
+        return app.game.updateTile(tile);
       };
     })(this)));
     return this.io;
@@ -278,8 +287,8 @@ Input = (function() {
     var cellX, cellY, x, y;
     cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
     cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);
-    x = cellX + app.view.components.map.currentX % app.map.width;
-    y = cellY + app.view.components.map.currentY % app.map.height;
+    x = (cellX + app.view.components.map.currentX) % app.map.width;
+    y = (cellY + app.view.components.map.currentY) % app.map.height;
     return {
       x: x,
       y: y
@@ -371,6 +380,13 @@ Map = (function() {
     return false;
   };
 
+  Map.prototype.updateTile = function(x, y, tileParams) {
+    if (!this.getTile(x, y)) {
+      return false;
+    }
+    return Object.assign(this.tiles[y][x], tileParams);
+  };
+
   return Map;
 
 })();
@@ -414,9 +430,9 @@ Cell = (function() {
       color = hexToRGBA(color, opacity);
     }
     this.layer.fillStyle = color;
-    x = this.getXPixel();
-    y = this.getYPixel();
-    l = this.getCellLength();
+    x = this.getXPixel() - 1;
+    y = this.getYPixel() - 1;
+    l = this.getCellLength() + 2;
     this.layer.fillRect(x, y, l, l);
     if (config.view.map.cellBorders) {
       this.stroke(config.view.colors.cellBorder);

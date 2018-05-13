@@ -24,3 +24,8 @@ class Map
 		if 0 <= x < @width and 0 <= y < @height
 			return @tiles[y][x]
 		return false
+
+	updateTile: (x, y, tileParams) ->
+		if !@getTile(x, y) 
+			return false
+		Object.assign(@tiles[y][x], tileParams)

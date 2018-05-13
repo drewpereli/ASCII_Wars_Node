@@ -134,9 +134,6 @@ class Unit extends Actor{
 		return this.player.getSquad(this.squad).getBehaviorParams();
 	}
 
-	canOccupy(tile){
-		return tile.isOpen();
-	}
 
 	//Weight of moving from tile1 to tile2
 	getMoveWeight(tile1, tile2){

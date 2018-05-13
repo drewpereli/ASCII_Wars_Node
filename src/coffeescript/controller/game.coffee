@@ -59,6 +59,8 @@ class Game
 		)
 
 	hoverTile: (tile) ->
+		if !tile
+			return
 		if tile is @hoveredTile 
 			return
 		if @state is 'constructing'
@@ -119,6 +121,12 @@ class Game
 		app.view.updateMap()
 		if @timeState is 'playing'
 			app.socket.emit('next')
+
+
+	updateTile: (tile) ->
+		app.map.updateTile(tile.x, tile.y, tile)
+		app.view.updateTile(tile)
+
 
 
 

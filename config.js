@@ -30,10 +30,22 @@ var config = {
 						readableName: 'Wall',
 						character: 'W'
 					},
-					WaterPump: {
-						readableName: 'Water Pump',
+					WaterPumpNorth: {
+						readableName: 'Water Pump -- North',
 						character: '\u21e1'
-					}
+					},
+					WaterPumpEast: {
+						readableName: 'Water Pump -- East',
+						character: '\u21e2'
+					},
+					WaterPumpSouth: {
+						readableName: 'Water Pump -- South',
+						character: '\u21e3'
+					},
+					WaterPumpWest: {
+						readableName: 'Water Pump -- West',
+						character: '\u21e0'
+					},
 				}
 			}
 		}
@@ -53,9 +65,9 @@ var config = {
 			players: ['black', 'white']
 		},
 		map: {
-			height: 50,
-			width: 50,
-			initialCellLength: 10, //In pixels
+			height: 40,
+			width: 40,
+			initialCellLength: 13, //In pixels
 			layers: ['terrain', 'elevation', 'water', 'actors',	'visibility', 'graphics'],
 			cellBorders: false
 		},
@@ -66,7 +78,7 @@ var config = {
 		showTileRegions: false,
 		showAnchorTiles: false,
 		setViewDimensionsToMapDimensions: false,
-		water: false,
+		water: true,
 		allTilesVisible: true,
 		testActors: 0
 	}
