@@ -56,9 +56,9 @@ class Tile extends Model{
 		//Then get all tiles with lowest surface elevation 
 		var lowestSibs = lowerSibs.filter(t => t.getSurfaceElevation() === lowestSurfaceElevation);
 		//Choose randomly from lowerSibs
-		var lowerSib = lowerSibs[rand(lowestSibs.length)];
-		lowerSib.setNextTurnsWaterDepth(lowerSib.waterDepth + 1);
-		lowerSib.prepareToGainWater();
+		var lowestSib = lowestSibs[rand(lowestSibs.length)];
+		//lowestSib.setNextTurnsWaterDepth(lowestSib.waterDepth + 1);
+		lowestSib.prepareToGainWater();
 		this.prepareToLoseWater();
 	}
 
