@@ -268,7 +268,7 @@ class Tile extends Model{
 		// (maxProb - minProb) / (minEl - maxEl) = m
 		// b = y - mx
 		var minProb = .001;
-		var maxProb = .01;
+		var maxProb = .02;
 		var minEl = config.model.map.minElevation + 1; //Surface elevation
 		var maxEl = config.model.map.maxElevation + 10; //Surface elevation
 		var m = (maxProb - minProb) / (minEl - maxEl);
@@ -282,7 +282,7 @@ class Tile extends Model{
 	getRainProbability(){
 		return 1;
 		var minProb = 0;
-		var maxProb = .02;
+		var maxProb = .05;
 		var minEl = config.model.map.minElevation; //Terrain elevation
 		var maxEl = config.model.map.maxElevation + 10; //Surface elevation
 		var m = (maxProb - minProb) / (maxEl - minEl);

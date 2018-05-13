@@ -6,8 +6,8 @@ var config = {
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 50,
-			width: 50,
+			height: 90,
+			width: 90,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -45,7 +45,7 @@ var config = {
 			height: 50,
 			width: 50,
 			initialCellLength: 10, //In pixels
-			layers: ['terrain', 'elevation', 'water', 'actors',/* 'visibility',*/ 'graphics'],
+			layers: ['terrain', 'elevation', 'water', 'actors',	'visibility', 'graphics'],
 			cellBorders: false
 		},
 		messageFadeDelay: 3
@@ -56,7 +56,8 @@ var config = {
 		showAnchorTiles: false,
 		setViewDimensionsToMapDimensions: false,
 		water: true,
-		allTilesVisible: true
+		allTilesVisible: false,
+		testActors: 100
 	}
 }
 

@@ -29,7 +29,8 @@ class Map extends Model{
 			}
 		});
 
-		this.cloudWater = 200;
+		this.cloudWaterPercentage = 50;
+		this.cloudWater = Math.round(this.height * this.width * this.cloudWaterPercentage / 100);
 
 		for (var y = 0 ; y < this.height ; y++){
 			this.tiles.push([]);
@@ -327,8 +328,8 @@ class Map extends Model{
 			})
 			//Done
 			.then(() => {
-				/*
-				for (var i = 0 ; i < 100 ; i++){
+				if (config.debug.debugMode && config.debug.testActors)
+				for (var i = 0 ; i < config.debug.testActors ; i++){
 					//Place a random unit
 					this.game.addActor(
 						new actorClasses.Unit({
@@ -338,7 +339,7 @@ class Map extends Model{
 						})
 					);
 				}
-				*/
+				
 				resolve();
 			})
 			//Error
