@@ -93,6 +93,18 @@ class Game
 			}
 		)
 
+	changeSquadAlignment: (alignment) ->
+		if alignment is'none'
+			alignment = false
+		selectedSquad = $('#squad-select').val()
+		app.socket.emit(
+			'update behavior params', 
+			{
+				squad: selectedSquad,
+				alignment: alignment
+			}
+		) 
+
 	controlClickTile: (tile) ->
 
 	next: ->

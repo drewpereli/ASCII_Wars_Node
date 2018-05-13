@@ -11,10 +11,10 @@ class Cell
 		@clear() unless @cleared
 		color = hexToRGBA(color, opacity) unless opacity is 1
 		@layer.fillStyle = color
-		x = @getXPixel() - 1
-		y = @getYPixel() - 1
-		l = @getCellLength() + 2
-		@layer.fillRect(x, y, l, l)
+		x = @getXPixel()
+		y = @getYPixel()
+		l = @getCellLength()
+		@layer.fillRect(x-0, y-0, l+0, l+0)
 		if (config.view.map.cellBorders)
 			@stroke(config.view.colors.cellBorder)
 		@cleared = false
@@ -31,13 +31,13 @@ class Cell
 		y = @getYPixel()
 		l = @getCellLength()
 		@layer.fillStyle = color
-		@layer.strokeRect(x, y, l, l)
+		@layer.strokeRect(x + 1, y + 1, l - 2, l - 2)
 
 	clear: ->
 		x = @getXPixel()
 		y = @getYPixel()
 		l = @getCellLength()
-		@layer.clearRect(x-1,y-1,l+2,l+2)
+		@layer.clearRect(x-0,y-0,l+0,l+0)
 
 	drawTile: (tile) ->
 		fillColor = false

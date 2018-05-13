@@ -112,6 +112,18 @@ Game = (function() {
     });
   };
 
+  Game.prototype.changeSquadAlignment = function(alignment) {
+    var selectedSquad;
+    if (alignment === 'none') {
+      alignment = false;
+    }
+    selectedSquad = $('#squad-select').val();
+    return app.socket.emit('update behavior params', {
+      squad: selectedSquad,
+      alignment: alignment
+    });
+  };
+
   Game.prototype.controlClickTile = function(tile) {};
 
   Game.prototype.next = function() {
@@ -251,6 +263,11 @@ Input = (function() {
     $('#digging-direction-select').change((function(_this) {
       return function() {
         return app.game.changeDiggingDirection($('#digging-direction-select').val());
+      };
+    })(this));
+    $('.alignment-selection').change((function(_this) {
+      return function() {
+        return app.game.changeSquadAlignment($('.alignment-selection:checked').val());
       };
     })(this));
     $(app.view.components.map.clickableCanvas).contextmenu((function(_this) {
@@ -430,10 +447,10 @@ Cell = (function() {
       color = hexToRGBA(color, opacity);
     }
     this.layer.fillStyle = color;
-    x = this.getXPixel() - 1;
-    y = this.getYPixel() - 1;
-    l = this.getCellLength() + 2;
-    this.layer.fillRect(x, y, l, l);
+    x = this.getXPixel();
+    y = this.getYPixel();
+    l = this.getCellLength();
+    this.layer.fillRect(x - 0, y - 0, l + 0, l + 0);
     if (config.view.map.cellBorders) {
       this.stroke(config.view.colors.cellBorder);
     }
@@ -455,7 +472,7 @@ Cell = (function() {
     y = this.getYPixel();
     l = this.getCellLength();
     this.layer.fillStyle = color;
-    return this.layer.strokeRect(x, y, l, l);
+    return this.layer.strokeRect(x + 1, y + 1, l - 2, l - 2);
   };
 
   Cell.prototype.clear = function() {
@@ -463,7 +480,7 @@ Cell = (function() {
     x = this.getXPixel();
     y = this.getYPixel();
     l = this.getCellLength();
-    return this.layer.clearRect(x - 1, y - 1, l + 2, l + 2);
+    return this.layer.clearRect(x - 0, y - 0, l + 0, l + 0);
   };
 
   Cell.prototype.drawTile = function(tile) {

@@ -32,6 +32,10 @@ class Input
 			app.game.changeDiggingDirection($('#digging-direction-select').val())
 		)
 
+		$('.alignment-selection').change( =>
+			app.game.changeSquadAlignment($('.alignment-selection:checked').val())
+		)
+
 		$(app.view.components.map.clickableCanvas).contextmenu( => return false)
 
 		$("#next-btn").click( =>

@@ -79,7 +79,7 @@ var config = {
 		showAnchorTiles: false,
 		setViewDimensionsToMapDimensions: false,
 		water: false,
-		allTilesVisible: true,
+		allTilesVisible: false,
 		testActors: 100
 	}
 }

@@ -80,29 +80,16 @@ class Unit extends Actor{
 			var alignmentScore = 0;
 			if (behaviorParams.alignment) {
 				if (behaviorParams.alignment === 'E-W'){
-					//Score should be proportional absolute value of cosign
-					//var angle = Math.abs((target.x - t.x) / dist); //1 is best, 0 is worst
 					var distanceFromLine = Math.abs(target.y - t.y); //0 is best, infinity is worst
-					//var angleScore = .0001 * angle;
-					//var distanceFromLineScore = Math.pow(2, -.1 * distanceFromLine) / 2; //1 is best, 0 is worst
-					//
 					//The score is a lot better if the tile is within the rectangle of the wall
 					var distanceFromLineScore = distanceFromLine > 1 ? Math.pow(2, -.1 * distanceFromLine) / 2 : 2;
 					alignmentScore = distanceFromLineScore;
-					//If the candidate tile has squadmates to the east and west of it, it's good
-					//If to the east or west, it's alright
-					//If neither, it's bad
-					/*
-					var eActor = t.siblings[6].actor;
-					eActor &= eActor.squad === this.squad;
-					var wActor = t.siblings[3].actor;
-					wActor &= wActor.squad === this.squad;
-					alignmentScore = eActor && wActor ? 2 : eActor || wActor ? 1 : 0;
-					*/
 				}
 				else if (behaviorParams.alignment === 'N-S'){
-					//Score should be proportional absolute value of cosign
-					alignmentScore = Math.abs((target.y - t.y) / dist); 
+					var distanceFromLine = Math.abs(target.x - t.x); //0 is best, infinity is worst
+					//The score is a lot better if the tile is within the rectangle of the wall
+					var distanceFromLineScore = distanceFromLine > 1 ? Math.pow(2, -.1 * distanceFromLine) / 2 : 2;
+					alignmentScore = distanceFromLineScore;
 				}
 				if (!uniqueAlignmentScores.includes(alignmentScore)) uniqueAlignmentScores.push(alignmentScore);
 

@@ -10,7 +10,7 @@ class Squad extends Model{
 			movingTo: null,
 			moveTowardsPointWeight: 1,
 			moveTowardsSquadMatesWeight: 1,
-			alignment: 'E-W',
+			alignment: false,
 			alignmentWeight: 2,
 			digging: false,
 			diggingDirection: 0
