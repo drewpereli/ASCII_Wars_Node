@@ -15,7 +15,9 @@ Game = (function() {
     this.state;
     this.timeState = 'paused';
     this.currentlyConstructing = false;
+    this.currentlyConstructingChar = false;
     this.selectedTile = null;
+    this.hoveredTile = null;
   }
 
   Game.prototype.changeState = function(state) {
@@ -42,7 +44,12 @@ Game = (function() {
   };
 
   Game.prototype.clickTile = function(tile) {
-    if (this.state === 'raising elevation') {
+    if (this.state === 'constructing') {
+      return app.socket.emit('construct', {
+        tile: tile,
+        building: this.currentlyConstructing
+      });
+    } else if (this.state === 'raising elevation') {
       return app.socket.emit('raise elevation', tile);
     } else if (this.state === 'lowering elevation') {
       return app.socket.emit('lower elevation', tile);
@@ -64,6 +71,24 @@ Game = (function() {
         y: tile.y
       }
     });
+  };
+
+  Game.prototype.hoverTile = function(tile) {
+    if (tile === this.hoveredTile) {
+      return;
+    }
+    if (this.state === 'constructing') {
+      if (this.hoveredTile) {
+        app.view.eraseGhostConstruction(this.hoveredTile);
+      }
+      app.view.drawGhostConstruction(tile, this.currentlyConstructingChar);
+    }
+    return this.hoveredTile = tile;
+  };
+
+  Game.prototype.mouseLeaveCanvas = function() {
+    app.view.eraseGhostConstruction(this.hoveredTile);
+    return this.hoveredTile = null;
   };
 
   Game.prototype.clickDiggingCheckbox = function(checked) {
@@ -98,9 +123,10 @@ Game = (function() {
     return this.changeTimeState('paused');
   };
 
-  Game.prototype.clickCreateBuildingButton = function(building) {
+  Game.prototype.clickCreateBuildingButton = function(building, character) {
     this.changeState('constructing');
-    return this.currentlyConstructing = building;
+    this.currentlyConstructing = building;
+    return this.currentlyConstructingChar = character;
   };
 
   Game.prototype.updateMap = function(map) {
@@ -192,10 +218,20 @@ Input = (function() {
         e.preventDefault();
         switch (e.which) {
           case 1:
-            return app.game.clickTile(_this.getTileClicked(e));
+            return app.game.clickTile(_this.getTileFromEvent(e));
           case 3:
-            return app.game.rightClickTile(_this.getTileClicked(e));
+            return app.game.rightClickTile(_this.getTileFromEvent(e));
         }
+      };
+    })(this));
+    $(app.view.components.map.clickableCanvas).mousemove((function(_this) {
+      return function(e) {
+        return app.game.hoverTile(_this.getTileFromEvent(e));
+      };
+    })(this));
+    $(app.view.components.map.clickableCanvas).mouseleave((function(_this) {
+      return function(e) {
+        return app.game.mouseLeaveCanvas();
       };
     })(this));
     $('#digging-checkbox').change((function(_this) {
@@ -230,14 +266,15 @@ Input = (function() {
     })(this));
     $('.create-building-btn').click((function(_this) {
       return function(e) {
-        var building;
+        var building, character;
         building = $(e.target).data('building');
-        return app.game.clickCreateBuildingButton(building);
+        character = $(e.target).data('character');
+        return app.game.clickCreateBuildingButton(building, character);
       };
     })(this));
   }
 
-  Input.prototype.getTileClicked = function(event) {
+  Input.prototype.getTileFromEvent = function(event) {
     var cellX, cellY, x, y;
     cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
     cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);
@@ -410,7 +447,7 @@ Cell = (function() {
     x = this.getXPixel();
     y = this.getYPixel();
     l = this.getCellLength();
-    return this.layer.clearRect(x, y, l, l);
+    return this.layer.clearRect(x - 1, y - 1, l + 2, l + 2);
   };
 
   Cell.prototype.drawTile = function(tile) {
@@ -470,6 +507,14 @@ Cell = (function() {
     if (borderColor) {
       return this.stroke(borderColor);
     }
+  };
+
+  Cell.prototype.drawGhostConstruction = function(character) {
+    var color;
+    this.clear();
+    color = 'rgba(0,0,0,.5)';
+    this.write(character, color);
+    return this.stroke(color);
   };
 
   Cell.prototype.getCellLength = function() {
@@ -641,6 +686,14 @@ View = (function() {
     return results;
   };
 
+  View.prototype.drawGhostConstruction = function(tile, character) {
+    return this.getCellFromTile(tile, 'graphics').drawGhostConstruction(character);
+  };
+
+  View.prototype.eraseGhostConstruction = function(tile) {
+    return this.getCellFromTile(tile, 'graphics').clear();
+  };
+
   View.prototype.getTileFromPixels = function(x, y) {
     var cellX, cellY;
     cellX = Math.floor(x / this.components.map.currentCellLength);
@@ -745,14 +798,19 @@ View.prototype.initialize = {
     }
   },
   controlPanel: function(v) {
-    var building, buildingName, i, ref, ref1, results, squadNum;
+    var building, buildingName, i, ref, ref1, ref2, results, squadNum;
     ref = config.model.actors.buildings.producers;
     for (buildingName in ref) {
       building = ref[buildingName];
-      $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).html(building.readableName).appendTo("#construct-tab .buttons");
+      $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).data('character', building.character).html(building.readableName).appendTo("#construct-tab .buttons .producers");
+    }
+    ref1 = config.model.actors.buildings.logistics;
+    for (buildingName in ref1) {
+      building = ref1[buildingName];
+      $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).data('character', building.character).html(building.readableName).appendTo("#construct-tab .buttons .logistics");
     }
     results = [];
-    for (squadNum = i = 1, ref1 = config.maxSquads; 1 <= ref1 ? i <= ref1 : i >= ref1; squadNum = 1 <= ref1 ? ++i : --i) {
+    for (squadNum = i = 1, ref2 = config.maxSquads; 1 <= ref2 ? i <= ref2 : i >= ref2; squadNum = 1 <= ref2 ? ++i : --i) {
       results.push($("<option>").attr('value', squadNum - 1).html(squadNum).appendTo('#squad-select'));
     }
     return results;

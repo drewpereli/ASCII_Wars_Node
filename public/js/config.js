@@ -6,8 +6,8 @@ var config = {
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 60,
-			width: 60,
+			height: 50,
+			width: 50,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -21,7 +21,17 @@ var config = {
 			buildings: {
 				producers: {
 					ResidentialArea: {
-						readableName: 'Residential Area'
+						readableName: 'Residential Area',
+						character: 'R'
+					}
+				},
+				logistics: {
+					Wall: {
+						readableName: 'Wall',
+						character: 'W'
+					},
+					WaterPump: {
+						readableName: 'Water Pump',
 					}
 				}
 			}

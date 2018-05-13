@@ -5,7 +5,9 @@ class Game
 		@state
 		@timeState = 'paused'
 		@currentlyConstructing = false
+		@currentlyConstructingChar = false
 		@selectedTile = null
+		@hoveredTile = null
 
 
 	changeState: (state) ->
@@ -34,7 +36,9 @@ class Game
 
 
 	clickTile: (tile) ->
-		if @state is 'raising elevation'
+		if @state is 'constructing'
+			app.socket.emit('construct', {tile: tile, building: @currentlyConstructing})
+		else if @state is 'raising elevation'
 			app.socket.emit('raise elevation', tile)
 		else if @state is 'lowering elevation'
 			app.socket.emit('lower elevation', tile)
@@ -53,6 +57,19 @@ class Game
 				movingTo: {x: tile.x, y: tile.y}
 			}
 		)
+
+	hoverTile: (tile) ->
+		if tile is @hoveredTile 
+			return
+		if @state is 'constructing'
+			if (@hoveredTile)
+				app.view.eraseGhostConstruction(@hoveredTile)
+			app.view.drawGhostConstruction(tile, @currentlyConstructingChar)
+		@hoveredTile = tile
+
+	mouseLeaveCanvas: -> 
+		app.view.eraseGhostConstruction(@hoveredTile)
+		@hoveredTile = null
 
 	clickDiggingCheckbox: (checked) ->
 		selectedSquad = $('#squad-select').val()
@@ -85,10 +102,10 @@ class Game
 	pause: -> 
 		@changeTimeState('paused')
 
-	clickCreateBuildingButton: (building) ->
+	clickCreateBuildingButton: (building, character) ->
 		@changeState('constructing')
 		@currentlyConstructing = building
-
+		@currentlyConstructingChar = character
 
 
 	################

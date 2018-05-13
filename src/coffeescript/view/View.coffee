@@ -97,6 +97,14 @@ class View
 			)
 
 
+	drawGhostConstruction: (tile, character) -> 
+		@getCellFromTile(tile, 'graphics').drawGhostConstruction(character)
+
+
+	eraseGhostConstruction: (tile) ->
+		@getCellFromTile(tile, 'graphics').clear()
+
+
 	getTileFromPixels: (x, y)-> 
 		cellX = Math.floor(x / @components.map.currentCellLength)
 		cellY = Math.floor(y / @components.map.currentCellLength)
@@ -179,8 +187,15 @@ View.prototype.initialize =
 		for buildingName, building of config.model.actors.buildings.producers
 			$("<div>").addClass('btn btn-default create-building-btn')
 				.data('building', buildingName)
+				.data('character', building.character)
 				.html(building.readableName)
-				.appendTo("#construct-tab .buttons")
+				.appendTo("#construct-tab .buttons .producers")
+		for buildingName, building of config.model.actors.buildings.logistics
+			$("<div>").addClass('btn btn-default create-building-btn')
+				.data('building', buildingName)
+				.data('character', building.character)
+				.html(building.readableName)
+				.appendTo("#construct-tab .buttons .logistics")
 		#Command Tab
 		#Add an dropdown menu for squads
 		for squadNum in [1..config.maxSquads]

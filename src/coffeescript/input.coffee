@@ -12,8 +12,16 @@ class Input
 		$(app.view.components.map.clickableCanvas).mousedown((e) => 
 			e.preventDefault()
 			switch e.which
-				when 1 then app.game.clickTile(@getTileClicked(e))
-				when 3 then app.game.rightClickTile(@getTileClicked(e))
+				when 1 then app.game.clickTile(@getTileFromEvent(e))
+				when 3 then app.game.rightClickTile(@getTileFromEvent(e))
+		)
+
+		$(app.view.components.map.clickableCanvas).mousemove((e) => 
+			app.game.hoverTile(@getTileFromEvent(e))
+		)
+
+		$(app.view.components.map.clickableCanvas).mouseleave((e) => 
+			app.game.mouseLeaveCanvas()
 		)
 
 		$('#digging-checkbox').change( => 
@@ -40,13 +48,14 @@ class Input
 
 		$('.create-building-btn').click((e) =>
 			building = $(e.target).data('building')
-			app.game.clickCreateBuildingButton(building)
+			character = $(e.target).data('character')
+			app.game.clickCreateBuildingButton(building, character)
 		)
 
 
 
 
-	getTileClicked: (event) ->
+	getTileFromEvent: (event) ->
 
 		cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
 		cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);

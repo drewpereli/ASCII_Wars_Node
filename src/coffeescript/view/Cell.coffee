@@ -37,7 +37,7 @@ class Cell
 		x = @getXPixel()
 		y = @getYPixel()
 		l = @getCellLength()
-		@layer.clearRect(x,y,l,l)
+		@layer.clearRect(x-1,y-1,l+2,l+2)
 
 	drawTile: (tile) ->
 		fillColor = false
@@ -80,6 +80,12 @@ class Cell
 			@write(char, charColor, xOffset, yOffset)
 		if borderColor
 			@stroke(borderColor)
+
+	drawGhostConstruction: (character) ->
+		@clear()
+		color = 'rgba(0,0,0,.5)'
+		@write(character, color)
+		@stroke(color)
 
 	getCellLength: ->
 		app.view.components.map.currentCellLength
