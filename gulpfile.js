@@ -6,8 +6,6 @@ var order = require('gulp-order')
 var spawn = require('child_process').spawn
 var node;
 
-
-
 gulp.task('sass', () => {
 	return gulp.src('./src/sass/**/*.scss')
 		.pipe(sass())
@@ -38,43 +36,15 @@ gulp.task('config', () => {
 	return gulp.src('./config.js').pipe(gulp.dest('./public/js'));
 })
 
-gulp.task('server', function() {
+gulp.task('default', function() {
   gulp.run('sass')
   gulp.run('lib')
   gulp.run('config')
   gulp.run('coffee')
-  if (node) node.kill()
-  node = spawn('node', ['app/server.js'], {stdio: 'inherit'})
-  node.on('close', function (code) {
-    if (code === 8) {
-      gulp.log('Error detected, waiting for changes...');
-    }
-  });
 })
 
 
 
-
-
-
-
-gulp.task('default', () => {
-	gulp.run('server')
-	gulp.watch(
-		[
-			'./app/**/*.js',
-			'./gulpfile.js',
-			'./config.js',
-			'./src/coffeescript/**/*.coffee', 
-			'./src/sass/**/*.scss', 
-			'./public', 
-			'./src/templates/**/*.pug',
-			'./package.json'
-		], 
-		function() {
-			gulp.run('server')
-		})
-})
 
 
 
