@@ -237,6 +237,17 @@ class Tile extends Model{
 	}
 
 
+	getXDiff(tile){
+		return Math.abs(tile.x - this.x) >= this.map.width / 2 ? this.map.width - Math.abs(tile.x - this.x) : tile.x - this.x;
+
+	}
+
+
+	getYDiff(tile){
+		return Math.abs(tile.y - this.y) >= this.map.height / 2 ? this.map.height - Math.abs(tile.y - this.y) : tile.y - this.y;
+	}
+
+
 	isOpen(){
 		return !this.actor && !this.hasWater();
 	}

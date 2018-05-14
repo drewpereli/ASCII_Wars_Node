@@ -21,10 +21,13 @@ class Unit extends Actor{
 			return;
 		}
 		var behaviorParams = this.getBehaviorParams();
-		if (behaviorParams.digging){
+		var behaviorChoice;
+		if (behaviorParams.digging) behaviorChoice = Math.random() < .5 ? 'DIGGING' : 'MOVING'; 
+		else if (behaviorParams.movingTo) behaviorChoice = 'MOVING';
+		if (behaviorChoice === 'DIGGING'){
 			this.dig(behaviorParams.diggingDirection);
 		}
-		else if (behaviorParams.movingTo){
+		else if (behaviorChoice === 'MOVING'){
 			if (randomNum < .2)
 				this.moveRandomly();
 			else
@@ -53,8 +56,8 @@ class Unit extends Actor{
 
 	moveTowardsSquadMovePoint(){
 		var behaviorParams = this.getBehaviorParams();
-		var target = behaviorParams.movingTo;
-		if (!target) return;
+		if (!behaviorParams.movingTo) return;
+		var target = this.tile.map.getTile(behaviorParams.movingTo.x, behaviorParams.movingTo.y);
 		if (this.tile.siblings.includes(target) && this.canOccupy(target))
 			return this.move(target);
 		var scores = [0,0,0,0,0,0,0,0];
@@ -80,13 +83,13 @@ class Unit extends Actor{
 			var alignmentScore = 0;
 			if (behaviorParams.alignment) {
 				if (behaviorParams.alignment === 'E-W'){
-					var distanceFromLine = Math.abs(target.y - t.y); //0 is best, infinity is worst
+					var distanceFromLine = Math.abs(target.getYDiff(t)); //0 is best, infinity is worst
 					//The score is a lot better if the tile is within the rectangle of the wall
 					var distanceFromLineScore = distanceFromLine > 1 ? Math.pow(2, -.1 * distanceFromLine) / 2 : 2;
 					alignmentScore = distanceFromLineScore;
 				}
 				else if (behaviorParams.alignment === 'N-S'){
-					var distanceFromLine = Math.abs(target.x - t.x); //0 is best, infinity is worst
+					var distanceFromLine = Math.abs(target.getXDiff(t)); //0 is best, infinity is worst
 					//The score is a lot better if the tile is within the rectangle of the wall
 					var distanceFromLineScore = distanceFromLine > 1 ? Math.pow(2, -.1 * distanceFromLine) / 2 : 2;
 					alignmentScore = distanceFromLineScore;
@@ -159,6 +162,8 @@ class Unit extends Actor{
 			return;
 		if (this.tile.siblings[dir].elevation >= config.model.map.maxElevation)
 			return;
+		var elDiff = this.tile.siblings[dir].elevation - this.tile.elevation;
+		this.timeUntilNextAction = elDiff <= 1 ? 1 : Math.round(elDiff);
 		this.tile.decrementElevation();
 		this.tile.siblings[dir].incrementElevation();
 	}
