@@ -23,10 +23,15 @@ function initializeHTTPRoutes(_app){
 function initializeIORoutes(_io){
 	io = _io;
 	game = require('./controller/game')(io);
+
 	io.on('connection', (socket) => {
 		console.log('connecting...');
 		if (game.acceptingPlayers() && !authenticatePlayer(socket.id)){
 			game.addPlayer(socket);
+			initializePlayerSocketRoutes(socket);
+		}
+		else if (process.env.DEBUG_MODE){
+			game.addPlayerDebug(socket);
 			initializePlayerSocketRoutes(socket);
 		}
 		else {
@@ -36,6 +41,7 @@ function initializeIORoutes(_io){
 		}
 	});
 }
+
 
 
 function initializePlayerSocketRoutes(socket){

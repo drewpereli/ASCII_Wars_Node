@@ -57,7 +57,7 @@ gulp.task('default', () => {
 			'./package.json'
 		], 
 		function() {
-			gulp.run('server')
+			gulp.run('compile')
 		})
 })
 

@@ -1,7 +1,7 @@
 
 var config = {
 	gameStartCountdownTime: 0, //In seconds
-	maxPlayers: 2,
+	maxPlayers: 1,
 	tickTime: 0, //In milliseconds
 	maxSquads: 100,
 	model: {

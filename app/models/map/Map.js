@@ -353,6 +353,14 @@ class Map extends Model{
 
 
 
+	placeCommandCenterFor(p) {
+		var t = this.getRandomOpenTile();
+		var commandCenter = new actorClasses.buildings.CommandCenter({tile: t, player: p});
+		this.game.addActor(commandCenter);
+	}
+
+
+
 	getRandomTile() {
 		return this.getTile(rand(this.width), rand(this.height));
 	}

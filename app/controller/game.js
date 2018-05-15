@@ -54,8 +54,8 @@ class Game{
 
 
 	acceptingPlayers(){
-		return (this.state === 'waiting for players' || this.state === 'counting down') 
-					&& this.players.length < config.maxPlayers;
+		return ((this.state === 'waiting for players' || this.state === 'counting down') 
+					&& this.players.length < config.maxPlayers);
 	}
 
 
@@ -88,10 +88,18 @@ class Game{
 	}
 
 
+	addPlayerDebug(socket){
+		var p = new Player({socket: socket, team: this.players.length, game: this});
+		this.players.push(p);
+		this.map.placeCommandCenterFor(p);
+		this.emitMap();
+	}
+
+
 	addSpectator(socket){
 		this.spectators.push({socket: socket});
 		if (this.state === 'default')
-			this.emitMap();
+			this.emitMapToSpectator(socket);
 	}
 
 
@@ -127,6 +135,11 @@ class Game{
 			var mapInfo = this.map.getClientDataFor(player);
 			player.socket.emit('map updated', JSON.stringify(mapInfo));
 		}
+	}
+
+	emitMapToSpectator(socket){
+		var mapInfo = this.map.getSpectatorData();
+		socket.emit('map updated', JSON.stringify(mapInfo));
 	}
 
 	emitTile(t){
