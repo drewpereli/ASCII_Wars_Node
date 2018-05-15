@@ -1,6 +1,12 @@
 html
 	head
 		title ASCII Wars
+
+
+		script(type="text/javascript").
+			if (typeof module === 'object') window.module = module; module = undefined;
+
+
 		link(
 		 	rel="stylesheet" 
 		 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
@@ -33,6 +39,10 @@ html
 		script(src="/js/config.js")
 		
 		script(src="/js/app.js")
+
+		script(type="text/javascript").
+			if (window.module) module = window.module;
+
 	
 	body
 		.container-fluid

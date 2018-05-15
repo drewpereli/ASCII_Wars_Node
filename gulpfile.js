@@ -36,14 +36,30 @@ gulp.task('config', () => {
 	return gulp.src('./config.js').pipe(gulp.dest('./public/js'));
 })
 
-gulp.task('default', function() {
+gulp.task('compile', function() {
   gulp.run('sass')
   gulp.run('lib')
   gulp.run('config')
   gulp.run('coffee')
 })
 
-
+gulp.task('default', () => {
+	gulp.run('compile')
+	gulp.watch(
+		[
+			'./app/**/*.js',
+			'./gulpfile.js',
+			'./config.js',
+			'./src/coffeescript/**/*.coffee', 
+			'./src/sass/**/*.scss', 
+			'./public', 
+			'./src/templates/**/*.pug',
+			'./package.json'
+		], 
+		function() {
+			gulp.run('server')
+		})
+})
 
 
 
