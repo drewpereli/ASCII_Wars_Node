@@ -80,7 +80,8 @@ var config = {
 		setViewDimensionsToMapDimensions: false,
 		water: false,
 		allTilesVisible: false,
-		testActors: 100
+		testActors: 100,
+		flatMap: true
 	}
 }
 

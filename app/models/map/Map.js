@@ -285,20 +285,22 @@ class Map extends Model{
 					while (true);
 				}
 
-				//Set each regions tiles
-				console.log('setting region tiles...');
-				setRegionTiles(regions);
-				//For each region, set the anchor tiles
-				console.log('setting region anchor tiles');
-				regions.forEach(r => setRegionAnchorTiles(r));
-				console.log('setting elevation');
-				setElevations(regions);
-				console.log('smoothing anchor tiles');
-				smoothAnchorTiles(regions);
-				console.log('smoothing elevations');
-				smoothElevations();
-				console.log('normalizing elevations');
-				normalizeElevations();
+				if (!config.debug.debugMode || !config.debug.flatMap){
+					//Set each regions tiles
+					console.log('setting region tiles...');
+					setRegionTiles(regions);
+					//For each region, set the anchor tiles
+					console.log('setting region anchor tiles');
+					regions.forEach(r => setRegionAnchorTiles(r));
+					console.log('setting elevation');
+					setElevations(regions);
+					console.log('smoothing anchor tiles');
+					smoothAnchorTiles(regions);
+					console.log('smoothing elevations');
+					smoothElevations();
+					console.log('normalizing elevations');
+					normalizeElevations();
+				}
 				console.log('adding water');
 				addWater(regions)
 				.then(() => resolve())

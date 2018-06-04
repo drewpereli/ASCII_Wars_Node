@@ -8,6 +8,8 @@ class Unit extends Actor{
 		args.maxHealth = 100;
 		args.moveTime = 1;
 		args.defense = 4;
+		args.damage = 20;
+		args.attackTime = 1;
 		args.character = '\u2022';
 		args.type = 'unit';
 		super(args);
@@ -22,11 +24,15 @@ class Unit extends Actor{
 		}
 		var behaviorParams = this.getBehaviorParams();
 		var behaviorChoice;
-		if (behaviorParams.digging) behaviorChoice = Math.random() < .5 ? 'DIGGING' : 'MOVING'; 
+		var enemy;
+		if (enemy = this.canSeeEnemy()) behaviorChoice = 'ATTACKING';
+		else if (behaviorParams.digging) behaviorChoice = Math.random() < .5 ? 'DIGGING' : 'MOVING'; 
 		else if (behaviorParams.movingTo) behaviorChoice = 'MOVING';
 		if (behaviorChoice === 'DIGGING'){
 			this.dig(behaviorParams.diggingDirection);
 		}
+		else if (behaviorChoice === 'ATTACKING')
+			this.attack(enemy);
 		else if (behaviorChoice === 'MOVING'){
 			if (randomNum < .2)
 				this.moveRandomly();
@@ -155,6 +161,11 @@ class Unit extends Actor{
 		if (candidates.includes(this.tile)) return;
 		this.move(candidates[rand(candidates.length)]);
 	}
+
+	attack(enemy){
+		enemy.takeDamage(this.damage);
+	}
+
 
 	dig(dir){
 		//Make sure the current tile is above the lowest elevation, and the tile in the direction of dir is below the highest elevation

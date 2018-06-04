@@ -34,6 +34,13 @@ class Actor extends Model{
 	}
 
 
+	takeDamage(damage){
+		this.health -= damage;
+		console.log(this.health);
+		if (this.health <= 0) this.die();
+	}
+
+
 	tick(){
 		this.timeUntilNextAction--;
 		if (this.timeUntilNextAction <= 0)
@@ -79,6 +86,14 @@ class Actor extends Model{
 
 	canOccupy(tile){
 		return this.constructor.canOccupy(tile);
+	}
+
+	canSeeEnemy(){
+		var enemyTile = this.getVisibleTiles().find(t => {
+			return t.actor && t.actor.team !== this.team;
+		});
+		if (enemyTile) return enemyTile.actor;
+		else return false;
 	}
 
 }

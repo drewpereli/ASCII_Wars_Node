@@ -1,0 +1,1 @@
+Make 'can see enemy' return random enemy it can see instead of first one, or maybe return all seen enemies or some shit
