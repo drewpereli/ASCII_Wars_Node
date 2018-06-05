@@ -43,7 +43,7 @@ function initializeHTTPRoutes(_app){
 
 function initializeIORoutes(_io){
 	io = _io;
-	game = require('./controller/game')(io);
+	game = require('./controller/game')(io, ngrok);
 
 
 	io.on('connection', (socket) => {
@@ -190,6 +190,7 @@ async function hostGame(){
 	var gameId = hostUrl.substr(8).split('.')[0];
 	return gameId;
 }
+
 
 
 module.exports = function(app, io){

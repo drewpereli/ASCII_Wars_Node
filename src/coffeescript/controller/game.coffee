@@ -139,6 +139,10 @@ class Game
 		app.map.updateTile(tile.x, tile.y, tile)
 		app.view.updateTile(tile)
 
+	end: () ->
+		
+		window.location = '/';
+
 
 
 

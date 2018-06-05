@@ -11,12 +11,13 @@ const Map = require('../models/map/Map');
 class Game{
 
 
-	constructor(io) {
+	constructor(io, ngrok) {
 		this.state = 'waiting for players';
 		this.players = [];
 		this.spectators = [];
 		this.map;
 		this.io = io;
+		this.ngrok = ngrok;
 		this.ticks = 0;
 		this.validGameStates = [
 			'waiting for players',
@@ -113,16 +114,24 @@ class Game{
 
 	killPlayer(player){
 		var playerIndex = this.players.indexOf(player);
-		this.emitMessage('Player ' + playerIndex + ' dead!');
+		this.emitMessageToPlayer('You died!', player);
 		//Kill all their actors
 		this.actors.forEach(a => {
 			if (a.dead) return;
 			if (a.player === player) a.die();
 		});
+		this.players.splice(playerIndex, 1);
+		console.log(this.players.length);
 		if (this.players.length === 1) {
-			this.emit('player win')
-			this.emitMessage('Game over!');
+			console.log('game over');
+			this.emitMessageToPlayer('You won!', this.players[0]);
 			this.changeState('game over');
+			setTimeout(() => {
+				this.ngrok.disconnect();
+				this.emit('game over');
+				delete this;
+			}, 
+			1000);
 		}
 	}
 
@@ -154,6 +163,13 @@ class Game{
 			throw new Error('"Message" must be a string. Instead got ' + (typeof message));
 		}
 		this.io.emit('message', message);
+	}
+
+	emitMessageToPlayer(message, player){
+		if (typeof message !== 'string'){
+			throw new Error('"Message" must be a string. Instead got ' + (typeof message));
+		}
+		player.socket.emit('message', message);
 	}
 
 
@@ -338,8 +354,8 @@ class Game{
 
 
 
-module.exports = (io) => {
-	return new Game(io);
+module.exports = (io, ngrok) => {
+	return new Game(io, ngrok);
 }
 
 

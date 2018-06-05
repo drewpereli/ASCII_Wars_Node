@@ -19,4 +19,8 @@ class Socket
 		)
 		@io.on('player added', (numPlayers) => app.view.addPlayer(numPlayers))
 		@io.on('game start', () => app.view.startGame())
+		@io.on('game over', () => 
+			@io.disconnect()
+			app.game.end()
+		)
 		return @io

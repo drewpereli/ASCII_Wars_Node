@@ -157,6 +157,10 @@ Game = (function() {
     return app.view.updateTile(tile);
   };
 
+  Game.prototype.end = function() {
+    return window.location = '/';
+  };
+
   return Game;
 
 })();
@@ -218,6 +222,11 @@ Socket = (function() {
     this.io.on('game start', (function(_this) {
       return function() {
         return app.view.startGame();
+      };
+    })(this));
+    this.io.on('game over', (function(_this) {
+      return function() {
+        return app.game.end();
       };
     })(this));
     return this.io;
