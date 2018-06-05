@@ -7,3 +7,10 @@
     position: absolute;
     top: 0;
     left: 0; }
+
+ul.menu > li {
+  text-align: center;
+  list-style-type: none;
+  padding: .5em; }
+  ul.menu > li.selected {
+    background-color: pink; }

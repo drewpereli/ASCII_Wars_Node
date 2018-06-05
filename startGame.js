@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
@@ -6,6 +8,8 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
+var server = require('./app/server')
+server.start()
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -20,7 +24,7 @@ function createWindow () {
                   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:8100/game');
+  mainWindow.loadURL('http://localhost:' + process.env.SOCKET);
   //mainWindow.loadURL('https://google.com/');
 
   // Open the DevTools.
@@ -56,6 +60,7 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

@@ -161,6 +161,33 @@ Game = (function() {
 
 })();
 
+$(function() {
+  $('ul.menu > li').first().addClass('selected');
+  return $('ul.menu').each((function(_this) {
+    return function(index, menu) {
+      return $('body').keydown(function(e) {
+        var dir, functionName, newlySelectedIndex, numItems, selectedItem, selectedItemIndex;
+        if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Enter') {
+          return;
+        }
+        event.preventDefault();
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+          selectedItemIndex = $(menu).find('.selected').index();
+          dir = e.key === 'ArrowUp' ? 1 : -1;
+          numItems = $(menu).children('li').length;
+          newlySelectedIndex = (numItems + selectedItemIndex + dir) % numItems;
+          $(menu).find('.selected').removeClass('selected');
+          return $(menu).find('li').eq(newlySelectedIndex).addClass('selected');
+        } else if (e.key === 'Enter') {
+          selectedItem = $(menu).find('.selected');
+          functionName = selectedItem.data('action');
+          return window[functionName](selectedItem[0]);
+        }
+      });
+    };
+  })(this));
+});
+
 var Socket;
 
 Socket = (function() {

@@ -15,3 +15,12 @@ body {
 		left: 0;
 	}
 }
+
+ul.menu > li {
+	text-align: center;
+	list-style-type: none;
+	padding: .5em;
+	&.selected {
+		background-color: pink;
+	}
+}

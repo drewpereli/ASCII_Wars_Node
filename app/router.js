@@ -8,7 +8,8 @@ function initializeHTTPRoutes(_app){
 	app = _app;
 	//Home page
 	app.get('/', (req, res) => {
-		res.render('index');
+		console.log('here');
+		res.render('start');
 	});
 
 

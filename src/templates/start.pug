@@ -1,0 +1,14 @@
+
+extends layouts/page
+		
+block scripts
+	script.
+		function hostGame(item){
+			window.location = '/game';
+		}
+
+block content
+	h1 ASCII Wars
+	ul.menu
+		li(data-action="hostGame") Host Game
+		li(data-action="joinGame") Join Game
