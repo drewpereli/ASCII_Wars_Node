@@ -4,21 +4,33 @@ const ngrok = require('ngrok');
 var app;
 var io;
 var game;
+var socketCount = 0;
 
 function initializeHTTPRoutes(_app){
 	app = _app;
 	//Home page
 	app.get('/', (req, res) => {
-		console.log('here');
-		res.render('start');
+		//If we're the first to connect, i.e. opening up the game
+		if (socketCount === 0)
+			res.render('start');
+		//Else we're coming in from an ngrok link
+		else
+			res.render('game')
 	});
 
 
 	app.get('/hostGame/', (req, res) => {
 		hostGame()
 		.then(url => {
-			res.render('hostGame');
+			//res.render('hostGame', {hostUrl: url});
+			console.log(url);
+			res.render('game');
 		})
+	});
+
+
+	app.get('/joinGame/', (req, res) => {
+		res.render('joinGame');
 	});
 }
 
@@ -30,6 +42,7 @@ function initializeIORoutes(_io){
 
 	io.on('connection', (socket) => {
 		console.log('connecting...');
+		socketCount++;
 		if (game.acceptingPlayers() && !authenticatePlayer(socket.id)){
 			game.addPlayer(socket);
 			initializePlayerSocketRoutes(socket);
@@ -85,15 +98,11 @@ function initializePlayerSocketRoutes(socket){
 	});
 
 
-	/*
+	
 	socket.on('disconnect', () => {
-		console.log('socket disconnecting...');
-		var p = authenticatePlayer(socket);
-		if (!p) return;
-		//game.playerQuit(p);
-		game.restart();
+		socketCount--;
 	});
-	*/
+	
 
 
 	if (process.env.DEBUG_MODE){
@@ -170,7 +179,7 @@ function authenticatePlayer(socket){
 
 
 async function hostGame(){
-	const hostUrl = await ngrok.connect();
+	const hostUrl = await ngrok.connect(process.env.SOCKET);
 	return hostUrl;
 }
 

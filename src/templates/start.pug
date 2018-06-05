@@ -3,8 +3,12 @@ extends layouts/page
 		
 block scripts
 	script.
-		function hostGame(item){
+		function hostGame(){
 			window.location = '/hostGame';
+		}
+
+		function joinGame(){
+			window.location = '/joinGame';
 		}
 
 block content

@@ -22,8 +22,7 @@ function start(){
 
 
 module.exports = {
-	start: start,
-	hostGame: hostGame
+	start: start
 };
 
 
