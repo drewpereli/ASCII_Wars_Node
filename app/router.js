@@ -1,5 +1,6 @@
 require('dotenv').config();
 const config = require('../config');
+const ngrok = require('ngrok');
 var app;
 var io;
 var game;
@@ -13,9 +14,11 @@ function initializeHTTPRoutes(_app){
 	});
 
 
-	app.get('/game/', (req, res) => {
-		//Most of the logic for this is in the socket connection event
-		res.render('game');
+	app.get('/hostGame/', (req, res) => {
+		hostGame()
+		.then(url => {
+			res.render('hostGame');
+		})
 	});
 }
 
@@ -163,6 +166,12 @@ function initializeSpectatorSocketRoutes(socket){
 
 function authenticatePlayer(socket){
 	return game.getPlayerFromSocket(socket);
+}
+
+
+async function hostGame(){
+	const hostUrl = await ngrok.connect();
+	return hostUrl;
 }
 
 

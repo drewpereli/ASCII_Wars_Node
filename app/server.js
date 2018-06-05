@@ -21,7 +21,10 @@ function start(){
 }
 
 
-module.exports = {start: start};
+module.exports = {
+	start: start,
+	hostGame: hostGame
+};
 
 
 
