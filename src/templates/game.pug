@@ -2,22 +2,28 @@
 extends layouts/page
 		
 block content
-	.row
-		.col-xs-12
-			include components/message
-	.row
-		.col-xs-3
-			include components/infoPanel
-		.col-xs-6
-			include components/map
-		.col-xs-3
-			include components/controlPanel
-	.row
-		.col-xs-12
-			include components/timePanel
-	.row
-		.col-xs-12
-			include components/debugPanel		
+
+	div#preGameScreen
+		div Num players:  
+			span#playerCount 0
+
+	div.hidden#gameScreen
+		.row
+			.col-xs-12
+				include components/message
+		.row
+			.col-xs-3
+				include components/infoPanel
+			.col-xs-6
+				include components/map
+			.col-xs-3
+				include components/controlPanel
+		.row
+			.col-xs-12
+				include components/timePanel
+		.row
+			.col-xs-12
+				include components/debugPanel		
 
 	script.
 		init();

@@ -17,4 +17,6 @@ class Socket
 				app.game.updateTile(tile)
 			)
 		)
+		@io.on('player added', (numPlayers) => app.view.addPlayer(numPlayers))
+		@io.on('game start', () => app.view.startGame())
 		return @io

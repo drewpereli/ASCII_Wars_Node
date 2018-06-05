@@ -36,7 +36,6 @@ class Actor extends Model{
 
 	takeDamage(damage){
 		this.health -= damage;
-		console.log(this.health);
 		if (this.health <= 0) this.die();
 	}
 

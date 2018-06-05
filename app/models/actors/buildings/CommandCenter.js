@@ -14,6 +14,11 @@ class CommandCenter extends Building{
 	act(){
 		
 	}
+
+	die(){
+		super.die();
+		this.game.killPlayer(this.player);
+	}
 }
 
 

@@ -1,4 +1,8 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+const dotenvParseVariables = require('dotenv-parse-variables');
+let env = dotenv.config({})
+if (env.error) throw env.error;
+env = dotenvParseVariables(env.parsed);
 const config = require('../config');
 const url = require('url');
 const ngrok = require('ngrok');
@@ -41,21 +45,23 @@ function initializeIORoutes(_io){
 	io = _io;
 	game = require('./controller/game')(io);
 
+
 	io.on('connection', (socket) => {
 		console.log('connecting...');
 		socketCount++;
-		if (game.acceptingPlayers() && !authenticatePlayer(socket.id)){
+		if (game.acceptingPlayers() && !authenticatePlayer(socket)){
 			game.addPlayer(socket);
 			initializePlayerSocketRoutes(socket);
 		}
-		else if (process.env.DEBUG_MODE){
+		else if (env.DEBUG_MODE){
 			game.addPlayerDebug(socket);
 			initializePlayerSocketRoutes(socket);
 		}
 		else {
-			//This is super sketchy, because you could just open a new tab and spectate, but whatevs
-			game.addSpectator(socket);
-			initializeSpectatorSocketRoutes(socket);
+			console.log('Cant add player');
+			if (!game.acceptingPlayers()) console.log('Game no longer accepting players');
+			else if (authenticatePlayer(socket)) console.log('You have already joined');
+			else console.log('Unknown reason. Check error log?');
 		}
 	});
 }
@@ -106,7 +112,7 @@ function initializePlayerSocketRoutes(socket){
 	
 
 
-	if (process.env.DEBUG_MODE){
+	if (env.DEBUG_MODE){
 		var actorClasses = require('require-dir-all')(
 			'models/actors', {recursive: true}
 		);
@@ -180,7 +186,7 @@ function authenticatePlayer(socket){
 
 
 async function hostGame(){
-	const hostUrl = await ngrok.connect(process.env.SOCKET);
+	const hostUrl = await ngrok.connect(env.SOCKET);
 	var gameId = hostUrl.substr(8).split('.')[0];
 	return gameId;
 }

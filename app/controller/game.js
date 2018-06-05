@@ -1,4 +1,9 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+const dotenvParseVariables = require('dotenv-parse-variables');
+ 
+let env = dotenv.config({})
+if (env.error) throw env.error;
+env = dotenvParseVariables(env.parsed);
 const config = require('../../config');
 const Player = require('../models/player/Player');
 const Map = require('../models/map/Map');
@@ -17,7 +22,7 @@ class Game{
 			'waiting for players',
 			'counting down',
 			'default',
-			'ending'
+			'game over'
 		];
 
 
@@ -37,6 +42,7 @@ class Game{
 
 	start() {
 		this.changeState('default');
+		this.emit('game start');
 		//Create a new map
 		this.emitMessage('Generating map');
 		this.map = new Map(this);
@@ -44,7 +50,6 @@ class Game{
 		.then(() => {
 			this.emitMessage('Map finished generating');
 			this.emitMap();
-			console.log('Actor length: ' + this.actors.length);
 		})
 		.catch( err => {
 			console.log(err);
@@ -61,6 +66,7 @@ class Game{
 
 	beginGameStartCountdown(seconds){
 		this.changeState('counting down');
+		this.emit('game starting');
 		var countDown = (second) => {
 			this.emitMessage(second + ' seconds until game starts');
 			if (second === 0){
@@ -80,9 +86,11 @@ class Game{
 
 
 	addPlayer(socket){
+		console.log('Adding player');
 		this.players.push(new Player({socket: socket, team: this.players.length, game: this}));
+		this.emit('player added', this.players.length);
 		//If this is at least the second player, start the game countdown if it hasn't already started
-		if (this.players.length >= process.env.MIN_PLAYERS && this.state !== 'counting down'){
+		if (this.players.length >= env.MIN_PLAYERS && this.state !== 'counting down'){
 			this.beginGameStartCountdown(config.gameStartCountdownTime);
 		}
 	}
@@ -103,6 +111,22 @@ class Game{
 	}
 
 
+	killPlayer(player){
+		var playerIndex = this.players.indexOf(player);
+		this.emitMessage('Player ' + playerIndex + ' dead!');
+		//Kill all their actors
+		this.actors.forEach(a => {
+			if (a.dead) return;
+			if (a.player === player) a.die();
+		});
+		if (this.players.length === 1) {
+			this.emit('player win')
+			this.emitMessage('Game over!');
+			this.changeState('game over');
+		}
+	}
+
+
 
 	addActor(actor){
 		this.actors.push(actor);
@@ -120,6 +144,10 @@ class Game{
 	*
 	*
 	*/
+
+	emit(event, data=null){
+		this.io.emit(event, data);
+	}
 
 	emitMessage(message){
 		if (typeof message !== 'string'){
@@ -143,7 +171,6 @@ class Game{
 	}
 
 	emitTile(t){
-		console.log('emitting tile');
 		for (var i in this.players){
 			var player = this.players[i];
 			player.socket.emit('tile updated', JSON.stringify(t.getClientDataFor(player)));

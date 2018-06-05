@@ -1,7 +1,7 @@
 
 var config = {
 	gameStartCountdownTime: 0, //In seconds
-	maxPlayers: 1,
+	maxPlayers: 2,
 	tickTime: 0, //In milliseconds
 	maxSquads: 100,
 	model: {
@@ -80,7 +80,7 @@ var config = {
 		setViewDimensionsToMapDimensions: false,
 		water: false,
 		allTilesVisible: false,
-		testActors: 100,
+		testActors: 50,
 		flatMap: true
 	}
 }

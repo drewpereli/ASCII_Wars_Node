@@ -1,10 +1,14 @@
-
-require('dotenv').config();
+const dotenv = require('dotenv');
+const dotenvParseVariables = require('dotenv-parse-variables');
+ 
+let env = dotenv.config({})
+if (env.error) throw env.error;
+env = dotenvParseVariables(env.parsed);
 const config = require('../config');
 const path = require('path');
 const express = require('express');
 const app = express();
-var server = app.listen(Number(process.env.SOCKET));
+var server = app.listen(Number(env.SOCKET));
 var io = require('socket.io').listen(server);
 
 
@@ -14,7 +18,7 @@ function start(){
 	app.use(express.static('public'));
 	//Templates
 	app.set('view engine', 'pug');
-	app.set('views', process.env.VIEWS_DIR);
+	app.set('views', env.VIEWS_DIR);
 
 	//Set up the routes
 	require('./router')(app, io);
