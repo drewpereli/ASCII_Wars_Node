@@ -1,5 +1,6 @@
 require('dotenv').config();
 const config = require('../config');
+const url = require('url');
 const ngrok = require('ngrok');
 var app;
 var io;
@@ -21,9 +22,9 @@ function initializeHTTPRoutes(_app){
 
 	app.get('/hostGame/', (req, res) => {
 		hostGame()
-		.then(url => {
+		.then(gameId => {
 			//res.render('hostGame', {hostUrl: url});
-			console.log(url);
+			console.log(gameId);
 			res.render('game');
 		})
 	});
@@ -180,7 +181,8 @@ function authenticatePlayer(socket){
 
 async function hostGame(){
 	const hostUrl = await ngrok.connect(process.env.SOCKET);
-	return hostUrl;
+	var gameId = hostUrl.substr(8).split('.')[0];
+	return gameId;
 }
 
 

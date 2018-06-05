@@ -5,13 +5,13 @@ block scripts
 	script.
 		$(() =>{
 			$('#joinButton').click(() => {
-				var url = $('#gameUrl').val();
-				window.location = url;
+				var id = $('#gameId').val();
+				window.location = 'https://' + id + '.ngrok.io/';
 			});
 		});
 
 block content
 	h2 Join Game
-	label(for="gameUrl")
-	input#gameUrl
+	label(for="gameId")
+	input#gameId
 	button#joinButton(type="button") Join
