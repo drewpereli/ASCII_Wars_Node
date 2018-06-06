@@ -680,6 +680,16 @@ View = (function() {
     });
   };
 
+  View.prototype.addPlayer = function(numPlayers) {
+    this.displayMessage('Player ' + numPlayers + ' added');
+    return $('#playerCount').html(numPlayers);
+  };
+
+  View.prototype.startGame = function() {
+    $('#preGameScreen').addClass('hidden');
+    return $('#gameScreen').removeClass('hidden');
+  };
+
   View.prototype.moveMap = function(dirIndex) {
     switch (dirIndex) {
       case 0:

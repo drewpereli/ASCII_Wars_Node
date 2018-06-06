@@ -119,7 +119,6 @@ class Unit extends Actor{
 		uniqueSurroundingSquadMates.sort((a, b) => a - b);
 		if (behaviorParams.alignment)
 			uniqueAlignmentScores.sort((a, b) => a - b);
-		//console.log(uniqueDistances);
 		//Set the scores
 		//This part is a bit tricky
 		//For distance and num surrounding mates

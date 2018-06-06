@@ -60,6 +60,16 @@ class Player extends Model{
 		return true;
 	}
 
+
+	emitTo(event, data=null){
+		this.socket.emit(event, data);
+	}
+
+
+	emitMessageTo(message){
+		this.emitTo('message', message);
+	}
+
 }
 
 module.exports = Player;

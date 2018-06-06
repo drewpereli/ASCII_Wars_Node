@@ -1,4 +1,8 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+const dotenvParseVariables = require('dotenv-parse-variables');
+let env = dotenv.config({})
+if (env.error) throw env.error;
+env = dotenvParseVariables(env.parsed);
 const config = require('../config');
 const url = require('url');
 const ngrok = require('ngrok');
@@ -11,12 +15,13 @@ function initializeHTTPRoutes(_app){
 	app = _app;
 	//Home page
 	app.get('/', (req, res) => {
-		//If we're the first to connect, i.e. opening up the game
-		if (socketCount === 0)
-			res.render('start');
-		//Else we're coming in from an ngrok link
-		else
-			res.render('game')
+		console.log('Request to /, socket count: ', socketCount);
+		res.render('game');
+	});
+
+
+	app.get('/startScreen', (req, res) => {
+		res.render('start');
 	});
 
 
@@ -26,6 +31,9 @@ function initializeHTTPRoutes(_app){
 			//res.render('hostGame', {hostUrl: url});
 			console.log(gameId);
 			res.render('game');
+		})
+		.catch(err => {
+			console.log(err);
 		})
 	});
 
@@ -41,23 +49,41 @@ function initializeIORoutes(_io){
 	io = _io;
 	game = require('./controller/game')(io);
 
+
 	io.on('connection', (socket) => {
 		console.log('connecting...');
 		socketCount++;
-		if (game.acceptingPlayers() && !authenticatePlayer(socket.id)){
+		socket.on('disconnect', (socket) => {
+			console.log('Got disconnect!');
+			socketCount--;
+			console.log('New socket count: ', socketCount);
+			//If game over
+			if (socketCount === 0){
+				console.log('Disconnecting ngrok tunnel');
+				ngrok.disconnect();
+				game = require('./controller/game')(io); //Reset game
+			}
+		})
+		if (game.acceptingPlayers() && !authenticatePlayer(socket)){
 			game.addPlayer(socket);
 			initializePlayerSocketRoutes(socket);
 		}
-		else if (process.env.DEBUG_MODE){
+		else if (env.DEBUG_MODE){
 			game.addPlayerDebug(socket);
 			initializePlayerSocketRoutes(socket);
 		}
 		else {
-			//This is super sketchy, because you could just open a new tab and spectate, but whatevs
-			game.addSpectator(socket);
-			initializeSpectatorSocketRoutes(socket);
+			console.log('Cant add player');
+			if (!game.acceptingPlayers()) console.log('Game no longer accepting players');
+			else if (authenticatePlayer(socket)) console.log('You have already joined');
+			else console.log('Unknown reason. Check error log?');
 		}
 	});
+}
+
+
+function deleteIORoutes(_io){
+	delete _io;
 }
 
 
@@ -100,13 +126,9 @@ function initializePlayerSocketRoutes(socket){
 
 
 	
-	socket.on('disconnect', () => {
-		socketCount--;
-	});
-	
 
 
-	if (process.env.DEBUG_MODE){
+	if (env.DEBUG_MODE){
 		var actorClasses = require('require-dir-all')(
 			'models/actors', {recursive: true}
 		);
@@ -169,9 +191,6 @@ function initializePlayerSocketRoutes(socket){
 }
 
 
-function initializeSpectatorSocketRoutes(socket){
-	socket.on('quit', () => {});
-}
 
 
 function authenticatePlayer(socket){
@@ -180,10 +199,11 @@ function authenticatePlayer(socket){
 
 
 async function hostGame(){
-	const hostUrl = await ngrok.connect(process.env.SOCKET);
+	const hostUrl = await ngrok.connect(env.SOCKET);
 	var gameId = hostUrl.substr(8).split('.')[0];
 	return gameId;
 }
+
 
 
 module.exports = function(app, io){

@@ -24,7 +24,7 @@ function createWindow () {
                   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:' + process.env.SOCKET);
+  mainWindow.loadURL('http://localhost:' + process.env.SOCKET + '/startScreen');
   //mainWindow.loadURL('https://google.com/');
 
   // Open the DevTools.

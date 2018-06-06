@@ -7,12 +7,17 @@ class CommandCenter extends Building{
 		arguments[0].name = 'command_center';
 		arguments[0].readableName = 'Command Center';
 		arguments[0].character = 'c';
-		arguments[0].maxHealth = 100;
+		arguments[0].maxHealth = 1;
 		super(arguments[0]);
 	}
 
 	act(){
 		
+	}
+
+	die(){
+		super.die();
+		this.game.killPlayer(this.player);
 	}
 }
 

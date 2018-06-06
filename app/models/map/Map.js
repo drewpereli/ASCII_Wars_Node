@@ -263,7 +263,6 @@ class Map extends Model{
 				//Break up map into regions
 				//Each region will have different genereation paramaters
 				var numRegions = Math.round(this.width * this.height / 1000);
-				console.log(numRegions);
 				var regions = []; 
 				for (var i = 0 ; i < numRegions ; i++){
 					do{
@@ -330,16 +329,19 @@ class Map extends Model{
 			})
 			//Done
 			.then(() => {
-				if (config.debug.debugMode && config.debug.testActors)
-				for (var i = 0 ; i < config.debug.testActors ; i++){
-					//Place a random unit
-					this.game.addActor(
-						new actorClasses.Unit({
-							tile: this.getRandomOpenTile(), 
-							player: this.game.players[0],
-							squad: 0
-						})
-					);
+				if (config.debug.debugMode && config.debug.testActors){
+					for (var i = 0 ; i < this.game.players.length ; i++){
+						for (var j = 0 ; j < config.debug.testActors ; j++){
+							//Place a random unit
+							this.game.addActor(
+								new actorClasses.Unit({
+									tile: this.getRandomOpenTile(), 
+									player: this.game.players[i],
+									squad: 0
+								})
+							);
+						}
+					}
 				}
 				
 				resolve();

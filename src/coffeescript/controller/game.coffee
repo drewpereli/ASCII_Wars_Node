@@ -139,6 +139,11 @@ class Game
 		app.map.updateTile(tile.x, tile.y, tile)
 		app.view.updateTile(tile)
 
+	end: () ->
+		
+		redirect = -> window.location = 'http://localhost:' + config.port + '/startScreen'
+		setTimeout redirect, 1000
+
 
 
 

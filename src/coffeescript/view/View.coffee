@@ -36,6 +36,16 @@ class View
 			})
 
 
+	addPlayer: (numPlayers) ->
+		@displayMessage('Player ' + numPlayers + ' added')
+		$('#playerCount').html(numPlayers)
+
+
+	startGame: () ->
+		$('#preGameScreen').addClass('hidden')
+		$('#gameScreen').removeClass('hidden')
+
+
 
 	moveMap: (dirIndex) ->
 		switch dirIndex
