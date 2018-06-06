@@ -2,13 +2,13 @@
 var config = {
 	port: 8100,
 	gameStartCountdownTime: 0, //In seconds
-	maxPlayers: 2,
+	maxPlayers: 3,
 	tickTime: 0, //In milliseconds
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 30,
-			width: 30,
+			height: 40,
+			width: 40,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -81,9 +81,10 @@ var config = {
 		setViewDimensionsToMapDimensions: false,
 		water: false,
 		allTilesVisible: false,
-		testActors: 10,
+		testActors: 20,
 		flatMap: true
-	}
+	},
+	logTimeStamps: false
 }
 
 if (config.view.map.height > config.model.map.height)

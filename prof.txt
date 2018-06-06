@@ -1,0 +1,1596 @@
+Statistical profiling result from isolate-0x102801000-v8.log, (3062 ticks, 50 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+     25    0.8%          /usr/lib/system/libsystem_pthread.dylib
+     19    0.6%          /usr/lib/system/libsystem_malloc.dylib
+      6    0.2%          /usr/lib/system/libsystem_platform.dylib
+      2    0.1%          /usr/lib/libc++abi.dylib
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+     48    1.6%    1.6%  Builtin: InterpreterEntryTrampoline
+     41    1.3%    1.4%  Builtin: KeyedLoadIC_Megamorphic
+     32    1.0%    1.1%  Builtin: StoreIC
+     24    0.8%    0.8%  Builtin: KeyedLoadIC
+     24    0.8%    0.8%  Builtin: ArrayIncludes
+     21    0.7%    0.7%  Builtin: KeyedStoreIC_Megamorphic
+     14    0.5%    0.5%  Builtin: CallFunction_ReceiverIsAny
+     13    0.4%    0.4%  LazyCompile: *visibleTiles.player.getVisibleTiles.map.t /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:64:54
+      9    0.3%    0.3%  LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      9    0.3%    0.3%  Builtin: LoadIC_Noninlined
+      8    0.3%    0.3%  LazyCompile: *normalizeString path.js:57:25
+      7    0.2%    0.2%  LazyCompile: ~readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1304:55
+      7    0.2%    0.2%  LazyCompile: ~pp$7.skipSpace /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2781:26
+      7    0.2%    0.2%  Builtin: RegExpReplace
+      7    0.2%    0.2%  Builtin: Call_ReceiverIsAny
+      6    0.2%    0.2%  Stub: StringAddStub
+      6    0.2%    0.2%  LazyCompile: ~walkAST /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:4:17
+      6    0.2%    0.2%  LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1870:36
+      6    0.2%    0.2%  LazyCompile: ~buffer /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:176:20
+      6    0.2%    0.2%  Builtin: KeyedStoreIC
+      5    0.2%    0.2%  LazyCompile: ~parseChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:76:19
+      5    0.2%    0.2%  LazyCompile: ~extname path.js:1374:28
+      5    0.2%    0.2%  Builtin: ForInFilter
+      5    0.2%    0.2%  Builtin: FastNewObject
+      4    0.1%    0.1%  LazyCompile: ~pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      4    0.1%    0.1%  LazyCompile: ~getOptions internal/fs/utils.js:54:20
+      4    0.1%    0.1%  LazyCompile: ~Script vm.js:38:14
+      4    0.1%    0.1%  LazyCompile: ~Module._nodeModulePaths internal/modules/cjs/loader.js:359:37
+      4    0.1%    0.1%  Builtin: StringSubstring
+      4    0.1%    0.1%  Builtin: RegExpPrototypeExec
+      4    0.1%    0.1%  Builtin: CompileLazy
+      4    0.1%    0.1%  Builtin: ArrayPrototypePush
+      4    0.1%    0.1%  Builtin: ArgumentsAdaptorTrampoline
+      3    0.1%    0.1%  LazyCompile: ~visitTag /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:521:21
+      3    0.1%    0.1%  LazyCompile: ~validateAsyncId internal/async_hooks.js:117:25
+      3    0.1%    0.1%  LazyCompile: ~stringify /Users/Drew/Projects/games/ASCII_Wars/node_modules/js-stringify/index.js:4:19
+      3    0.1%    0.1%  LazyCompile: ~resolve path.js:1075:28
+      3    0.1%    0.1%  LazyCompile: ~pp$7.readEscapedChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3255:32
+      3    0.1%    0.1%  LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2715:26
+      3    0.1%    0.1%  LazyCompile: ~pp$3.parseMaybeUnary /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1828:32
+      3    0.1%    0.1%  LazyCompile: ~pp$3.parseLiteral /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3775:30
+      3    0.1%    0.1%  LazyCompile: ~nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:753:53
+      3    0.1%    0.1%  LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      3    0.1%    0.1%  LazyCompile: ~init /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:517:39
+      3    0.1%    0.1%  LazyCompile: ~fs.readFileSync fs.js:480:27
+      3    0.1%    0.1%  LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      3    0.1%    0.1%  LazyCompile: ~attribute /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1059:22
+      3    0.1%    0.1%  LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      3    0.1%    0.1%  LazyCompile: ~State.isNesting /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:213:38
+      3    0.1%    0.1%  LazyCompile: ~Module._resolveLookupPaths internal/modules/cjs/loader.js:400:38
+      3    0.1%    0.1%  LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      3    0.1%    0.1%  Builtin: StringPrototypeCharCodeAt
+      3    0.1%    0.1%  Builtin: StringIndexOf
+      3    0.1%    0.1%  Builtin: RegExpPrototypeTest
+      3    0.1%    0.1%  Builtin: InterpreterPushUndefinedAndArgsThenCall
+      3    0.1%    0.1%  Builtin: HasProperty
+      3    0.1%    0.1%  Builtin: FastNewClosure
+      3    0.1%    0.1%  Builtin: CallFunction_ReceiverIsNullOrUndefined
+      2    0.1%    0.1%  Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/clean-css/lib/optimizer/level-2/compactable.js:1:11
+      2    0.1%    0.1%  LazyCompile: ~yield /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:717:20
+      2    0.1%    0.1%  LazyCompile: ~writeOrBuffer _stream_writable.js:360:23
+      2    0.1%    0.1%  LazyCompile: ~tryFile internal/modules/cjs/loader.js:193:17
+      2    0.1%    0.1%  LazyCompile: ~t.siblings.reduce /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:82:50
+      2    0.1%    0.1%  LazyCompile: ~sortedTiles.getTiles.sort /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:56:42
+      2    0.1%    0.1%  LazyCompile: ~slice buffer.js:1008:40
+      2    0.1%    0.1%  LazyCompile: ~setVisibleTiles /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Actor.abstract.js:60:17
+      2    0.1%    0.1%  LazyCompile: ~send /Users/Drew/Projects/games/ASCII_Wars/node_modules/engine.io/lib/transports/websocket.js:97:17
+      2    0.1%    0.1%  LazyCompile: ~runPlugin /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:171:22
+      2    0.1%    0.1%  LazyCompile: ~remove internal/linkedlist.js:15:16
+      2    0.1%    0.1%  LazyCompile: ~processCallback zlib.js:565:25
+      2    0.1%    0.1%  LazyCompile: ~pp$7.readToken_plus_min /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2896:35
+      2    0.1%    0.1%  LazyCompile: ~pp$7.readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3182:27
+      2    0.1%    0.1%  LazyCompile: ~pp$7.readInt /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3102:24
+      2    0.1%    0.1%  LazyCompile: ~pp$7.next /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2676:21
+      2    0.1%    0.1%  LazyCompile: ~pp$6.processComment /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4498:32
+      2    0.1%    0.1%  LazyCompile: ~pp$3.parseSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1883:32
+      2    0.1%    0.1%  LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:1870:36
+      2    0.1%    0.1%  LazyCompile: ~peek /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:80:17
+      2    0.1%    0.1%  LazyCompile: ~parseUntil /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:47:20
+      2    0.1%    0.1%  LazyCompile: ~nullCheck internal/fs/utils.js:93:19
+      2    0.1%    0.1%  LazyCompile: ~normalizeString path.js:57:25
+      2    0.1%    0.1%  LazyCompile: ~next /Users/Drew/Projects/games/ASCII_Wars/node_modules/express/lib/router/index.js:176:16
+      2    0.1%    0.1%  LazyCompile: ~loadPlugins /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1618:54
+      2    0.1%    0.1%  LazyCompile: ~isNewLine /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:379:19
+      2    0.1%    0.1%  LazyCompile: ~isNewLine /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:245:19
+      2    0.1%    0.1%  LazyCompile: ~handleErrorFromBinding fs.js:139:32
+      2    0.1%    0.1%  LazyCompile: ~getVisibleTiles /Users/Drew/Projects/games/ASCII_Wars/app/models/player/Player.js:35:17
+      2    0.1%    0.1%  LazyCompile: ~getTileInDirAwayFrom /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Tile.js:178:22
+      2    0.1%    0.1%  LazyCompile: ~flush zlib.js:395:38
+      2    0.1%    0.1%  LazyCompile: ~dirname path.js:1269:28
+      2    0.1%    0.1%  LazyCompile: ~basename path.js:1296:30
+      2    0.1%    0.1%  LazyCompile: ~attributeValue /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1151:27
+      2    0.1%    0.1%  LazyCompile: ~_ultron.on /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/WebSocket.js:136:29
+      2    0.1%    0.1%  LazyCompile: ~Socket.sendPacket /Users/Drew/Projects/games/ASCII_Wars/node_modules/engine.io/lib/socket.js:380:40
+      2    0.1%    0.1%  LazyCompile: ~Emitter.emit /Users/Drew/Projects/games/ASCII_Wars/node_modules/component-emitter/index.js:125:34
+      2    0.1%    0.1%  LazyCompile: ~ConvertToString native array.js:131:25
+      2    0.1%    0.1%  LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/psl/index.js:14:61
+      2    0.1%    0.1%  LazyCompile: *tile.siblings.concat.forEach.t /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:76:48
+      2    0.1%    0.1%  LazyCompile: *pp$7.readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3182:27
+      2    0.1%    0.1%  LazyCompile: *parseChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:76:19
+      2    0.1%    0.1%  Builtin: StringToLowerCaseIntl
+      2    0.1%    0.1%  Builtin: StringEqual
+      2    0.1%    0.1%  Builtin: StrictEqual
+      2    0.1%    0.1%  Builtin: StoreIC_Uninitialized
+      2    0.1%    0.1%  Builtin: RegExpExecAtom
+      2    0.1%    0.1%  Builtin: LoadIC
+      2    0.1%    0.1%  Builtin: KeyedLoadIC_PolymorphicName
+      2    0.1%    0.1%  Builtin: KeyedLoadICTrampoline
+      2    0.1%    0.1%  Builtin: InterpreterPushArgsThenCall
+      2    0.1%    0.1%  Builtin: CallWithArrayLike
+      2    0.1%    0.1%  Builtin: ArrayForEach
+      1    0.0%    0.0%  Stub: GetPropertyStub
+      1    0.0%    0.0%  Stub: CEntryStub {1}
+      1    0.0%    0.0%  Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/request-promise-core/node_modules/lodash/_objectToString.js:1:11
+      1    0.0%    0.0%  Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/core-js/library/modules/es6.symbol.js:1:11
+      1    0.0%    0.0%  Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1:11
+      1    0.0%    0.0%  RegExp: ^when +([^:
+]+)
+      1    0.0%    0.0%  RegExp: ^( !)
+      1    0.0%    0.0%  RegExp: Error$
+      1    0.0%    0.0%  LazyCompile: ~write_ _http_outgoing.js:578:16
+      1    0.0%    0.0%  LazyCompile: ~writeToEngine /Users/Drew/Projects/games/ASCII_Wars/node_modules/socket.io/lib/client.js:167:25
+      1    0.0%    0.0%  LazyCompile: ~writeGeneric internal/stream_base_commons.js:67:22
+      1    0.0%    0.0%  LazyCompile: ~validateTimerDuration internal/timers.js:132:31
+      1    0.0%    0.0%  LazyCompile: ~validatePath internal/fs/utils.js:398:22
+      1    0.0%    0.0%  LazyCompile: ~tryExtensions internal/modules/cjs/loader.js:208:23
+      1    0.0%    0.0%  LazyCompile: ~toString buffer.js:642:46
+      1    0.0%    0.0%  LazyCompile: ~toRealPath internal/modules/cjs/loader.js:201:20
+      1    0.0%    0.0%  LazyCompile: ~tileInfos.forEach.tInfo /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:146:21
+      1    0.0%    0.0%  LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      1    0.0%    0.0%  LazyCompile: ~tag /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:369:16
+      1    0.0%    0.0%  LazyCompile: ~stringSlice buffer.js:588:21
+      1    0.0%    0.0%  LazyCompile: ~stat internal/modules/cjs/loader.js:83:14
+      1    0.0%    0.0%  LazyCompile: ~splitRoot fs.js:1602:33
+      1    0.0%    0.0%  LazyCompile: ~shallowEqual /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:232:22
+      1    0.0%    0.0%  LazyCompile: ~setHeader _http_outgoing.js:469:57
+      1    0.0%    0.0%  LazyCompile: ~send /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Sender.js:266:8
+      1    0.0%    0.0%  LazyCompile: ~scanEndOfLine /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:197:27
+      1    0.0%    0.0%  LazyCompile: ~scan /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:185:17
+      1    0.0%    0.0%  LazyCompile: ~runInThisContext vm.js:86:19
+      1    0.0%    0.0%  LazyCompile: ~resume_ _stream_readable.js:894:17
+      1    0.0%    0.0%  LazyCompile: ~resetSocketTimeout _http_server.js:663:28
+      1    0.0%    0.0%  LazyCompile: ~resOnFinish _http_server.js:549:21
+      1    0.0%    0.0%  LazyCompile: ~require internal/modules/cjs/helpers.js:17:19
+      1    0.0%    0.0%  LazyCompile: ~removeListener events.js:306:28
+      1    0.0%    0.0%  LazyCompile: ~registerType /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-types/lib/index.js:343:22
+      1    0.0%    0.0%  LazyCompile: ~realpathSync fs.js:1640:40
+      1    0.0%    0.0%  LazyCompile: ~readHexChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1449:57
+      1    0.0%    0.0%  LazyCompile: ~random.random /Users/Drew/Projects/games/ASCII_Wars/node_modules/random-seed/index.js:240:28
+      1    0.0%    0.0%  LazyCompile: ~pushValueToArray internal/bootstrap/node.js:298:30
+      1    0.0%    0.0%  LazyCompile: ~pushAsyncIds internal/async_hooks.js:389:22
+      1    0.0%    0.0%  LazyCompile: ~push internal/fixed_queue.js:95:7
+      1    0.0%    0.0%  LazyCompile: ~pug_attr /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-runtime/index.js:128:18
+      1    0.0%    0.0%  LazyCompile: ~processFluidFlow /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Tile.js:76:18
+      1    0.0%    0.0%  LazyCompile: ~prepareFluidFlow /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Tile.js:48:18
+      1    0.0%    0.0%  LazyCompile: ~pp.semicolon /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:599:24
+      1    0.0%    0.0%  LazyCompile: ~pp.canInsertSemicolon /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:582:33
+      1    0.0%    0.0%  LazyCompile: ~pp.addExtra /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1685:24
+      1    0.0%    0.0%  LazyCompile: ~pp$7.readWord /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3337:25
+      1    0.0%    0.0%  LazyCompile: ~pp$7.readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:3182:27
+      1    0.0%    0.0%  LazyCompile: ~pp$7.readHexChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3291:28
+      1    0.0%    0.0%  LazyCompile: ~pp$7.readCodePoint /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3160:30
+      1    0.0%    0.0%  LazyCompile: ~pp$5.finishNode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2537:27
+      1    0.0%    0.0%  LazyCompile: ~pp$3.parseSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:1883:32
+      1    0.0%    0.0%  LazyCompile: ~pp$3.parseMaybeConditional /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3378:39
+      1    0.0%    0.0%  LazyCompile: ~pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1    0.0%    0.0%  LazyCompile: ~pp$3.parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1718:32
+      1    0.0%    0.0%  LazyCompile: ~pp$3.parseExprOps /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1789:29
+      1    0.0%    0.0%  LazyCompile: ~pp$3.parseExprOp /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1802:28
+      1    0.0%    0.0%  LazyCompile: ~pp$3.parseExprAtom /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1931:30
+      1    0.0%    0.0%  LazyCompile: ~pp$1.parseStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:720:31
+      1    0.0%    0.0%  LazyCompile: ~pp$1.isLet /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:684:22
+      1    0.0%    0.0%  LazyCompile: ~pipe /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:510:43
+      1    0.0%    0.0%  LazyCompile: ~path /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:754:17
+      1    0.0%    0.0%  LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:28:15
+      1    0.0%    0.0%  LazyCompile: ~onwriteDrain _stream_writable.js:487:22
+      1    0.0%    0.0%  LazyCompile: ~onread net.js:618:16
+      1    0.0%    0.0%  LazyCompile: ~ok assert.js:271:12
+      1    0.0%    0.0%  LazyCompile: ~next /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:682:43
+      1    0.0%    0.0%  LazyCompile: ~newAsyncId internal/async_hooks.js:254:20
+      1    0.0%    0.0%  LazyCompile: ~needMoreData _stream_readable.js:314:22
+      1    0.0%    0.0%  LazyCompile: ~mixinBlock /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:705:23
+      1    0.0%    0.0%  LazyCompile: ~map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:277:24
+      1    0.0%    0.0%  LazyCompile: ~map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:266:24
+      1    0.0%    0.0%  LazyCompile: ~makeRequireFunction internal/modules/cjs/helpers.js:14:29
+      1    0.0%    0.0%  LazyCompile: ~isUint32 internal/fs/utils.js:74:18
+      1    0.0%    0.0%  LazyCompile: ~isInAstralSet /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:64:23
+      1    0.0%    0.0%  LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-attrs/index.js:8:20
+      1    0.0%    0.0%  LazyCompile: ~isAbsolute path.js:1145:34
+      1    0.0%    0.0%  LazyCompile: ~initBlock /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:154:22
+      1    0.0%    0.0%  LazyCompile: ~inflateOnData /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/PerMessageDeflate.js:477:24
+      1    0.0%    0.0%  LazyCompile: ~indent /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1312:19
+      1    0.0%    0.0%  LazyCompile: ~include /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:729:20
+      1    0.0%    0.0%  LazyCompile: ~identifier /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/index.js:127:22
+      1    0.0%    0.0%  LazyCompile: ~handleWriteReq internal/stream_base_commons.js:9:24
+      1    0.0%    0.0%  LazyCompile: ~handle /Users/Drew/Projects/games/ASCII_Wars/node_modules/express/lib/router/index.js:136:31
+      1    0.0%    0.0%  LazyCompile: ~getOptions /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:387:20
+      1    0.0%    0.0%  LazyCompile: ~getOptions /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:124:20
+      1    0.0%    0.0%  LazyCompile: ~getDistance /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Tile.js:233:13
+      1    0.0%    0.0%  LazyCompile: ~getClientDataFor /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:62:18
+      1    0.0%    0.0%  LazyCompile: ~get _stream_duplex.js:119:6
+      1    0.0%    0.0%  LazyCompile: ~game.actors.filter.a /Users/Drew/Projects/games/ASCII_Wars/app/models/player/Player.js:28:34
+      1    0.0%    0.0%  LazyCompile: ~fs.readSync fs.js:613:23
+      1    0.0%    0.0%  LazyCompile: ~finishNodeAt /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4423:22
+      1    0.0%    0.0%  LazyCompile: ~finishNodeAt /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2527:22
+      1    0.0%    0.0%  LazyCompile: ~exports.encodePacket /Users/Drew/Projects/games/ASCII_Wars/node_modules/engine.io-parser/lib/index.js:53:33
+      1    0.0%    0.0%  LazyCompile: ~emitReadable _stream_readable.js:526:22
+      1    0.0%    0.0%  LazyCompile: ~emitPromiseRejectionWarnings internal/process/promises.js:88:38
+      1    0.0%    0.0%  LazyCompile: ~emit events.js:140:44
+      1    0.0%    0.0%  LazyCompile: ~doctype /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:407:20
+      1    0.0%    0.0%  LazyCompile: ~defineType /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-types/lib/definitions/index.js:197:20
+      1    0.0%    0.0%  LazyCompile: ~debug /Users/Drew/Projects/games/ASCII_Wars/node_modules/engine.io/node_modules/debug/src/debug.js:66:17
+      1    0.0%    0.0%  LazyCompile: ~curPosition /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:626:53
+      1    0.0%    0.0%  LazyCompile: ~createUnsafeArrayBuffer buffer.js:115:33
+      1    0.0%    0.0%  LazyCompile: ~createArgumentsString /Users/Drew/Projects/games/ASCII_Wars/node_modules/depd/index.js:73:32
+      1    0.0%    0.0%  LazyCompile: ~codePointToString /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3175:27
+      1    0.0%    0.0%  LazyCompile: ~characters :59:20
+      1    0.0%    0.0%  LazyCompile: ~call /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:828:17
+      1    0.0%    0.0%  LazyCompile: ~base.AssignmentExpression.base.AssignmentPattern /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:299:63
+      1    0.0%    0.0%  LazyCompile: ~attrs /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1265:18
+      1    0.0%    0.0%  LazyCompile: ~assertSize buffer.js:258:20
+      1    0.0%    0.0%  LazyCompile: ~allocate buffer.js:317:18
+      1    0.0%    0.0%  LazyCompile: ~afterTransform _stream_transform.js:78:24
+      1    0.0%    0.0%  LazyCompile: ~adjustOffset buffer.js:991:22
+      1    0.0%    0.0%  LazyCompile: ~addChunk _stream_readable.js:276:18
+      1    0.0%    0.0%  LazyCompile: ~a.getVisibleTiles.forEach.t /Users/Drew/Projects/games/ASCII_Wars/app/models/player/Player.js:41:32
+      1    0.0%    0.0%  LazyCompile: ~_tickCallback internal/process/next_tick.js:41:25
+      1    0.0%    0.0%  LazyCompile: ~_storeHeader _http_outgoing.js:286:22
+      1    0.0%    0.0%  LazyCompile: ~_setExports /Users/Drew/Projects/games/ASCII_Wars/node_modules/jsprim/node_modules/assert-plus/assert.js:98:21
+      1    0.0%    0.0%  LazyCompile: ~_finish _http_server.js:140:52
+      1    0.0%    0.0%  LazyCompile: ~_extend util.js:1196:17
+      1    0.0%    0.0%  LazyCompile: ~_decompress /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/PerMessageDeflate.js:336:15
+      1    0.0%    0.0%  LazyCompile: ~_addListener events.js:193:22
+      1    0.0%    0.0%  LazyCompile: ~WritableState _stream_writable.js:52:23
+      1    0.0%    0.0%  LazyCompile: ~Writable.write _stream_writable.js:268:36
+      1    0.0%    0.0%  LazyCompile: ~WebSocket.send /Users/Drew/Projects/games/ASCII_Wars/node_modules/engine.io/lib/transports/websocket.js:89:37
+      1    0.0%    0.0%  LazyCompile: ~Transform._read _stream_transform.js:185:37
+      1    0.0%    0.0%  LazyCompile: ~Tokenizer /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:673:21
+      1    0.0%    0.0%  LazyCompile: ~TokenType /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:223:35
+      1    0.0%    0.0%  LazyCompile: ~TokenStream.peek /Users/Drew/Projects/games/ASCII_Wars/node_modules/token-stream/index.js:16:39
+      1    0.0%    0.0%  LazyCompile: ~TokenStream.advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/token-stream/index.js:22:42
+      1    0.0%    0.0%  LazyCompile: ~Token /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:651:27
+      1    0.0%    0.0%  LazyCompile: ~State.current /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:200:36
+      1    0.0%    0.0%  LazyCompile: ~StackPop native array.js:81:18
+      1    0.0%    0.0%  LazyCompile: ~Socket._read net.js:516:34
+      1    0.0%    0.0%  LazyCompile: ~QuickSort native array.js:564:19
+      1    0.0%    0.0%  LazyCompile: ~Parser /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1563:18
+      1    0.0%    0.0%  LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:560:35
+      1    0.0%    0.0%  LazyCompile: ~Module._load internal/modules/cjs/loader.js:502:24
+      1    0.0%    0.0%  LazyCompile: ~Join native array.js:118:14
+      1    0.0%    0.0%  LazyCompile: ~IncomingMessage _http_incoming.js:38:25
+      1    0.0%    0.0%  LazyCompile: ~EventEmitter.init events.js:67:29
+      1    0.0%    0.0%  LazyCompile: ~ClientRequest _http_client.js:63:23
+      1    0.0%    0.0%  LazyCompile: ~Client.ondata /Users/Drew/Projects/games/ASCII_Wars/node_modules/socket.io/lib/client.js:192:35
+      1    0.0%    0.0%  LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:103:34
+      1    0.0%    0.0%  LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-linker/index.js:176:22
+      1    0.0%    0.0%  LazyCompile: *walkAST /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:4:17
+      1    0.0%    0.0%  LazyCompile: *pp$7.readInt /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3102:24
+      1    0.0%    0.0%  LazyCompile: *pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      1    0.0%    0.0%  LazyCompile: *pp$7.fullCharCodeAtPos /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2736:34
+      1    0.0%    0.0%  LazyCompile: *pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1    0.0%    0.0%  LazyCompile: *parseUntil /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:47:20
+      1    0.0%    0.0%  LazyCompile: *matches /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:225:17
+      1    0.0%    0.0%  LazyCompile: *map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:277:24
+      1    0.0%    0.0%  LazyCompile: *map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:274:24
+      1    0.0%    0.0%  LazyCompile: *map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:266:24
+      1    0.0%    0.0%  LazyCompile: *lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:10:13
+      1    0.0%    0.0%  LazyCompile: *getClientDataFor /Users/Drew/Projects/games/ASCII_Wars/app/models/Model.abstract.js:8:18
+      1    0.0%    0.0%  LazyCompile: *get extensionName /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/PerMessageDeflate.js:80:28
+      1    0.0%    0.0%  LazyCompile: *forEachTile /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:384:13
+      1    0.0%    0.0%  LazyCompile: *enemyTile.getVisibleTiles.find.t /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Actor.abstract.js:91:47
+      1    0.0%    0.0%  LazyCompile: *dirname path.js:1269:28
+      1    0.0%    0.0%  LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1    0.0%    0.0%  LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1    0.0%    0.0%  LazyCompile: *a.getVisibleTiles.forEach.t /Users/Drew/Projects/games/ASCII_Wars/app/models/player/Player.js:41:32
+      1    0.0%    0.0%  LazyCompile: *Module._nodeModulePaths internal/modules/cjs/loader.js:359:37
+      1    0.0%    0.0%  Builtin: StringPrototypeTrim
+      1    0.0%    0.0%  Builtin: StringPrototypeSlice
+      1    0.0%    0.0%  Builtin: StringCharAt
+      1    0.0%    0.0%  Builtin: ObjectPrototypeHasOwnProperty
+      1    0.0%    0.0%  Builtin: MathRound
+      1    0.0%    0.0%  Builtin: JSEntryTrampoline
+      1    0.0%    0.0%  Builtin: ForInEnumerate
+      1    0.0%    0.0%  Builtin: Divide
+      1    0.0%    0.0%  Builtin: CloneFastJSArray
+      1    0.0%    0.0%  Builtin: Call_ReceiverIsNullOrUndefined
+      1    0.0%    0.0%  Builtin: ArrayPrototypeFind
+      1    0.0%    0.0%  Builtin: ArrayMap
+      1    0.0%    0.0%  Builtin: ArrayIndexOf
+      1    0.0%    0.0%  Builtin: Add {1}
+
+ [C++]:
+   ticks  total  nonlib   name
+    477   15.6%   15.8%  T _kpersona_get
+    384   12.5%   12.8%  T node::contextify::ContextifyScript::New(v8::FunctionCallbackInfo<v8::Value> const&)
+     69    2.3%    2.3%  t node::Buffer::(anonymous namespace)::CreateFromString(v8::FunctionCallbackInfo<v8::Value> const&)
+     62    2.0%    2.1%  T _mach_vm_purgable_control
+     50    1.6%    1.7%  T v8::internal::JsonStringifier::SerializeString(v8::internal::Handle<v8::internal::String>)
+     47    1.5%    1.6%  t node::fs::InternalModuleStat(v8::FunctionCallbackInfo<v8::Value> const&)
+     41    1.3%    1.4%  t std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > std::__1::__pad_and_output<char, std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > >(std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> >, char const*, char const*, char const*, std::__1::ios_base&, char)
+     41    1.3%    1.4%  T _vm_read
+     34    1.1%    1.1%  t void v8::internal::RelocInfo::Visit<v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)0, (v8::internal::TraceRetainingPathMode)0, v8::internal::IncrementalMarkingState> >(v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)0, (v8::internal::TraceRetainingPathMode)0, v8::internal::IncrementalMarkingState>*)
+     34    1.1%    1.1%  t node::fs::Read(v8::FunctionCallbackInfo<v8::Value> const&)
+     26    0.8%    0.9%  T ___guarded_open_dprotected_np
+     19    0.6%    0.6%  t node::fs::Open(v8::FunctionCallbackInfo<v8::Value> const&)
+     19    0.6%    0.6%  T v8::internal::Heap::AllocateFixedArrayWithFiller(v8::internal::Heap::RootListIndex, int, v8::internal::PretenureFlag, v8::internal::Object*)
+     18    0.6%    0.6%  t void node::Buffer::(anonymous namespace)::StringSlice<(node::encoding)1>(v8::FunctionCallbackInfo<v8::Value> const&)
+     15    0.5%    0.5%  t v8::internal::Scavenger::ScavengeObject(v8::internal::HeapObject**, v8::internal::HeapObject*)
+     15    0.5%    0.5%  t v8::internal::JsonStringifier::Result v8::internal::JsonStringifier::Serialize_<false>(v8::internal::Handle<v8::internal::Object>, bool, v8::internal::Handle<v8::internal::Object>)
+     15    0.5%    0.5%  t __os_once_gate_wait_slow
+     14    0.5%    0.5%  T void node::StreamBase::JSMethod<node::LibuvStreamWrap, &(int node::StreamBase::WriteString<(node::encoding)4>(v8::FunctionCallbackInfo<v8::Value> const&))>(v8::FunctionCallbackInfo<v8::Value> const&)
+     14    0.5%    0.5%  T v8::internal::IncrementalMarking::Step(unsigned long, v8::internal::IncrementalMarking::CompletionAction, v8::internal::StepOrigin, v8::internal::WorklistToProcess)
+     12    0.4%    0.4%  t v8::internal::LookupIterator::State v8::internal::LookupIterator::LookupInRegularHolder<false>(v8::internal::Map*, v8::internal::JSReceiver*)
+     12    0.4%    0.4%  T void node::StreamBase::JSMethod<node::LibuvStreamWrap, &(node::StreamBase::WriteBuffer(v8::FunctionCallbackInfo<v8::Value> const&))>(v8::FunctionCallbackInfo<v8::Value> const&)
+     12    0.4%    0.4%  T v8::internal::JsonParser<true>::ScanJsonString()
+     11    0.4%    0.4%  t void node::(anonymous namespace)::ZCtx::Write<true>(v8::FunctionCallbackInfo<v8::Value> const&)
+     11    0.4%    0.4%  t _szone_malloc_should_clear
+     10    0.3%    0.3%  t v8::internal::(anonymous namespace)::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastPackedObjectElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)2> >::PrependElementIndices(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Handle<v8::internal::FixedArrayBase>, v8::internal::Handle<v8::internal::FixedArray>, v8::internal::GetKeysConversion, v8::internal::PropertyFilter)
+     10    0.3%    0.3%  t v8::internal::(anonymous namespace)::CopyObjectToObjectElements(v8::internal::FixedArrayBase*, v8::internal::ElementsKind, unsigned int, v8::internal::FixedArrayBase*, v8::internal::ElementsKind, unsigned int, int)
+     10    0.3%    0.3%  T v8::internal::compiler::GraphReducer::ReduceTop()
+      9    0.3%    0.3%  t node::GetBinding(v8::FunctionCallbackInfo<v8::Value> const&)
+      9    0.3%    0.3%  t node::Buffer::(anonymous namespace)::ByteLengthUtf8(v8::FunctionCallbackInfo<v8::Value> const&)
+      9    0.3%    0.3%  T v8::internal::StackFrameIterator::StackFrameIterator(v8::internal::Isolate*, v8::internal::ThreadLocalTop*)
+      8    0.3%    0.3%  t v8::internal::JsonStringifier::Result v8::internal::JsonStringifier::Serialize_<true>(v8::internal::Handle<v8::internal::Object>, bool, v8::internal::Handle<v8::internal::Object>)
+      7    0.2%    0.2%  t void v8::internal::String::WriteToFlat<unsigned char>(v8::internal::String*, unsigned char*, int, int)
+      7    0.2%    0.2%  t node::fs::InternalModuleReadJSON(v8::FunctionCallbackInfo<v8::Value> const&)
+      7    0.2%    0.2%  T v8::internal::Zone::New(unsigned long)
+      6    0.2%    0.2%  t v8::internal::compiler::(anonymous namespace)::SourcePositionWrapper::Reduce(v8::internal::compiler::Node*)
+      6    0.2%    0.2%  t node::fs::LStat(v8::FunctionCallbackInfo<v8::Value> const&)
+      6    0.2%    0.2%  t _update_cache_for_file_streams
+      6    0.2%    0.2%  T v8::internal::Scanner::ScanIdentifierOrKeywordInner(v8::internal::Scanner::LiteralScope*)
+      6    0.2%    0.2%  T node::contextify::ContextifyScript::RunInThisContext(v8::FunctionCallbackInfo<v8::Value> const&)
+      5    0.2%    0.2%  t void v8::internal::Scanner::Advance<false, true>()
+      5    0.2%    0.2%  t v8::internal::(anonymous namespace)::Fast_ArrayConcat(v8::internal::Isolate*, v8::internal::BuiltinArguments*)
+      5    0.2%    0.2%  t node::fs::FStat(v8::FunctionCallbackInfo<v8::Value> const&)
+      5    0.2%    0.2%  t node::(anonymous namespace)::ProcessWrap::Spawn(v8::FunctionCallbackInfo<v8::Value> const&)
+      5    0.2%    0.2%  t __os_lock_nospin_lock
+      5    0.2%    0.2%  T void node::StreamBase::JSMethod<node::LibuvStreamWrap, &(int node::StreamBase::WriteString<(node::encoding)1>(v8::FunctionCallbackInfo<v8::Value> const&))>(v8::FunctionCallbackInfo<v8::Value> const&)
+      5    0.2%    0.2%  T v8::internal::Scanner::Next()
+      5    0.2%    0.2%  T v8::internal::Map::GetOrCreatePrototypeChainValidityCell(v8::internal::Handle<v8::internal::Map>, v8::internal::Isolate*)
+      5    0.2%    0.2%  T v8::internal::JsonParser<true>::ParseJsonObject()
+      5    0.2%    0.2%  T v8::internal::JSObject::MigrateToMap(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Handle<v8::internal::Map>, int)
+      5    0.2%    0.2%  T v8::internal::CanonicalHandleScope::Lookup(v8::internal::Object*)
+      5    0.2%    0.2%  T std::__1::basic_istream<wchar_t, std::__1::char_traits<wchar_t> >::getline(wchar_t*, long)
+      5    0.2%    0.2%  T node::fs::Close(v8::FunctionCallbackInfo<v8::Value> const&)
+      5    0.2%    0.2%  T node::TTYWrap::New(v8::FunctionCallbackInfo<v8::Value> const&)
+      4    0.1%    0.1%  t void v8::internal::String::WriteToFlat<unsigned short>(v8::internal::String*, unsigned short*, int, int)
+      4    0.1%    0.1%  t v8::internal::PrototypeIterator::Advance()
+      4    0.1%    0.1%  t v8::internal::HeapObject::Size() const
+      4    0.1%    0.1%  t v8::internal::Heap::AllocateRaw(int, v8::internal::AllocationSpace, v8::internal::AllocationAlignment)
+      4    0.1%    0.1%  t v8::internal::ConsString* v8::internal::String::VisitFlat<v8::internal::IteratingStringHasher>(v8::internal::IteratingStringHasher*, v8::internal::String*, int)
+      4    0.1%    0.1%  t std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long)
+      4    0.1%    0.1%  t node::fs::Stat(v8::FunctionCallbackInfo<v8::Value> const&)
+      4    0.1%    0.1%  t _szone_pressure_relief
+      4    0.1%    0.1%  T v8::internal::compiler::GraphTrimmer::TrimGraph()
+      4    0.1%    0.1%  T v8::internal::TransitionsAccessor::Insert(v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Map>, v8::internal::SimpleTransitionFlag)
+      4    0.1%    0.1%  T v8::internal::Space::AllocationStep(int, unsigned char*, int)
+      4    0.1%    0.1%  T v8::internal::Scavenger::ScavengePage(v8::internal::MemoryChunk*)
+      4    0.1%    0.1%  T v8::internal::Scavenger::Process(v8::internal::OneshotBarrier*)
+      4    0.1%    0.1%  T v8::internal::JSObject::AllocateStorageForMap(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Handle<v8::internal::Map>)
+      4    0.1%    0.1%  T v8::internal::IntToCString(int, v8::internal::Vector<char>)
+      4    0.1%    0.1%  T v8::internal::Factory::NumberToString(v8::internal::Handle<v8::internal::Object>, bool)
+      4    0.1%    0.1%  T v8::internal::Bitmap::Clear()
+      4    0.1%    0.1%  T _mach_error_type
+      3    0.1%    0.1%  t v8::internal::LookupIterator::LookupIterator(v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Name>, v8::internal::LookupIterator::Configuration)
+      3    0.1%    0.1%  t v8::internal::KeywordOrIdentifierToken(unsigned char const*, int)
+      3    0.1%    0.1%  t v8::internal::(anonymous namespace)::StringTableNoAllocateKey::IsMatch(v8::internal::Object*)
+      3    0.1%    0.1%  t v8::base::TemplateHashMapEntry<void*, void*>* v8::base::TemplateHashMapImpl<void*, void*, v8::base::HashEqualityThenKeyMatcher<void*, bool (*)(void*, void*)>, v8::base::DefaultAllocationPolicy>::LookupOrInsert<v8::base::TemplateHashMapImpl<void*, void*, v8::base::HashEqualityThenKeyMatcher<void*, bool (*)(void*, void*)>, v8::base::DefaultAllocationPolicy>::LookupOrInsert(void* const&, unsigned int, v8::base::DefaultAllocationPolicy)::'lambda'()>(void* const&, unsigned int, v8::base::TemplateHashMapImpl<void*, void*, v8::base::HashEqualityThenKeyMatcher<void*, bool (*)(void*, void*)>, v8::base::DefaultAllocationPolicy>::LookupOrInsert(void* const&, unsigned int, v8::base::DefaultAllocationPolicy)::'lambda'() const&, v8::base::DefaultAllocationPolicy)
+      3    0.1%    0.1%  t unsigned int v8::internal::StringHasher::HashSequentialString<unsigned char>(unsigned char const*, int, unsigned int)
+      3    0.1%    0.1%  t std::__1::vector<std::__1::locale::facet*, std::__1::__sso_allocator<std::__1::locale::facet*, 28ul> >::deallocate()
+      3    0.1%    0.1%  t _malloc_zone_register_while_locked
+      3    0.1%    0.1%  t __platform_memmove$VARIANT$Base
+      3    0.1%    0.1%  t __os_once_gate_broadcast_slow
+      3    0.1%    0.1%  t __os_lock_nospin_unlock
+      3    0.1%    0.1%  t __malloc_initialize
+      3    0.1%    0.1%  t ___vfwscanf
+      3    0.1%    0.1%  t ___vfprintf
+      3    0.1%    0.1%  t ___inaddr_to_index
+      3    0.1%    0.1%  T void v8::internal::LookupIterator::Start<false>()
+      3    0.1%    0.1%  T v8::internal::interpreter::ConstantArrayBuilder::ToFixedArray(v8::internal::Isolate*)
+      3    0.1%    0.1%  T v8::internal::interpreter::BytecodeArrayBuilder::CallProperty(v8::internal::interpreter::Register, v8::internal::interpreter::RegisterList, int)
+      3    0.1%    0.1%  T v8::internal::StringTable::LookupStringIfExists_NoAllocate(v8::internal::String*)
+      3    0.1%    0.1%  T v8::internal::String::IsOneByteEqualTo(v8::internal::Vector<unsigned char const>)
+      3    0.1%    0.1%  T v8::internal::SerializerDeserializer::Iterate(v8::internal::Isolate*, v8::internal::RootVisitor*)
+      3    0.1%    0.1%  T v8::internal::Runtime_ForInEnumerate(int, v8::internal::Object**, v8::internal::Isolate*)
+      3    0.1%    0.1%  T v8::internal::RelocIterator::next()
+      3    0.1%    0.1%  T v8::internal::Parser::ParseFunctionLiteral(v8::internal::AstRawString const*, v8::internal::Scanner::Location, v8::internal::FunctionNameValidity, v8::internal::FunctionKind, int, v8::internal::FunctionLiteral::FunctionType, v8::internal::LanguageMode, v8::internal::ZoneList<v8::internal::AstRawString const*>*, bool*)
+      3    0.1%    0.1%  T v8::internal::Map::GetOrCreatePrototypeInfo(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Isolate*)
+      3    0.1%    0.1%  T v8::internal::LoadIC::ComputeHandler(v8::internal::LookupIterator*)
+      3    0.1%    0.1%  T v8::internal::JsonStringifier::StackPush(v8::internal::Handle<v8::internal::Object>)
+      3    0.1%    0.1%  T v8::internal::JsonStringifier::SerializeSmi(v8::internal::Smi*)
+      3    0.1%    0.1%  T v8::internal::JSObject::MakePrototypesFast(v8::internal::Handle<v8::internal::Object>, v8::internal::WhereToStart, v8::internal::Isolate*)
+      3    0.1%    0.1%  T v8::internal::JSObject::FastPropertyAt(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Representation, v8::internal::FieldIndex)
+      3    0.1%    0.1%  T v8::internal::IC::ShouldRecomputeHandler(v8::internal::Handle<v8::internal::String>)
+      3    0.1%    0.1%  T v8::internal::FunctionCallbackArguments::Call(v8::internal::CallHandlerInfo*)
+      3    0.1%    0.1%  T v8::internal::FeedbackVector::GetKind(v8::internal::FeedbackSlot) const
+      3    0.1%    0.1%  T v8::internal::FeedbackNexus::ConfigureMonomorphic(v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::Object>)
+      3    0.1%    0.1%  T v8::internal::Factory::NewNumberFromUint(unsigned int, v8::internal::PretenureFlag)
+      3    0.1%    0.1%  T std::__1::num_get<wchar_t, std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> > >::do_get(std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> >, std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> >, std::__1::ios_base&, unsigned int&, void*&) const
+      3    0.1%    0.1%  T _sendto
+      2    0.1%    0.1%  t void v8::internal::LookupIterator::NextInternal<false>(v8::internal::Map*, v8::internal::JSReceiver*)
+      2    0.1%    0.1%  t void std::__1::__sort<v8::internal::EnumIndexComparator<v8::internal::NameDictionary>&, v8::base::AtomicElement<v8::internal::Smi*>*>(v8::base::AtomicElement<v8::internal::Smi*>*, v8::base::AtomicElement<v8::internal::Smi*>*, v8::internal::EnumIndexComparator<v8::internal::NameDictionary>&)
+      2    0.1%    0.1%  t v8::internal::Worklist<v8::internal::WeakCell*, 64>::Pop(int, v8::internal::WeakCell**)
+      2    0.1%    0.1%  t v8::internal::ParserBase<v8::internal::Parser>::ValidateExpression(bool*)
+      2    0.1%    0.1%  t v8::internal::ParserBase<v8::internal::Parser>::ParseLeftHandSideExpression(bool*)
+      2    0.1%    0.1%  t v8::internal::ParserBase<v8::internal::Parser>::ParseBinaryExpression(int, bool, bool*)
+      2    0.1%    0.1%  t v8::internal::ParserBase<v8::internal::Parser>::ParseAssignmentExpression(bool, bool*)
+      2    0.1%    0.1%  t v8::internal::PagedSpace::Available()
+      2    0.1%    0.1%  t v8::internal::MaybeHandle<v8::internal::Object> v8::internal::(anonymous namespace)::HandleApiCallHelper<false>(v8::internal::Isolate*, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::FunctionTemplateInfo>, v8::internal::Handle<v8::internal::Object>, v8::internal::BuiltinArguments)
+      2    0.1%    0.1%  t v8::internal::FeedbackVectorSpec::append(v8::internal::FeedbackSlotKind)
+      2    0.1%    0.1%  t v8::internal::ExpressionClassifier<v8::internal::ParserTypes<v8::internal::Parser> >::Accumulate(v8::internal::ExpressionClassifier<v8::internal::ParserTypes<v8::internal::Parser> >*, unsigned int)
+      2    0.1%    0.1%  t v8::internal::Builtin_Impl_HandleApiCall(v8::internal::BuiltinArguments, v8::internal::Isolate*)
+      2    0.1%    0.1%  t v8::internal::(anonymous namespace)::JSObjectWalkVisitor<v8::internal::AllocationSiteUsageContext>::StructureWalk(v8::internal::Handle<v8::internal::JSObject>)
+      2    0.1%    0.1%  t v8::base::TemplateHashMapEntry<void*, void*>* v8::base::TemplateHashMapImpl<void*, void*, v8::base::KeyEqualityMatcher<void*>, v8::internal::ZoneAllocationPolicy>::LookupOrInsert<v8::base::TemplateHashMapImpl<void*, void*, v8::base::KeyEqualityMatcher<void*>, v8::internal::ZoneAllocationPolicy>::LookupOrInsert(void* const&, unsigned int, v8::internal::ZoneAllocationPolicy)::'lambda'()>(void* const&, unsigned int, v8::base::TemplateHashMapImpl<void*, void*, v8::base::KeyEqualityMatcher<void*>, v8::internal::ZoneAllocationPolicy>::LookupOrInsert(void* const&, unsigned int, v8::internal::ZoneAllocationPolicy)::'lambda'() const&, v8::internal::ZoneAllocationPolicy)
+      2    0.1%    0.1%  t std::__1::vector<std::__1::locale::facet*, std::__1::__sso_allocator<std::__1::locale::facet*, 28ul> >::__append(unsigned long)
+      2    0.1%    0.1%  t node::cares_wrap::(anonymous namespace)::ChannelWrap::New(v8::FunctionCallbackInfo<v8::Value> const&)
+      2    0.1%    0.1%  t node::EnvGetter(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Value> const&)
+      2    0.1%    0.1%  t _tiny_malloc_from_free_list
+      2    0.1%    0.1%  t _mvm_allocate_pages
+      2    0.1%    0.1%  t __os_nospin_lock_unlock_slow
+      2    0.1%    0.1%  T void v8::internal::LookupIterator::Start<true>()
+      2    0.1%    0.1%  T void node::StreamBase::JSMethod<node::LibuvStreamWrap, &(node::StreamBase::Writev(v8::FunctionCallbackInfo<v8::Value> const&))>(v8::FunctionCallbackInfo<v8::Value> const&)
+      2    0.1%    0.1%  T v8::internal::parsing::ParseFunction(v8::internal::ParseInfo*, v8::internal::Handle<v8::internal::SharedFunctionInfo>, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::interpreter::BytecodeRegisterOptimizer::RegisterTransfer(v8::internal::interpreter::BytecodeRegisterOptimizer::RegisterInfo*, v8::internal::interpreter::BytecodeRegisterOptimizer::RegisterInfo*)
+      2    0.1%    0.1%  T v8::internal::interpreter::BytecodeGenerator::VisitIfStatement(v8::internal::IfStatement*)
+      2    0.1%    0.1%  T v8::internal::interpreter::BytecodeArrayWriter::Write(v8::internal::interpreter::BytecodeNode*)
+      2    0.1%    0.1%  T v8::internal::compiler::SourcePositionTable::GetSourcePosition(v8::internal::compiler::Node*) const
+      2    0.1%    0.1%  T v8::internal::compiler::OperatorProperties::HasFrameStateInput(v8::internal::compiler::Operator const*)
+      2    0.1%    0.1%  T v8::internal::compiler::GraphReducer::Reduce(v8::internal::compiler::Node*)
+      2    0.1%    0.1%  T v8::internal::compiler::DeadCodeElimination::ReducePureNode(v8::internal::compiler::Node*)
+      2    0.1%    0.1%  T v8::internal::compiler::AccessInfoFactory::ComputePropertyAccessInfo(v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::Name>, v8::internal::compiler::AccessMode, v8::internal::compiler::PropertyAccessInfo*)
+      2    0.1%    0.1%  T v8::internal::StringTable::LookupString(v8::internal::Isolate*, v8::internal::Handle<v8::internal::String>)
+      2    0.1%    0.1%  T v8::internal::StringHasher::GetHashField()
+      2    0.1%    0.1%  T v8::internal::String::SlowEquals(v8::internal::String*)
+      2    0.1%    0.1%  T v8::internal::String::GetFlatContent()
+      2    0.1%    0.1%  T v8::internal::StandardFrame::ComputeCallerState(v8::internal::StackFrame::State*) const
+      2    0.1%    0.1%  T v8::internal::StackFrame::ComputeType(v8::internal::StackFrameIteratorBase const*, v8::internal::StackFrame::State*)
+      2    0.1%    0.1%  T v8::internal::Script::GetPositionInfo(int, v8::internal::Script::PositionInfo*, v8::internal::Script::OffsetFlag) const
+      2    0.1%    0.1%  T v8::internal::ScopeInfo::Create(v8::internal::Isolate*, v8::internal::Zone*, v8::internal::Scope*, v8::internal::MaybeHandle<v8::internal::ScopeInfo>)
+      2    0.1%    0.1%  T v8::internal::Scope::AllocateNonParameterLocal(v8::internal::Variable*)
+      2    0.1%    0.1%  T v8::internal::Scanner::Scan()
+      2    0.1%    0.1%  T v8::internal::RegExpParser::Advance()
+      2    0.1%    0.1%  T v8::internal::OFStreamBase::overflow(int)
+      2    0.1%    0.1%  T v8::internal::Map::WeakCellForMap(v8::internal::Handle<v8::internal::Map>)
+      2    0.1%    0.1%  T v8::internal::Map::SetPrototype(v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::Object>, bool)
+      2    0.1%    0.1%  T v8::internal::Map::CopyWithField(v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::FieldType>, v8::internal::PropertyAttributes, v8::internal::PropertyConstness, v8::internal::Representation, v8::internal::TransitionFlag)
+      2    0.1%    0.1%  T v8::internal::Map::CopyAddDescriptor(v8::internal::Handle<v8::internal::Map>, v8::internal::Descriptor*, v8::internal::TransitionFlag)
+      2    0.1%    0.1%  T v8::internal::LookupIterator::FetchValue() const
+      2    0.1%    0.1%  T v8::internal::Log::MessageBuilder& v8::internal::Log::MessageBuilder::operator<<<char const*>(char const*)
+      2    0.1%    0.1%  T v8::internal::LoadIC::Load(v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Name>)
+      2    0.1%    0.1%  T v8::internal::JsonParser<false>::ScanJsonString()
+      2    0.1%    0.1%  T v8::internal::IteratingStringHasher::VisitConsString(v8::internal::ConsString*)
+      2    0.1%    0.1%  T v8::internal::IncrementalMarking::WhiteToGreyAndPush(v8::internal::HeapObject*)
+      2    0.1%    0.1%  T v8::internal::Heap::Scavenge()
+      2    0.1%    0.1%  T v8::internal::Heap::InitializeJSObjectFromMap(v8::internal::JSObject*, v8::internal::Object*, v8::internal::Map*)
+      2    0.1%    0.1%  T v8::internal::Heap::AllocateMap(v8::internal::InstanceType, int, v8::internal::ElementsKind, int)
+      2    0.1%    0.1%  T v8::internal::Heap::AllocateJSObjectFromMap(v8::internal::Map*, v8::internal::PretenureFlag, v8::internal::AllocationSite*)
+      2    0.1%    0.1%  T v8::internal::Heap::Allocate(v8::internal::Map*, v8::internal::AllocationSpace, v8::internal::AllocationSite*)
+      2    0.1%    0.1%  T v8::internal::Factory::NewRawOneByteString(int, v8::internal::PretenureFlag)
+      2    0.1%    0.1%  T v8::internal::Factory::NewJSArrayStorage(v8::internal::Handle<v8::internal::JSArray>, int, int, v8::internal::ArrayStorageAllocationMode)
+      2    0.1%    0.1%  T v8::internal::ElementsAccessor::Concat(v8::internal::Isolate*, v8::internal::Arguments*, unsigned int, unsigned int)
+      2    0.1%    0.1%  T v8::internal::Builtin_ArrayConcat(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::BaseNameDictionary<v8::internal::NameDictionary, v8::internal::NameDictionaryShape>::CopyEnumKeysTo(v8::internal::Handle<v8::internal::NameDictionary>, v8::internal::Handle<v8::internal::FixedArray>, v8::internal::KeyCollectionMode, v8::internal::KeyAccumulator*)
+      2    0.1%    0.1%  T node::AsyncWrap::MakeCallback(v8::Local<v8::Function>, int, v8::Local<v8::Value>*)
+      2    0.1%    0.1%  T _malloc_set_zone_name
+      2    0.1%    0.1%  T _malloc
+      2    0.1%    0.1%  T ___ungetwc
+      1    0.0%    0.0%  t void v8::internal::SlotSet::Insert<(v8::internal::AccessMode)0>(int)
+      1    0.0%    0.0%  t void v8::internal::Scanner::Advance<true, true>()
+      1    0.0%    0.0%  t void v8::internal::RelocInfo::Visit<v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)1, (v8::internal::TraceRetainingPathMode)1, v8::internal::IncrementalMarkingState> >(v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)1, (v8::internal::TraceRetainingPathMode)1, v8::internal::IncrementalMarkingState>*)
+      1    0.0%    0.0%  t void v8::internal::BodyDescriptorBase::IteratePointer<v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)1, (v8::internal::TraceRetainingPathMode)1, v8::internal::IncrementalMarkingState> >(v8::internal::HeapObject*, int, v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)1, (v8::internal::TraceRetainingPathMode)1, v8::internal::IncrementalMarkingState>*)
+      1    0.0%    0.0%  t void v8::internal::BodyDescriptorApply<v8::internal::CallIterateBody, void, v8::internal::HeapObject*, int, v8::internal::ObjectVisitor*>(v8::internal::InstanceType, v8::internal::HeapObject*, int, v8::internal::ObjectVisitor*)
+      1    0.0%    0.0%  t void std::__1::vector<v8::internal::compiler::PropertyAccessInfo, v8::internal::ZoneAllocator<v8::internal::compiler::PropertyAccessInfo> >::__push_back_slow_path<v8::internal::compiler::PropertyAccessInfo const&>(v8::internal::compiler::PropertyAccessInfo const&&&)
+      1    0.0%    0.0%  t void std::__1::__tree_balance_after_insert<std::__1::__tree_node_base<void*>*>(std::__1::__tree_node_base<void*>*, std::__1::__tree_node_base<void*>*)
+      1    0.0%    0.0%  t v8::internal::interpreter::InterpreterCompilationJob::~InterpreterCompilationJob()
+      1    0.0%    0.0%  t v8::internal::interpreter::BytecodeGenerator::VisitNoStackOverflowCheck(v8::internal::AstNode*)
+      1    0.0%    0.0%  t v8::internal::compiler::SourcePositionTable::Decorator::Decorate(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  t v8::internal::compiler::RepresentationSelector::ProcessRemainingInputs(v8::internal::compiler::Node*, int)
+      1    0.0%    0.0%  t v8::internal::compiler::GraphBuilderPhase::Run(v8::internal::compiler::PipelineData*, v8::internal::Zone*)
+      1    0.0%    0.0%  t v8::internal::compiler::BytecodeAnalysis::~BytecodeAnalysis()
+      1    0.0%    0.0%  t v8::internal::ZoneChunkList<unsigned char>::push_back(unsigned char const&)
+      1    0.0%    0.0%  t v8::internal::ScavengingTask::RunInParallel()
+      1    0.0%    0.0%  t v8::internal::RecordMigratedSlotVisitor::RecordMigratedSlot(v8::internal::HeapObject*, v8::internal::Object*, unsigned char*)
+      1    0.0%    0.0%  t v8::internal::PrototypeIterator::AdvanceFollowingProxiesIgnoringAccessChecks()
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParsePrimaryExpression(bool*, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParsePostfixExpression(bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseMemberWithNewPrefixesExpression(bool*, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseMemberExpression(bool*, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseLeftHandSideExpression(bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseIdentifierName(bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseExpressionOrLabelledStatement(v8::internal::ZoneList<v8::internal::AstRawString const*>*, v8::internal::AllowLabelledFunctionStatement, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseBlock(v8::internal::ZoneList<v8::internal::AstRawString const*>*, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseAndClassifyIdentifier(bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ParseVariableDeclarations(v8::internal::ParserBase<v8::internal::Parser>::VariableDeclarationContext, v8::internal::ParserBase<v8::internal::Parser>::DeclarationParsingResult*, v8::internal::ZoneList<v8::internal::AstRawString const*>*, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ParseUnaryExpression(bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ParseStatement(v8::internal::ZoneList<v8::internal::AstRawString const*>*, v8::internal::AllowLabelledFunctionStatement, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ParsePropertyName(v8::internal::AstRawString const**, v8::internal::ParserBase<v8::internal::Parser>::PropertyKind*, bool*, bool*, bool*, bool*, bool*, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ParsePrimaryExpression(bool*, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ParseConditionalExpression(bool, bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ParseAndClassifyIdentifier(bool*)
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::BindingPatternUnexpectedToken()
+      1    0.0%    0.0%  t v8::internal::ParserBase<v8::internal::Parser>::ArrowFormalParametersUnexpectedToken()
+      1    0.0%    0.0%  t v8::internal::PagedSpace::is_local()
+      1    0.0%    0.0%  t v8::internal::PagedSpace::Free(unsigned char*, unsigned long, v8::internal::SpaceAccountingMode)
+      1    0.0%    0.0%  t v8::internal::MaybeHandle<v8::internal::Object> v8::internal::(anonymous namespace)::HandleApiCallHelper<true>(v8::internal::Isolate*, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::FunctionTemplateInfo>, v8::internal::Handle<v8::internal::Object>, v8::internal::BuiltinArguments)
+      1    0.0%    0.0%  t v8::internal::MarkCompactCollector::RootMarkingVisitor::VisitRootPointer(v8::internal::Root, char const*, v8::internal::Object**)
+      1    0.0%    0.0%  t v8::internal::JSObject::WriteToField(int, v8::internal::PropertyDetails, v8::internal::Object*)
+      1    0.0%    0.0%  t v8::internal::JSObject::FastPropertyAtPut(v8::internal::FieldIndex, v8::internal::Object*)
+      1    0.0%    0.0%  t v8::internal::InternalizedStringTableCleaner::VisitPointers(v8::internal::HeapObject*, v8::internal::Object**, v8::internal::Object**)
+      1    0.0%    0.0%  t v8::internal::Handle<v8::internal::InterceptorInfo> v8::CreateNamedInterceptorInfo<void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Value> const&), void (*)(v8::Local<v8::Name>, v8::Local<v8::Value>, v8::PropertyCallbackInfo<v8::Value> const&), void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Integer> const&), void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Value> const&), void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Boolean> const&), void (*)(v8::PropertyCallbackInfo<v8::Array> const&), void (*)(v8::Local<v8::Name>, v8::PropertyDescriptor const&, v8::PropertyCallbackInfo<v8::Value> const&)>(v8::internal::Isolate*, void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Value> const&), void (*)(v8::Local<v8::Name>, v8::Local<v8::Value>, v8::PropertyCallbackInfo<v8::Value> const&), void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Integer> const&), void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Value> const&), void (*)(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Boolean> const&), void (*)(v8::PropertyCallbackInfo<v8::Array> const&), void (*)(v8::Local<v8::Name>, v8::PropertyDescriptor const&, v8::PropertyCallbackInfo<v8::Value> const&), v8::Local<v8::Value>, v8::PropertyHandlerFlags)
+      1    0.0%    0.0%  t v8::internal::Handle<v8::internal::CodeDataContainer> v8::internal::Factory::New<v8::internal::CodeDataContainer>(v8::internal::Handle<v8::internal::Map>, v8::internal::AllocationSpace)
+      1    0.0%    0.0%  t v8::internal::GlobalHandles::Node::PostGarbageCollectionProcessing(v8::internal::Isolate*)
+      1    0.0%    0.0%  t v8::internal::EvacuateNewSpaceVisitor::Visit(v8::internal::HeapObject*, int)
+      1    0.0%    0.0%  t v8::internal::Dictionary<v8::internal::NameDictionary, v8::internal::NameDictionaryShape>::Add(v8::internal::Handle<v8::internal::NameDictionary>, v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Object>, v8::internal::PropertyDetails, int*)
+      1    0.0%    0.0%  t v8::internal::Builtin_Impl_ArrayConcat(v8::internal::BuiltinArguments, v8::internal::Isolate*)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::ObjectBoilerplate::Create(v8::internal::Isolate*, v8::internal::Handle<v8::internal::HeapObject>, int, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::MakeStringThin(v8::internal::String*, v8::internal::String*, v8::internal::Isolate*)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::GetSimpleHash(v8::internal::Object*)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::GetFastEnumPropertyKeys(v8::internal::Isolate*, v8::internal::Handle<v8::internal::JSObject>)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::FastElementsAccessor<v8::internal::(anonymous namespace)::FastPackedObjectElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)2> >::AddArguments(v8::internal::Handle<v8::internal::JSArray>, v8::internal::Handle<v8::internal::FixedArrayBase>, v8::internal::Arguments*, unsigned int, v8::internal::(anonymous namespace)::Where)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastPackedObjectElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)2> >::Unshift(v8::internal::Handle<v8::internal::JSArray>, v8::internal::Arguments*, unsigned int)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastHoleyObjectElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)3> >::SetLengthImpl(v8::internal::Isolate*, v8::internal::Handle<v8::internal::JSArray>, unsigned int, v8::internal::Handle<v8::internal::FixedArrayBase>)
+      1    0.0%    0.0%  t v8::internal::(anonymous namespace)::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastHoleyObjectElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)3> >::SetLength(v8::internal::Handle<v8::internal::JSArray>, unsigned int)
+      1    0.0%    0.0%  t v8::Local<v8::Value> node::FillStatsArray<double, v8::Float64Array>(node::AliasedBuffer<double, v8::Float64Array>*, uv_stat_t const*, int)
+      1    0.0%    0.0%  t unibrow::IsStringLiteralLineTerminator(unsigned int)
+      1    0.0%    0.0%  t std::__1::vector<v8::internal::SourcePosition, v8::internal::ZoneAllocator<v8::internal::SourcePosition> >::__append(unsigned long, v8::internal::SourcePosition const&)
+      1    0.0%    0.0%  t std::__1::vector<std::__1::array<v8::internal::compiler::Node*, 8ul>, v8::internal::ZoneAllocator<std::__1::array<v8::internal::compiler::Node*, 8ul> > >::__append(unsigned long)
+      1    0.0%    0.0%  t std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> > std::__1::num_get<wchar_t, std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> > >::__do_get_floating_point<long double>(std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> >, std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> >, std::__1::ios_base&, unsigned int&, long double&) const
+      1    0.0%    0.0%  t node::performance::PerformanceEntry::PerformanceEntry(node::Environment*, char const*, char const*, unsigned long long, unsigned long long)
+      1    0.0%    0.0%  t node::performance::GCPerformanceEntry::~GCPerformanceEntry()
+      1    0.0%    0.0%  t node::i18n::(anonymous namespace)::GetVersion(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  t node::Buffer::(anonymous namespace)::SetupBufferJS(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  t node::(anonymous namespace)::ZCtx::Init(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  t node::(anonymous namespace)::TimerWrap::Now(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  t node::(anonymous namespace)::TimerWrap::New(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  t int v8::internal::SlotSet::Iterate<v8::internal::RememberedSetUpdatingItem<v8::internal::MajorNonAtomicMarkingState>::UpdateUntypedPointers()::'lambda'(unsigned char*)>(v8::internal::RememberedSetUpdatingItem<v8::internal::MajorNonAtomicMarkingState>::UpdateUntypedPointers()::'lambda'(unsigned char*), v8::internal::SlotSet::EmptyBucketMode)
+      1    0.0%    0.0%  t _uv__io_poll
+      1    0.0%    0.0%  t _szone_batch_free
+      1    0.0%    0.0%  t __os_lock_transactional_lock_yield
+      1    0.0%    0.0%  t __os_lock_transactional_lock
+      1    0.0%    0.0%  t __os_lock_nospin_trylock
+      1    0.0%    0.0%  t __os_lock_eliding_lock_yield
+      1    0.0%    0.0%  t ___printf_flush
+      1    0.0%    0.0%  t ___find_warguments
+      1    0.0%    0.0%  T v8::internal::wasm::WasmCodeManager::LookupCode(unsigned char*) const
+      1    0.0%    0.0%  T v8::internal::libc_memchr(void*, int, unsigned long)
+      1    0.0%    0.0%  T v8::internal::interpreter::ConstantArrayBuilder::Insert(v8::internal::AstRawString const*)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeRegisterOptimizer::PrepareOutputRegister(v8::internal::interpreter::Register)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeRegisterOptimizer::GrowRegisterMap(v8::internal::interpreter::Register)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeRegisterOptimizer::CreateMaterializedEquivalent(v8::internal::interpreter::BytecodeRegisterOptimizer::RegisterInfo*)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeGenerator::VisitCompareOperation(v8::internal::CompareOperation*)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeGenerator::VisitCall(v8::internal::Call*)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeGenerator::GenerateBytecode(unsigned long)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeGenerator::BuildLocalActivationContextInitialization()
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayWriter::PatchJump(unsigned long, unsigned long)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayWriter::EmitBytecode(v8::internal::interpreter::BytecodeNode const*)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayBuilder::ThrowReferenceErrorIfHole(v8::internal::AstRawString const*)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayBuilder::StoreAccumulatorInRegister(v8::internal::interpreter::Register)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayBuilder::LoadUndefined()
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayBuilder::LoadLiteral(v8::internal::Smi*)
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayAccessor::current_bytecode_size() const
+      1    0.0%    0.0%  T v8::internal::interpreter::BytecodeArrayAccessor::GetIndexOperand(int) const
+      1    0.0%    0.0%  T v8::internal::compiler::ZoneStats::ReturnZone(v8::internal::Zone*)
+      1    0.0%    0.0%  T v8::internal::compiler::StateValuesCache::StateValuesCache(v8::internal::compiler::JSGraph*)
+      1    0.0%    0.0%  T v8::internal::compiler::StateValuesCache::IsKeysEqualToNode(v8::internal::compiler::StateValuesCache::StateValuesKey*, v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::RedundancyElimination::RedundancyElimination(v8::internal::compiler::AdvancedReducer::Editor*, v8::internal::Zone*)
+      1    0.0%    0.0%  T v8::internal::compiler::PipelineImpl::FinalizeCode()
+      1    0.0%    0.0%  T v8::internal::compiler::NodeProperties::IsControlEdge(v8::internal::compiler::Edge)
+      1    0.0%    0.0%  T v8::internal::compiler::NodeProperties::GetTypeOrAny(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::LoopVariableOptimizer::VisitNode(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::LoopVariableOptimizer::Run()
+      1    0.0%    0.0%  T v8::internal::compiler::LoopVariableOptimizer::LoopVariableOptimizer(v8::internal::compiler::Graph*, v8::internal::compiler::CommonOperatorBuilder*, v8::internal::Zone*)
+      1    0.0%    0.0%  T v8::internal::compiler::JSTypeHintLowering::ReduceStoreNamedOperation(v8::internal::compiler::Operator const*, v8::internal::compiler::Node*, v8::internal::compiler::Node*, v8::internal::compiler::Node*, v8::internal::compiler::Node*, v8::internal::FeedbackSlot) const
+      1    0.0%    0.0%  T v8::internal::compiler::JSOperatorBuilder::StoreNamed(v8::internal::LanguageMode, v8::internal::Handle<v8::internal::Name>, v8::internal::VectorSlotPair const&)
+      1    0.0%    0.0%  T v8::internal::compiler::JSInliningHeuristic::Reduce(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::JSInliningHeuristic::Finalize()
+      1    0.0%    0.0%  T v8::internal::compiler::JSBuiltinReducer::Reduce(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::GraphReducer::Replace(v8::internal::compiler::Node*, v8::internal::compiler::Node*, unsigned int)
+      1    0.0%    0.0%  T v8::internal::compiler::GraphReducer::ReduceNode(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::DeadCodeElimination::ReduceEffectNode(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::CommonOperatorReducer::Reduce(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::BytecodeGraphBuilder::VisitStackCheck()
+      1    0.0%    0.0%  T v8::internal::compiler::BytecodeGraphBuilder::VisitCallProperty2()
+      1    0.0%    0.0%  T v8::internal::compiler::BytecodeGraphBuilder::MergeValue(v8::internal::compiler::Node*, v8::internal::compiler::Node*, v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::BytecodeGraphBuilder::ExitThenEnterExceptionHandlers(int)
+      1    0.0%    0.0%  T v8::internal::compiler::BytecodeGraphBuilder::Environment::Environment(v8::internal::compiler::BytecodeGraphBuilder*, int, int, v8::internal::interpreter::Register, v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::compiler::BytecodeGraphBuilder::BuildJumpIf(v8::internal::compiler::Node*)
+      1    0.0%    0.0%  T v8::internal::Zone::Zone(v8::internal::AccountingAllocator*, char const*, v8::internal::SegmentSize)
+      1    0.0%    0.0%  T v8::internal::Zone::NewExpand(unsigned long)
+      1    0.0%    0.0%  T v8::internal::TransitionsAccessor::SearchTransition(v8::internal::Name*, v8::internal::PropertyKind, v8::internal::PropertyAttributes)
+      1    0.0%    0.0%  T v8::internal::TransitionsAccessor::Initialize()
+      1    0.0%    0.0%  T v8::internal::TransitionArray::Search(v8::internal::PropertyKind, v8::internal::Name*, v8::internal::PropertyAttributes, int*)
+      1    0.0%    0.0%  T v8::internal::ThreadManager::Iterate(v8::internal::RootVisitor*)
+      1    0.0%    0.0%  T v8::internal::StubCache::Set(v8::internal::Name*, v8::internal::Map*, v8::internal::Object*)
+      1    0.0%    0.0%  T v8::internal::StringTable::LookupKey(v8::internal::Isolate*, v8::internal::StringTableKey*)
+      1    0.0%    0.0%  T v8::internal::String::LastIndexOf(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>)
+      1    0.0%    0.0%  T v8::internal::String::ComputeAndSetHash()
+      1    0.0%    0.0%  T v8::internal::String::CalculateLineEnds(v8::internal::Handle<v8::internal::String>, bool)
+      1    0.0%    0.0%  T v8::internal::StoreIC::Store(v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Object>, v8::internal::Object::StoreFromKeyed)
+      1    0.0%    0.0%  T v8::internal::StoreIC::LookupForWrite(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::Object::StoreFromKeyed)
+      1    0.0%    0.0%  T v8::internal::StoreHandler::StoreTransition(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Map>)
+      1    0.0%    0.0%  T v8::internal::StackGuard::PushPostponeInterruptsScope(v8::internal::PostponeInterruptsScope*)
+      1    0.0%    0.0%  T v8::internal::StackFrameIterator::Advance()
+      1    0.0%    0.0%  T v8::internal::SpaceWithLinearArea::StartNextInlineAllocationStep()
+      1    0.0%    0.0%  T v8::internal::SourcePositionTableBuilder::AddPosition(unsigned long, v8::internal::SourcePosition, bool)
+      1    0.0%    0.0%  T v8::internal::SourcePositionTableBuilder::AddEntry(v8::internal::PositionTableEntry const&)
+      1    0.0%    0.0%  T v8::internal::SharedFunctionInfo::DebugName()
+      1    0.0%    0.0%  T v8::internal::Script::InitLineEnds(v8::internal::Handle<v8::internal::Script>)
+      1    0.0%    0.0%  T v8::internal::ScopeInfo::scope_type()
+      1    0.0%    0.0%  T v8::internal::Scope::Snapshot::Snapshot(v8::internal::Scope*)
+      1    0.0%    0.0%  T v8::internal::Scope::Scope(v8::internal::Zone*, v8::internal::Scope*, v8::internal::ScopeType)
+      1    0.0%    0.0%  T v8::internal::Scope::ResolveVariablesRecursively(v8::internal::ParseInfo*)
+      1    0.0%    0.0%  T v8::internal::Scope::ResolveTo(v8::internal::ParseInfo*, v8::internal::VariableProxy*, v8::internal::Variable*)
+      1    0.0%    0.0%  T v8::internal::Scope::LookupRecursive(v8::internal::ParseInfo*, v8::internal::VariableProxy*, v8::internal::Scope*)
+      1    0.0%    0.0%  T v8::internal::Scope::FinalizeBlockScope()
+      1    0.0%    0.0%  T v8::internal::Scope::DeserializeScopeChain(v8::internal::Zone*, v8::internal::ScopeInfo*, v8::internal::DeclarationScope*, v8::internal::AstValueFactory*, v8::internal::Scope::DeserializationMode)
+      1    0.0%    0.0%  T v8::internal::Scanner::ScanRegExpFlags()
+      1    0.0%    0.0%  T v8::internal::Runtime_RegExpExec(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::Runtime_KeyedGetProperty(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::RootScavengeVisitor::VisitRootPointer(v8::internal::Root, char const*, v8::internal::Object**)
+      1    0.0%    0.0%  T v8::internal::Rewriter::Rewrite(v8::internal::ParseInfo*)
+      1    0.0%    0.0%  T v8::internal::RegExpStackScope::RegExpStackScope(v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::RegExpParser::ParseClassEscape(v8::internal::ZoneList<v8::internal::CharacterRange>*, v8::internal::Zone*, bool, int*, bool*)
+      1    0.0%    0.0%  T v8::internal::RegExpMacroAssemblerX64::Bind(v8::internal::Label*)
+      1    0.0%    0.0%  T v8::internal::PropertyDescriptor::ToPropertyDescriptor(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::PropertyDescriptor*)
+      1    0.0%    0.0%  T v8::internal::Parser::ParseFunction(v8::internal::Isolate*, v8::internal::ParseInfo*, v8::internal::Handle<v8::internal::SharedFunctionInfo>)
+      1    0.0%    0.0%  T v8::internal::OptimizingCompileDispatcher::InstallOptimizedFunctions()
+      1    0.0%    0.0%  T v8::internal::ObjectLiteral::BuildConstantProperties(v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::Object::SetPropertyInternal(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::LanguageMode, v8::internal::Object::StoreFromKeyed, bool*)
+      1    0.0%    0.0%  T v8::internal::Object::SetProperty(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::LanguageMode, v8::internal::Object::StoreFromKeyed)
+      1    0.0%    0.0%  T v8::internal::Object::GetProperty(v8::internal::LookupIterator*)
+      1    0.0%    0.0%  T v8::internal::OFStreamBase::sync()
+      1    0.0%    0.0%  T v8::internal::MarkCompactCollector::ClearNonLiveReferences()
+      1    0.0%    0.0%  T v8::internal::MapUpdater::FindRootMap()
+      1    0.0%    0.0%  T v8::internal::Map::TransitionElementsTo(v8::internal::Handle<v8::internal::Map>, v8::internal::ElementsKind)
+      1    0.0%    0.0%  T v8::internal::Map::ShareDescriptor(v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::DescriptorArray>, v8::internal::Descriptor*)
+      1    0.0%    0.0%  T v8::internal::Map::GetOrCreatePrototypeInfo(v8::internal::Handle<v8::internal::Map>, v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::Map::EnsureDescriptorSlack(v8::internal::Handle<v8::internal::Map>, int)
+      1    0.0%    0.0%  T v8::internal::LookupIterator::WriteDataValue(v8::internal::Handle<v8::internal::Object>, bool)
+      1    0.0%    0.0%  T v8::internal::LookupIterator::PropertyOrElement(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, bool*, v8::internal::LookupIterator::Configuration)
+      1    0.0%    0.0%  T v8::internal::LookupIterator::PrepareTransitionToDataProperty(v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::Object>, v8::internal::PropertyAttributes, v8::internal::Object::StoreFromKeyed)
+      1    0.0%    0.0%  T v8::internal::LookupIterator::ForTransitionHandler(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Object>, v8::internal::MaybeHandle<v8::internal::Object>, v8::internal::Handle<v8::internal::Map>)
+      1    0.0%    0.0%  T v8::internal::LookupIterator::ApplyTransitionToDataProperty(v8::internal::Handle<v8::internal::JSReceiver>)
+      1    0.0%    0.0%  T v8::internal::Logger::LogExistingFunction(v8::internal::Handle<v8::internal::SharedFunctionInfo>, v8::internal::Handle<v8::internal::AbstractCode>)
+      1    0.0%    0.0%  T v8::internal::Logger::CodeDeoptEvent(v8::internal::Code*, v8::internal::CodeEventListener::DeoptKind, unsigned char*, int)
+      1    0.0%    0.0%  T v8::internal::Logger::ApiNamedPropertyAccess(char const*, v8::internal::JSObject*, v8::internal::Object*)
+      1    0.0%    0.0%  T v8::internal::LoadIC::UpdateCaches(v8::internal::LookupIterator*)
+      1    0.0%    0.0%  T v8::internal::LoadHandler::LoadFromPrototype(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::Smi>, v8::internal::MaybeHandle<v8::internal::Object>, v8::internal::MaybeHandle<v8::internal::Object>)
+      1    0.0%    0.0%  T v8::internal::LayoutDescriptor::ShareAppend(v8::internal::Handle<v8::internal::Map>, v8::internal::PropertyDetails)
+      1    0.0%    0.0%  T v8::internal::LargeObjectSpace::FindPage(unsigned char*)
+      1    0.0%    0.0%  T v8::internal::KeyedStoreIC::Store(v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>)
+      1    0.0%    0.0%  T v8::internal::KeyedLoadIC::Load(v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>)
+      1    0.0%    0.0%  T v8::internal::KeyAccumulator::GetOwnEnumPropertyKeys(v8::internal::Isolate*, v8::internal::Handle<v8::internal::JSObject>)
+      1    0.0%    0.0%  T v8::internal::KeyAccumulator::CollectKeys(v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::JSReceiver>)
+      1    0.0%    0.0%  T v8::internal::JsonStringifier::InitializeReplacer(v8::internal::Handle<v8::internal::Object>)
+      1    0.0%    0.0%  T v8::internal::JsonStringifier::ApplyToJsonFunction(v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>)
+      1    0.0%    0.0%  T v8::internal::JsonParser<true>::ParseJsonValue()
+      1    0.0%    0.0%  T v8::internal::JsonParser<true>::ParseJsonNumber()
+      1    0.0%    0.0%  T v8::internal::JsonParser<false>::ParseJsonArray()
+      1    0.0%    0.0%  T v8::internal::JavaScriptFrame::GetCallerStackPointer() const
+      1    0.0%    0.0%  T v8::internal::JSReceiver::SetProperties(v8::internal::HeapObject*)
+      1    0.0%    0.0%  T v8::internal::JSObject::SetPrototype(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Handle<v8::internal::Object>, bool, v8::internal::ShouldThrow)
+      1    0.0%    0.0%  T v8::internal::JSObject::OptimizeAsPrototype(v8::internal::Handle<v8::internal::JSObject>, bool)
+      1    0.0%    0.0%  T v8::internal::JSObject::MigrateSlowToFast(v8::internal::Handle<v8::internal::JSObject>, int, char const*)
+      1    0.0%    0.0%  T v8::internal::JSObject::GetElementsAccessor()
+      1    0.0%    0.0%  T v8::internal::JSFunction::ToString(v8::internal::Handle<v8::internal::JSFunction>)
+      1    0.0%    0.0%  T v8::internal::JSFunction::EnsureHasInitialMap(v8::internal::Handle<v8::internal::JSFunction>)
+      1    0.0%    0.0%  T v8::internal::Isolate::FireCallCompletedCallback()
+      1    0.0%    0.0%  T v8::internal::IsMoreGeneralElementsKindTransition(v8::internal::ElementsKind, v8::internal::ElementsKind)
+      1    0.0%    0.0%  T v8::internal::InnerPointerToCodeCache::GetCacheEntry(unsigned char*)
+      1    0.0%    0.0%  T v8::internal::IncrementalStringBuilder::Extend()
+      1    0.0%    0.0%  T v8::internal::IncrementalMarking::RecordWriteSlow(v8::internal::HeapObject*, v8::internal::Object**, v8::internal::Object*)
+      1    0.0%    0.0%  T v8::internal::IdentityMapBase::LookupOrInsert(v8::internal::Object*)
+      1    0.0%    0.0%  T v8::internal::IdentityMapBase::GetEntry(v8::internal::Object*)
+      1    0.0%    0.0%  T v8::internal::IC::ConfigureVectorState(v8::internal::Handle<v8::internal::Name>, std::__1::vector<v8::internal::Handle<v8::internal::Map>, std::__1::allocator<v8::internal::Handle<v8::internal::Map> > > const&, std::__1::vector<v8::internal::Handle<v8::internal::Object>, std::__1::allocator<v8::internal::Handle<v8::internal::Object> > >*)
+      1    0.0%    0.0%  T v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags)
+      1    0.0%    0.0%  T v8::internal::Heap::MoveElements(v8::internal::FixedArray*, int, int, int)
+      1    0.0%    0.0%  T v8::internal::Heap::CopyJSObject(v8::internal::JSObject*, v8::internal::AllocationSite*)
+      1    0.0%    0.0%  T v8::internal::Heap::AllocateRawTwoByteString(int, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Heap::AllocateRawOneByteString(int, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Heap::AllocateFeedbackVector(v8::internal::SharedFunctionInfo*, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Heap::AllocateCode(v8::internal::CodeDesc const&, v8::internal::Code::Kind, v8::internal::Handle<v8::internal::Object>, int, v8::internal::ByteArray*, v8::internal::CodeDataContainer*, v8::internal::ByteArray*, v8::internal::DeoptimizationData*, v8::internal::Movability, unsigned int, bool, int, int, int)
+      1    0.0%    0.0%  T v8::internal::Heap::AllocateBytecodeArray(int, unsigned char const*, int, int, v8::internal::FixedArray*)
+      1    0.0%    0.0%  T v8::internal::HashTable<v8::internal::StringTable, v8::internal::StringTableShape>::Rehash(v8::internal::StringTable*)
+      1    0.0%    0.0%  T v8::internal::HashTable<v8::internal::StringTable, v8::internal::StringTableShape>::EnsureCapacity(v8::internal::Handle<v8::internal::StringTable>, int, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::HashTable<v8::internal::SimpleNumberDictionary, v8::internal::SimpleNumberDictionaryShape>::Rehash()
+      1    0.0%    0.0%  T v8::internal::HandleScopeImplementer::BeginDeferredScope()
+      1    0.0%    0.0%  T v8::internal::FeedbackVectorSpec::AddSlot(v8::internal::FeedbackSlotKind)
+      1    0.0%    0.0%  T v8::internal::FeedbackVector::New(v8::internal::Isolate*, v8::internal::Handle<v8::internal::SharedFunctionInfo>)
+      1    0.0%    0.0%  T v8::internal::FeedbackMetadata::SpecDiffersFrom(v8::internal::FeedbackVectorSpec const*) const
+      1    0.0%    0.0%  T v8::internal::FastKeyAccumulator::Prepare()
+      1    0.0%    0.0%  T v8::internal::Factory::NewRawTwoByteString(int, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Factory::NewNoClosuresCell(v8::internal::Handle<v8::internal::HeapObject>)
+      1    0.0%    0.0%  T v8::internal::Factory::NewJSObjectFromMap(v8::internal::Handle<v8::internal::Map>, v8::internal::PretenureFlag, v8::internal::Handle<v8::internal::AllocationSite>)
+      1    0.0%    0.0%  T v8::internal::Factory::NewJSArray(v8::internal::ElementsKind, int, int, v8::internal::ArrayStorageAllocationMode, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Factory::NewFunction(v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::SharedFunctionInfo>, v8::internal::Handle<v8::internal::Object>, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Factory::NewFixedArrayWithHoles(int, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Factory::NewFixedArray(int, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Expression::IsAnonymousFunctionDefinition() const
+      1    0.0%    0.0%  T v8::internal::Execution::Call(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*)
+      1    0.0%    0.0%  T v8::internal::EscapeRegExpSource(v8::internal::Isolate*, v8::internal::Handle<v8::internal::String>)
+      1    0.0%    0.0%  T v8::internal::Dictionary<v8::internal::NameDictionary, v8::internal::NameDictionaryShape>::SetEntry(int, v8::internal::Object*, v8::internal::Object*, v8::internal::PropertyDetails)
+      1    0.0%    0.0%  T v8::internal::Deserializer<v8::internal::DefaultDeserializerAllocator>::ReadData(v8::internal::Object**, v8::internal::Object**, int, unsigned char*)
+      1    0.0%    0.0%  T v8::internal::DescriptorArray::CopyFrom(int, v8::internal::DescriptorArray*)
+      1    0.0%    0.0%  T v8::internal::DependentCode::Insert(v8::internal::Handle<v8::internal::DependentCode>, v8::internal::DependentCode::DependencyGroup, v8::internal::Handle<v8::internal::Object>)
+      1    0.0%    0.0%  T v8::internal::DependentCode::Compact()
+      1    0.0%    0.0%  T v8::internal::DeclarationScope::DeclareDefaultFunctionVariables(v8::internal::AstValueFactory*)
+      1    0.0%    0.0%  T v8::internal::ContextSlotCache::Clear()
+      1    0.0%    0.0%  T v8::internal::Context::AddOptimizedCode(v8::internal::Code*)
+      1    0.0%    0.0%  T v8::internal::CompilerDispatcher::IsEnqueued(v8::internal::Handle<v8::internal::SharedFunctionInfo>) const
+      1    0.0%    0.0%  T v8::internal::Compiler::PostInstantiation(v8::internal::Handle<v8::internal::JSFunction>, v8::internal::PretenureFlag)
+      1    0.0%    0.0%  T v8::internal::Compiler::Compile(v8::internal::Handle<v8::internal::SharedFunctionInfo>, v8::internal::Compiler::ClearExceptionFlag)
+      1    0.0%    0.0%  T v8::internal::CompilationJob::RecordUnoptimizedCompilationStats(v8::internal::Isolate*) const
+      1    0.0%    0.0%  T v8::internal::CompilationInfo::CompilationInfo(v8::internal::Zone*, v8::internal::ParseInfo*, v8::internal::FunctionLiteral*)
+      1    0.0%    0.0%  T v8::internal::CompilationDependencies::AssumePrototypeMapsStable(v8::internal::Handle<v8::internal::Map>, v8::internal::MaybeHandle<v8::internal::JSReceiver>)
+      1    0.0%    0.0%  T v8::internal::CompilationCacheRegExp::Put(v8::internal::Handle<v8::internal::String>, v8::base::Flags<v8::internal::JSRegExp::Flag, int>, v8::internal::Handle<v8::internal::FixedArray>)
+      1    0.0%    0.0%  T v8::internal::ChoiceNode::Emit(v8::internal::RegExpCompiler*, v8::internal::Trace*)
+      1    0.0%    0.0%  T v8::internal::CharacterRange::AddClassEscape(char, v8::internal::ZoneList<v8::internal::CharacterRange>*, v8::internal::Zone*)
+      1    0.0%    0.0%  T v8::internal::CanonicalHandleScope::CanonicalHandleScope(v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::AstValueFactory::Internalize(v8::internal::Isolate*)
+      1    0.0%    0.0%  T v8::internal::AstValueFactory::GetString(unsigned int, bool, v8::internal::Vector<unsigned char const>)
+      1    0.0%    0.0%  T v8::internal::AstValueFactory::GetOneByteStringInternal(v8::internal::Vector<unsigned char const>)
+      1    0.0%    0.0%  T v8::internal::AstRawString::AsArrayIndex(unsigned int*) const
+      1    0.0%    0.0%  T v8::internal::Assembler::jmp(v8::internal::Handle<v8::internal::Code>, v8::internal::RelocInfo::Mode)
+      1    0.0%    0.0%  T v8::internal::Assembler::j(v8::internal::Condition, v8::internal::Label*, v8::internal::Label::Distance)
+      1    0.0%    0.0%  T v8::internal::Assembler::emit_mov(v8::internal::Register, v8::internal::Operand, int)
+      1    0.0%    0.0%  T v8::internal::Assembler::bind_to(v8::internal::Label*, int)
+      1    0.0%    0.0%  T v8::internal::AccountingAllocator::ReturnSegment(v8::internal::Segment*)
+      1    0.0%    0.0%  T v8::internal::AccountingAllocator::GetSegment(unsigned long)
+      1    0.0%    0.0%  T v8::internal::Accessors::FunctionPrototypeGetter(v8::Local<v8::Name>, v8::PropertyCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  T v8::Locker::IsActive()
+      1    0.0%    0.0%  T v8::FunctionTemplate::SetCallHandler(void (*)(v8::FunctionCallbackInfo<v8::Value> const&), v8::Local<v8::Value>, v8::SideEffectType)
+      1    0.0%    0.0%  T v8::CpuProfiler::SetIdle(bool)
+      1    0.0%    0.0%  T v8::Context::Enter()
+      1    0.0%    0.0%  T std::__1::timed_mutex::lock()
+      1    0.0%    0.0%  T std::__1::basic_streambuf<char, std::__1::char_traits<char> >::swap(std::__1::basic_streambuf<char, std::__1::char_traits<char> >&)
+      1    0.0%    0.0%  T std::__1::basic_ostream<char, std::__1::char_traits<char> >::basic_ostream(std::__1::basic_streambuf<char, std::__1::char_traits<char> >*)
+      1    0.0%    0.0%  T std::__1::basic_istream<wchar_t, std::__1::char_traits<wchar_t> >::putback(wchar_t)
+      1    0.0%    0.0%  T std::__1::__next_prime(unsigned long)
+      1    0.0%    0.0%  T std::__1::__codecvt_utf16<char16_t, false>::do_length(__mbstate_t&, char const*, char const*, unsigned long) const
+      1    0.0%    0.0%  T node::contextify::ContextifyContext::MakeContext(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  T node::NodePlatform::MonotonicallyIncreasingTime()
+      1    0.0%    0.0%  T node::InternalCallbackScope::Close()
+      1    0.0%    0.0%  T node::HandleWrap::Close(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.0%    0.0%  T int v8::internal::SearchStringRaw<unsigned char const, unsigned short const>(v8::internal::Isolate*, unsigned char const const*, int, unsigned short const const*, int, int)
+      1    0.0%    0.0%  T _uv_hrtime
+      1    0.0%    0.0%  T _uv_cond_signal
+      1    0.0%    0.0%  T _szone_error
+      1    0.0%    0.0%  T _swscanf_l
+      1    0.0%    0.0%  T _swprintf_l
+      1    0.0%    0.0%  T _mach_vm_protect
+      1    0.0%    0.0%  T _mach_msg_server_once
+      1    0.0%    0.0%  T _fputwc_l
+      1    0.0%    0.0%  T _fgetc
+      1    0.0%    0.0%  T _catopen
+      1    0.0%    0.0%  T __swrite
+      1    0.0%    0.0%  T __sread
+      1    0.0%    0.0%  T ___fflush
+
+ [Summary]:
+   ticks  total  nonlib   name
+    716   23.4%   23.8%  JavaScript
+   2244   73.3%   74.6%  C++
+    207    6.8%    6.9%  GC
+     52    1.7%          Shared libraries
+     50    1.6%          Unaccounted
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+    693   43.9%   22.6%  T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+    197   12.5%    6.4%  T v8::internal::Runtime_CompileLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+    109    6.9%    3.6%  T v8::internal::Builtin_JsonStringify(int, v8::internal::Object**, v8::internal::Isolate*)
+    108    6.8%    3.5%  T v8::internal::Runtime_CompileOptimized_Concurrent(int, v8::internal::Object**, v8::internal::Isolate*)
+     62    3.9%    2.0%  T v8::internal::Builtin_JsonParse(int, v8::internal::Object**, v8::internal::Isolate*)
+     48    3.0%    1.6%  T v8::internal::Runtime_LoadIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+     42    2.7%    1.4%  T v8::internal::Builtin_FunctionConstructor(int, v8::internal::Object**, v8::internal::Isolate*)
+     37    2.3%    1.2%  t std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > std::__1::__pad_and_output<char, std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > >(std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> >, char const*, char const*, char const*, std::__1::ios_base&, char)
+     30    1.9%    1.0%  T v8::internal::Runtime_StoreIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+     30    1.9%    1.0%  T v8::internal::Builtin_ArrayConcat(int, v8::internal::Object**, v8::internal::Isolate*)
+     29    1.8%    0.9%  T v8::internal::Runtime_ForInEnumerate(int, v8::internal::Object**, v8::internal::Isolate*)
+     24    1.5%    0.8%  T v8::internal::Runtime_StackGuard(int, v8::internal::Object**, v8::internal::Isolate*)
+     15    1.0%    0.5%  T v8::internal::Runtime_KeyedStoreIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+     14    0.9%    0.5%  T v8::internal::Runtime_RegExpExec(int, v8::internal::Object**, v8::internal::Isolate*)
+     11    0.7%    0.4%  T v8::internal::Runtime_CreateObjectLiteral(int, v8::internal::Object**, v8::internal::Isolate*)
+      9    0.6%    0.3%  T v8::internal::Runtime_NewObject(int, v8::internal::Object**, v8::internal::Isolate*)
+      7    0.4%    0.2%  T v8::internal::Runtime_StringCharCodeAt(int, v8::internal::Object**, v8::internal::Isolate*)
+      7    0.4%    0.2%  T v8::internal::OrderedHashMap::GetHash(v8::internal::Isolate*, v8::internal::Object*)
+      6    0.4%    0.2%  T v8::internal::Runtime_InterpreterDeserializeLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+      6    0.4%    0.2%  T v8::internal::Runtime_DefineDataPropertyInLiteral(int, v8::internal::Object**, v8::internal::Isolate*)
+      6    0.4%    0.2%  T v8::internal::Runtime_CreateRegExpLiteral(int, v8::internal::Object**, v8::internal::Isolate*)
+      5    0.3%    0.2%  T v8::internal::Runtime_ObjectKeys(int, v8::internal::Object**, v8::internal::Isolate*)
+      5    0.3%    0.2%  T v8::internal::Runtime_KeyedGetProperty(int, v8::internal::Object**, v8::internal::Isolate*)
+      4    0.3%    0.1%  T v8::internal::Runtime_StringBuilderJoin(int, v8::internal::Object**, v8::internal::Isolate*)
+      4    0.3%    0.1%  T v8::internal::Builtin_ArrayUnshift(int, v8::internal::Object**, v8::internal::Isolate*)
+      3    0.2%    0.1%  t v8::internal::(anonymous namespace)::StringTableNoAllocateKey::IsMatch(v8::internal::Object*)
+      3    0.2%    0.1%  T v8::internal::StringTable::LookupStringIfExists_NoAllocate(v8::internal::String*)
+      3    0.2%    0.1%  T v8::internal::Runtime_StringAdd(int, v8::internal::Object**, v8::internal::Isolate*)
+      3    0.2%    0.1%  T v8::internal::Runtime_RegExpInitializeAndCompile(int, v8::internal::Object**, v8::internal::Isolate*)
+      3    0.2%    0.1%  T v8::internal::Runtime_NewClosure(int, v8::internal::Object**, v8::internal::Isolate*)
+      3    0.2%    0.1%  T _sendto
+      2    0.1%    0.1%  T v8::internal::Runtime_StringIndexOfUnchecked(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Runtime_NewClosure_Tenured(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Runtime_LoadFromSuper(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Runtime_KeyedLoadIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Runtime_Interrupt(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Runtime_DeserializeLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Runtime_CompileForOnStackReplacement(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Builtin_ObjectDefineProperty(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Builtin_ObjectDefineProperties(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.1%    0.1%  T v8::internal::Builtin_ErrorCaptureStackTrace(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  t v8::internal::ParserBase<v8::internal::PreParser>::ParseAndClassifyIdentifier(bool*)
+      1    0.1%    0.0%  t v8::internal::HeapObject::Size() const
+      1    0.1%    0.0%  t v8::internal::ConsString* v8::internal::String::VisitFlat<v8::internal::IteratingStringHasher>(v8::internal::IteratingStringHasher*, v8::internal::String*, int)
+      1    0.1%    0.0%  t v8::internal::(anonymous namespace)::MakeStringThin(v8::internal::String*, v8::internal::String*, v8::internal::Isolate*)
+      1    0.1%    0.0%  t v8::Local<v8::Value> node::FillStatsArray<double, v8::Float64Array>(node::AliasedBuffer<double, v8::Float64Array>*, uv_stat_t const*, int)
+      1    0.1%    0.0%  t node::inspector::(anonymous namespace)::InspectorConsoleCall(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.1%    0.0%  t node::(anonymous namespace)::RunMicrotasks(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.1%    0.0%  t _szone_malloc_should_clear
+      1    0.1%    0.0%  t _malloc_zone_register_while_locked
+      1    0.1%    0.0%  t __os_once_gate_wait_slow
+      1    0.1%    0.0%  T v8::internal::libc_memchr(void*, int, unsigned long)
+      1    0.1%    0.0%  T v8::internal::TransitionsAccessor::SearchTransition(v8::internal::Name*, v8::internal::PropertyKind, v8::internal::PropertyAttributes)
+      1    0.1%    0.0%  T v8::internal::Script::GetPositionInfo(int, v8::internal::Script::PositionInfo*, v8::internal::Script::OffsetFlag) const
+      1    0.1%    0.0%  T v8::internal::Runtime_StringSplit(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Runtime_MapGrow(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Runtime_LoadPropertyWithInterceptor(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Runtime_LoadGlobalIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Runtime_DefineClass(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Runtime_CreateArrayLiteral(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Runtime_CompileOptimized_NotConcurrent(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Runtime_AddDictionaryProperty(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::JSObject::MigrateToMap(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Handle<v8::internal::Map>, int)
+      1    0.1%    0.0%  T v8::internal::Deoptimizer::New(v8::internal::JSFunction*, v8::internal::Deoptimizer::BailoutType, unsigned int, unsigned char*, int, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Builtin_StringPrototypeLastIndexOf(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Builtin_ObjectGetPrototypeOf(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Builtin_FunctionPrototypeToString(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T v8::internal::Builtin_ArrayBufferConstructor_ConstructStub(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.0%  T std::__1::num_get<wchar_t, std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> > >::do_get(std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> >, std::__1::istreambuf_iterator<wchar_t, std::__1::char_traits<wchar_t> >, std::__1::ios_base&, unsigned int&, void*&) const
+      1    0.1%    0.0%  T int v8::internal::SearchStringRaw<unsigned char const, unsigned short const>(v8::internal::Isolate*, unsigned char const const*, int, unsigned short const const*, int, int)
+      1    0.1%    0.0%  T _malloc
+      1    0.1%    0.0%  T _mach_vm_purgable_control
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+    477   15.6%  T _kpersona_get
+
+    384   12.5%  T node::contextify::ContextifyScript::New(v8::FunctionCallbackInfo<v8::Value> const&)
+    384  100.0%    T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+    315   82.0%      LazyCompile: ~Script vm.js:38:14
+    315  100.0%        LazyCompile: ~createScript vm.js:245:22
+    315  100.0%          LazyCompile: ~runInThisContext vm.js:294:26
+    315  100.0%            LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+     69   18.0%      LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+     69  100.0%        LazyCompile: ~NativeModule.require internal/bootstrap/loaders.js:129:34
+     10   14.5%          LazyCompile: ~Module._load internal/modules/cjs/loader.js:502:24
+     10  100.0%            LazyCompile: ~Module.require internal/modules/cjs/loader.js:642:36
+      8   11.6%          Script: ~<anonymous> fs.js:1:11
+      8  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      5    7.2%          Script: ~<anonymous> assert.js:1:11
+      5  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      4    5.8%          Script: ~<anonymous> http.js:1:11
+      4  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      3    4.3%          Script: ~<anonymous> tty.js:1:11
+      3  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      3    4.3%          Script: ~<anonymous> tls.js:1:11
+      3  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      3    4.3%          Script: ~<anonymous> stream.js:1:11
+      3  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      3    4.3%          Script: ~<anonymous> crypto.js:1:11
+      3  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      3    4.3%          Script: ~<anonymous> child_process.js:1:11
+      3  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      3    4.3%          Script: ~<anonymous> _http_client.js:1:11
+      3  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      3    4.3%          LazyCompile: ~setupGlobalConsole internal/bootstrap/node.js:363:30
+      3  100.0%            LazyCompile: ~startup internal/bootstrap/node.js:19:19
+      2    2.9%          Script: ~<anonymous> internal/process.js:1:11
+      2  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      2    2.9%          Script: ~<anonymous> internal/encoding.js:1:11
+      2  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      2    2.9%          Script: ~<anonymous> internal/cluster/master.js:1:11
+      2  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      2    2.9%          LazyCompile: ~startup internal/bootstrap/node.js:19:19
+      2  100.0%            Script: ~bootstrapNodeJSCore internal/bootstrap/node.js:16:30
+      2    2.9%          LazyCompile: ~setupGlobalVariables internal/bootstrap/node.js:304:32
+      2  100.0%            LazyCompile: ~startup internal/bootstrap/node.js:19:19
+      2    2.9%          LazyCompile: ~setupGlobalTimeouts internal/bootstrap/node.js:353:31
+      2  100.0%            LazyCompile: ~startup internal/bootstrap/node.js:19:19
+      1    1.4%          Script: ~<anonymous> util.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          Script: ~<anonymous> os.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          Script: ~<anonymous> net.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          Script: ~<anonymous> internal/modules/cjs/loader.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          Script: ~<anonymous> internal/child_process.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          Script: ~<anonymous> cluster.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          Script: ~<anonymous> _stream_readable.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          Script: ~<anonymous> _http_common.js:1:11
+      1  100.0%            LazyCompile: ~NativeModule.compile internal/bootstrap/loaders.js:220:44
+      1    1.4%          LazyCompile: ~createWritableStdioStream internal/process/stdio.js:156:35
+      1  100.0%            LazyCompile: ~getStdout internal/process/stdio.js:17:21
+
+     69    2.3%  t node::Buffer::(anonymous namespace)::CreateFromString(v8::FunctionCallbackInfo<v8::Value> const&)
+     69  100.0%    T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+     69  100.0%      LazyCompile: ~fromString buffer.js:333:20
+     69  100.0%        LazyCompile: ~from buffer.js:199:28
+     68   98.6%          LazyCompile: ~send /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Sender.js:266:8
+     68  100.0%            LazyCompile: ~send /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/WebSocket.js:352:8
+      1    1.4%          LazyCompile: ~decodeChunk _stream_writable.js:338:21
+      1  100.0%            LazyCompile: ~writeOrBuffer _stream_writable.js:360:23
+
+     62    2.0%  T _mach_vm_purgable_control
+     22   35.5%    T v8::internal::Runtime_CompileOptimized_Concurrent(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    9.1%      LazyCompile: ~getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1041:67
+      2  100.0%        LazyCompile: ~readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:770:53
+      2  100.0%          LazyCompile: ~nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:753:53
+      2  100.0%            LazyCompile: ~pp$3.getExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3279:31
+      2    9.1%      LazyCompile: ~QuickSort native array.js:564:19
+      2  100.0%        LazyCompile: ~InnerArraySort native array.js:520:24
+      2  100.0%          LazyCompile: ~sort native array.js:741:46
+      2  100.0%            LazyCompile: ~getRainTiles /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:55:14
+      1    4.5%      LazyCompile: ~toRealPath internal/modules/cjs/loader.js:201:20
+      1  100.0%        LazyCompile: ~tryFile internal/modules/cjs/loader.js:193:17
+      1  100.0%          LazyCompile: ~tryExtensions internal/modules/cjs/loader.js:208:23
+      1  100.0%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+      1    4.5%      LazyCompile: ~toConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:9:24
+      1  100.0%        LazyCompile: ~expressionToConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:6:30
+      1  100.0%          LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      1  100.0%            LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-attrs/index.js:8:20
+      1    4.5%      LazyCompile: ~pp$7.readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3182:27
+      1  100.0%        LazyCompile: ~pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      1  100.0%          LazyCompile: ~pp$7.readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2727:26
+      1  100.0%            LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2715:26
+      1    4.5%      LazyCompile: ~pp$7.next /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2676:21
+      1  100.0%        LazyCompile: ~pp$3.parseLiteral /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2015:29
+      1  100.0%          LazyCompile: ~pp$3.parseExprAtom /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1931:30
+      1  100.0%            LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1870:36
+      1    4.5%      LazyCompile: ~pp$7.finishToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2828:28
+      1  100.0%        LazyCompile: ~pp$7.finishOp /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3015:25
+      1  100.0%          LazyCompile: ~pp$7.readToken_plus_min /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2896:35
+      1  100.0%            LazyCompile: ~pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      1    4.5%      LazyCompile: ~pp$3.parseIdent /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2429:27
+      1  100.0%        LazyCompile: ~pp$3.parseExprAtom /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1931:30
+      1  100.0%          LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1870:36
+      1  100.0%            LazyCompile: ~pp$3.parseMaybeUnary /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1828:32
+      1    4.5%      LazyCompile: ~pp$3.parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3303:33
+      1  100.0%        LazyCompile: ~pp$3.getExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3279:31
+      1  100.0%          LazyCompile: ~parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:7308:25
+      1  100.0%            LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      1    4.5%      LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1870:36
+      1  100.0%        LazyCompile: ~pp$3.parseMaybeUnary /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1828:32
+      1  100.0%          LazyCompile: *pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1  100.0%            LazyCompile: *pp$1.parseStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:720:31
+      1    4.5%      LazyCompile: ~pp$3.parseExprAtom /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1931:30
+      1  100.0%        LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1870:36
+      1  100.0%          LazyCompile: *pp$3.parseExprOps /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1789:29
+      1  100.0%            LazyCompile: ~pp$3.parseMaybeConditional /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1772:38
+      1    4.5%      LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:101:21
+      1  100.0%        LazyCompile: ~loadString /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:40:34
+      1  100.0%          LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:13:29
+      1  100.0%            LazyCompile: *walkAST /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:4:17
+      1    4.5%      LazyCompile: ~map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:277:24
+      1  100.0%        LazyCompile: *forEachTile /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:384:13
+      1  100.0%          LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      1  100.0%            LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      1    4.5%      LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%        LazyCompile: ~ancestor /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:37:18
+      1  100.0%          LazyCompile: ~findGlobals /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/index.js:30:21
+      1  100.0%            LazyCompile: ~addWith /Users/Drew/Projects/games/ASCII_Wars/node_modules/with/index.js:24:17
+      1    4.5%      LazyCompile: ~base.Program.base.BlockStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:169:47
+      1  100.0%        LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: ~ancestor /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:37:18
+      1  100.0%            LazyCompile: ~findGlobals /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/index.js:30:21
+      1    4.5%      LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%        LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~getTokens /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1510:23
+      1  100.0%            LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:10:13
+      1    4.5%      LazyCompile: ~InnerArraySort native array.js:520:24
+      1  100.0%        LazyCompile: ~sort native array.js:741:46
+      1  100.0%          LazyCompile: ~getRainTiles /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:55:14
+      1  100.0%            LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      1    4.5%      LazyCompile: *pp$7.readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3182:27
+      1  100.0%        LazyCompile: ~pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      1  100.0%          LazyCompile: ~pp$7.readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2727:26
+      1  100.0%            LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2715:26
+      1    4.5%      LazyCompile: *pp$7.next /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2676:21
+      1  100.0%        LazyCompile: *pp.eat /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:553:18
+      1  100.0%          LazyCompile: ~pp.semicolon /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:599:24
+      1  100.0%            LazyCompile: ~pp$1.parseExpressionStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1023:41
+      1    4.5%      Builtin: ArrayForEach
+      1  100.0%        LazyCompile: ~getActors.forEach.a /Users/Drew/Projects/games/ASCII_Wars/app/models/player/Player.js:40:28
+      1  100.0%          Builtin: ArrayForEach
+      1  100.0%            LazyCompile: ~getVisibleTiles /Users/Drew/Projects/games/ASCII_Wars/app/models/player/Player.js:35:17
+      2    3.2%    T v8::internal::Runtime_StackGuard(int, v8::internal::Object**, v8::internal::Isolate*)
+      1   50.0%      LazyCompile: *visibleTiles.player.getVisibleTiles.map.t /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:64:54
+      1  100.0%        Builtin: ArrayMap
+      1  100.0%          LazyCompile: ~getClientDataFor /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:62:18
+      1  100.0%            LazyCompile: ~emitMap /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:169:9
+      1   50.0%      LazyCompile: *last /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4486:14
+      1  100.0%        LazyCompile: ~pp$6.processComment /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4498:32
+      1  100.0%          LazyCompile: ~finishNodeAt /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4423:22
+      1  100.0%            LazyCompile: ~pp$4.finishNode /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4433:28
+      1    1.6%    T v8::internal::Runtime_RegExpExec(int, v8::internal::Object**, v8::internal::Isolate*)
+      1  100.0%      Builtin: RegExpPrototypeTest
+      1  100.0%        LazyCompile: ~pp$7.readWord /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3337:25
+      1  100.0%          LazyCompile: ~pp$7.readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2727:26
+      1  100.0%            LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2715:26
+      1    1.6%    T v8::internal::Runtime_CompileLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+      1  100.0%      LazyCompile: ~_tickCallback internal/process/next_tick.js:41:25
+      1    1.6%    T v8::internal::Builtin_JsonParse(int, v8::internal::Object**, v8::internal::Isolate*)
+      1  100.0%      LazyCompile: *parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:10:15
+      1  100.0%        LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:101:21
+      1  100.0%          LazyCompile: ~loadString /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:40:34
+      1  100.0%            LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:13:29
+      1    1.6%    Builtin: StringPrototypeReplace
+      1  100.0%      LazyCompile: *stringify /Users/Drew/Projects/games/ASCII_Wars/node_modules/js-stringify/index.js:4:19
+      1  100.0%        LazyCompile: ~visit /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:251:18
+      1  100.0%          LazyCompile: ~visitBlock /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:364:23
+      1  100.0%            LazyCompile: ~visitNode /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:307:22
+
+     50    1.6%  UNKNOWN
+      3    6.0%    T v8::internal::Runtime_CompileLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+      1   33.3%      Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-runtime/helpers/typeof.js:1:11
+      1  100.0%        LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1  100.0%          LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      1  100.0%            LazyCompile: ~Module.load internal/modules/cjs/loader.js:603:33
+      1   33.3%      LazyCompile: ~perMessageDeflate.decompress /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Receiver.js:343:51
+      1  100.0%        LazyCompile: ~_decompress /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/PerMessageDeflate.js:304:35
+      1  100.0%          LazyCompile: ~_inflate.flush /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/PerMessageDeflate.js:359:25
+      1  100.0%            LazyCompile: ~afterWrite _stream_writable.js:476:20
+      1   33.3%      LazyCompile: ~emit events.js:140:44
+      1  100.0%        LazyCompile: ~addChunk _stream_readable.js:276:18
+      1  100.0%          LazyCompile: ~readableAddChunk _stream_readable.js:227:26
+      1  100.0%            LazyCompile: ~Readable.push _stream_readable.js:202:35
+      1    2.0%    T v8::internal::Builtin_JsonStringify(int, v8::internal::Object**, v8::internal::Isolate*)
+      1  100.0%      LazyCompile: ~emitMap /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:169:9
+      1  100.0%        LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      1  100.0%          LazyCompile: ~playerReadyForNextTurn /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:203:24
+      1  100.0%            LazyCompile: ~socket.on /Users/Drew/Projects/games/ASCII_Wars/app/router.js:93:20
+      1    2.0%    T v8::internal::Builtin_FunctionConstructor(int, v8::internal::Object**, v8::internal::Isolate*)
+      1  100.0%      Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/uglify-js/tools/node.js:1:11
+      1  100.0%        LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1  100.0%          LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      1  100.0%            LazyCompile: ~Module.load internal/modules/cjs/loader.js:603:33
+      1    2.0%    LazyCompile: ~InnerArraySort native array.js:520:24
+      1  100.0%      LazyCompile: ~sort native array.js:741:46
+      1  100.0%        LazyCompile: ~getRainTiles /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:55:14
+      1  100.0%          LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      1  100.0%            LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+
+     50    1.6%  T v8::internal::JsonStringifier::SerializeString(v8::internal::Handle<v8::internal::String>)
+     50  100.0%    T v8::internal::Builtin_JsonStringify(int, v8::internal::Object**, v8::internal::Isolate*)
+     28   56.0%      LazyCompile: ~tryStringify /Users/Drew/Projects/games/ASCII_Wars/node_modules/socket.io-parser/index.js:182:22
+     28  100.0%        LazyCompile: ~encodeAsString /Users/Drew/Projects/games/ASCII_Wars/node_modules/socket.io-parser/index.js:147:24
+     28  100.0%          LazyCompile: ~Encoder.encode /Users/Drew/Projects/games/ASCII_Wars/node_modules/socket.io-parser/index.js:128:36
+     28  100.0%            LazyCompile: ~Client.packet /Users/Drew/Projects/games/ASCII_Wars/node_modules/socket.io/lib/client.js:162:35
+     20   40.0%      LazyCompile: ~emitMap /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:169:9
+     20  100.0%        LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+     20  100.0%          LazyCompile: ~playerReadyForNextTurn /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:203:24
+     20  100.0%            LazyCompile: ~socket.on /Users/Drew/Projects/games/ASCII_Wars/app/router.js:93:20
+      1    2.0%      LazyCompile: ~load /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:9:14
+      1  100.0%        LazyCompile: ~loadString /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:40:34
+      1  100.0%          LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:13:29
+      1  100.0%            LazyCompile: *walkAST /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:4:17
+      1    2.0%      LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:10:13
+      1  100.0%        LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:89:19
+      1  100.0%          LazyCompile: ~loadString /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:40:34
+      1  100.0%            LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:13:29
+
+     48    1.6%  Builtin: InterpreterEntryTrampoline
+      2    4.2%    LazyCompile: ~readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1304:55
+      2  100.0%      LazyCompile: ~getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1041:67
+      2  100.0%        LazyCompile: ~readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:770:53
+      2  100.0%          LazyCompile: ~nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:753:53
+      2  100.0%            LazyCompile: ~pp$3.getExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3279:31
+      2    4.2%    LazyCompile: ~pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      2  100.0%      LazyCompile: ~pp$3.parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1718:32
+      2  100.0%        LazyCompile: ~pp$1.parseStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:720:31
+      2  100.0%          LazyCompile: ~pp$1.parseTopLevel /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:666:30
+      2  100.0%            LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:526:41
+      2    4.2%    LazyCompile: ~_tickCallback internal/process/next_tick.js:41:25
+      1    2.1%    Stub: CEntryStub
+      1  100.0%      LazyCompile: ~DEFNODE :412:17
+      1  100.0%        Eval: ~<anonymous> :1:20
+      1  100.0%          Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/uglify-js/tools/node.js:1:11
+      1  100.0%            LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1    2.1%    Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/sshpk/lib/certificate.js:1:11
+      1  100.0%      LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1  100.0%        LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      1  100.0%          LazyCompile: ~Module.load internal/modules/cjs/loader.js:603:33
+      1  100.0%            LazyCompile: ~tryModuleLoad internal/modules/cjs/loader.js:548:23
+      1    2.1%    LazyCompile: ~yield /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:717:20
+      1  100.0%      LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%        LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%          LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%            LazyCompile: ~getTokens /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1510:23
+      1    2.1%    LazyCompile: ~write console.js:143:15
+      1  100.0%      LazyCompile: ~log console.js:196:37
+      1  100.0%        t node::inspector::(anonymous namespace)::InspectorConsoleCall(v8::FunctionCallbackInfo<v8::Value> const&)
+      1  100.0%          LazyCompile: ~hostGame.then.gameId /Users/Drew/Projects/games/ASCII_Wars/app/router.js:30:9
+      1  100.0%            t node::(anonymous namespace)::RunMicrotasks(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    2.1%    LazyCompile: ~unsetActor /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Tile.js:137:12
+      1  100.0%      LazyCompile: ~die /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Actor.abstract.js:53:5
+      1  100.0%        LazyCompile: ~takeDamage /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Actor.abstract.js:37:12
+      1  100.0%          LazyCompile: ~attack /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:164:8
+      1  100.0%            LazyCompile: ~act /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:20:5
+      1    2.1%    LazyCompile: ~toIdentifier /Users/Drew/Projects/games/ASCII_Wars/node_modules/http-errors/index.js:256:23
+      1  100.0%      LazyCompile: ~forEachCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/http-errors/index.js:226:38
+      1  100.0%        Builtin: ArrayForEach
+      1  100.0%          LazyCompile: ~populateConstructorExports /Users/Drew/Projects/games/ASCII_Wars/node_modules/http-errors/index.js:225:37
+      1  100.0%            Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/http-errors/index.js:1:11
+      1    2.1%    LazyCompile: ~toConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-attrs/index.js:11:20
+      1  100.0%      LazyCompile: ~addAttribute /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-attrs/index.js:46:24
+      1  100.0%        LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-attrs/index.js:75:25
+      1  100.0%          Builtin: ArrayForEach
+      1  100.0%            LazyCompile: ~compileAttrs /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-attrs/index.js:22:22
+      1    2.1%    LazyCompile: ~tile.siblings.concat.forEach.t /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:76:48
+      1  100.0%      Builtin: ArrayForEach
+      1  100.0%        LazyCompile: ~moveTowardsSquadMovePoint /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:63:27
+      1  100.0%          LazyCompile: ~act /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:20:5
+      1  100.0%            LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Actor.abstract.js:43:6
+      1    2.1%    LazyCompile: ~runInThisContext vm.js:294:26
+      1  100.0%      LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1  100.0%        LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      1  100.0%          LazyCompile: ~Module.load internal/modules/cjs/loader.js:603:33
+      1  100.0%            LazyCompile: ~tryModuleLoad internal/modules/cjs/loader.js:548:23
+      1    2.1%    LazyCompile: ~realpathSync fs.js:1640:40
+      1  100.0%      LazyCompile: ~toRealPath internal/modules/cjs/loader.js:201:20
+      1  100.0%        LazyCompile: ~tryFile internal/modules/cjs/loader.js:193:17
+      1  100.0%          LazyCompile: ~tryPackage internal/modules/cjs/loader.js:173:20
+      1  100.0%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+      1    2.1%    LazyCompile: ~pp$7.readWord1 /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3304:26
+      1  100.0%      LazyCompile: ~pp$7.readWord /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3337:25
+      1  100.0%        LazyCompile: ~pp$7.readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2727:26
+      1  100.0%          LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2715:26
+      1  100.0%            LazyCompile: ~pp$7.next /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2676:21
+      1    2.1%    LazyCompile: ~pp$7.readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2727:26
+      1  100.0%      LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2715:26
+      1  100.0%        LazyCompile: ~pp$7.next /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2676:21
+      1  100.0%          LazyCompile: ~pp.eat /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:553:18
+      1  100.0%            LazyCompile: ~pp.semicolon /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:599:24
+      1    2.1%    LazyCompile: ~pp$7.readCodePoint /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3160:30
+      1  100.0%      LazyCompile: ~pp$7.readEscapedChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3255:32
+      1  100.0%        LazyCompile: ~pp$7.readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3182:27
+      1  100.0%          LazyCompile: ~pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      1  100.0%            LazyCompile: ~pp$7.readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2727:26
+      1    2.1%    LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:2715:26
+      1  100.0%      LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/index.js:14:22
+      1  100.0%        LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:67:26
+      1  100.0%          LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%            LazyCompile: ~assertExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:73:30
+      1    2.1%    LazyCompile: ~pp$5.finishNode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2537:27
+      1  100.0%      LazyCompile: ~pp$3.parseLiteral /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2015:29
+      1  100.0%        LazyCompile: ~pp$3.parseExprAtom /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1931:30
+      1  100.0%          LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1870:36
+      1  100.0%            LazyCompile: ~pp$3.parseMaybeUnary /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1828:32
+      1    2.1%    LazyCompile: ~pp$3.parseSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1883:32
+      1  100.0%      LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1870:36
+      1  100.0%        LazyCompile: ~pp$3.parseMaybeUnary /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1828:32
+      1  100.0%          LazyCompile: ~pp$3.parseExprOps /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1789:29
+      1  100.0%            LazyCompile: ~pp$3.parseMaybeConditional /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1772:38
+      1    2.1%    LazyCompile: ~pp$3.parseExprOps /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1789:29
+      1  100.0%      LazyCompile: ~pp$3.parseMaybeConditional /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1772:38
+      1  100.0%        LazyCompile: ~pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1  100.0%          LazyCompile: ~pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1  100.0%            LazyCompile: ~pp$3.parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1718:32
+      1    2.1%    LazyCompile: ~nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:753:53
+      1  100.0%      LazyCompile: ~pp$3.getExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3279:31
+      1  100.0%        LazyCompile: ~parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:7308:25
+      1  100.0%          LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      1  100.0%            LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:36:20
+      1    2.1%    LazyCompile: ~nextTick internal/process/next_tick.js:96:20
+      1  100.0%      LazyCompile: ~onwrite _stream_writable.js:445:17
+      1  100.0%        LazyCompile: ~afterWriteDispatched internal/stream_base_commons.js:73:30
+      1  100.0%          LazyCompile: ~writeGeneric internal/stream_base_commons.js:67:22
+      1  100.0%            LazyCompile: ~Socket._writeGeneric net.js:732:42
+      1    2.1%    LazyCompile: ~map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:266:24
+      1  100.0%      LazyCompile: ~forEachTile /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:384:13
+      1  100.0%        LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      1  100.0%          LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      1  100.0%            LazyCompile: ~playerReadyForNextTurn /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:203:24
+      1    2.1%    LazyCompile: ~isUint8Array internal/util/types.js:28:22
+      1  100.0%      LazyCompile: ~nullCheck internal/fs/utils.js:93:19
+      1  100.0%        LazyCompile: ~validatePath internal/fs/utils.js:398:22
+      1  100.0%          LazyCompile: ~fs.stat fs.js:913:19
+      1  100.0%            LazyCompile: ~sendFile /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:717:51
+      1    2.1%    LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/index.js:14:22
+      1  100.0%      LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:67:26
+      1  100.0%        LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~assertExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:73:30
+      1  100.0%            LazyCompile: ~attributeValue /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1151:27
+      1    2.1%    LazyCompile: ~getOptions internal/fs/utils.js:54:20
+      1  100.0%      LazyCompile: ~ReadStream fs.js:2022:20
+      1  100.0%        LazyCompile: ~fs.createReadStream fs.js:2015:31
+      1  100.0%          LazyCompile: ~stream /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:790:47
+      1  100.0%            LazyCompile: ~send /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:607:43
+      1    2.1%    LazyCompile: ~getOptions /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:387:20
+      1  100.0%      LazyCompile: ~Parser /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:432:29
+      1  100.0%        LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/index.js:14:22
+      1  100.0%          LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:67:26
+      1  100.0%            LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1    2.1%    LazyCompile: ~fs.stat fs.js:913:19
+      1  100.0%      LazyCompile: ~sendFile /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:717:51
+      1  100.0%        LazyCompile: ~pipe /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:510:43
+      1  100.0%          LazyCompile: ~serveStatic /Users/Drew/Projects/games/ASCII_Wars/node_modules/serve-static/index.js:72:31
+      1  100.0%            LazyCompile: ~handle /Users/Drew/Projects/games/ASCII_Wars/node_modules/express/lib/router/layer.js:86:49
+      1    2.1%    LazyCompile: ~fs.readFileSync fs.js:480:27
+      1  100.0%      LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      1  100.0%        LazyCompile: ~Module.load internal/modules/cjs/loader.js:603:33
+      1  100.0%          LazyCompile: ~tryModuleLoad internal/modules/cjs/loader.js:548:23
+      1  100.0%            LazyCompile: ~Module._load internal/modules/cjs/loader.js:502:24
+      1    2.1%    LazyCompile: ~expressionToConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:6:30
+      1  100.0%      LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      1  100.0%        LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:36:20
+      1  100.0%          LazyCompile: ~bufferExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:207:30
+      1  100.0%            LazyCompile: ~attrs /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:797:18
+      1    2.1%    LazyCompile: ~exports._unrefActive timers.js:157:32
+      1  100.0%      LazyCompile: ~setUnrefTimeout internal/timers.js:98:25
+      1  100.0%        LazyCompile: ~Socket.setTimeout net.js:408:39
+      1  100.0%          LazyCompile: ~resOnFinish _http_server.js:549:21
+      1  100.0%            LazyCompile: ~emit events.js:140:44
+      1    2.1%    LazyCompile: ~eat /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:696:41
+      1  100.0%      LazyCompile: ~pp$3.parseSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3507:33
+      1  100.0%        LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3490:37
+      1  100.0%          LazyCompile: ~pp$3.parseMaybeUnary /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3446:33
+      1  100.0%            LazyCompile: ~pp$3.parseExprOps /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3401:30
+      1    2.1%    LazyCompile: ~attribute /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1059:22
+      1  100.0%      LazyCompile: ~attrs /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1265:18
+      1  100.0%        LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%            LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1    2.1%    LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%      LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%        LazyCompile: ~getTokens /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1510:23
+      1  100.0%          LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:10:13
+      1  100.0%            LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:89:19
+      1    2.1%    LazyCompile: ~act /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Unit.js:20:5
+      1  100.0%      LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/models/actors/Actor.abstract.js:43:6
+      1  100.0%        LazyCompile: ~processActorTicks /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:254:19
+      1  100.0%          LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      1  100.0%            LazyCompile: ~playerReadyForNextTurn /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:203:24
+      1    2.1%    LazyCompile: ~QuickSort native array.js:564:19
+      1  100.0%      LazyCompile: ~InnerArraySort native array.js:520:24
+      1  100.0%        LazyCompile: ~sort native array.js:741:46
+      1  100.0%          LazyCompile: ~getRainTiles /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:55:14
+      1  100.0%            LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      1    2.1%    LazyCompile: ~Parser /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/node_modules/acorn/dist/acorn.js:432:29
+      1  100.0%      LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/is-expression/index.js:14:22
+      1  100.0%        LazyCompile: ~isExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:67:26
+      1  100.0%          LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%            LazyCompile: ~assertExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:73:30
+      1    2.1%    LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:560:35
+      1  100.0%      LazyCompile: ~Module._load internal/modules/cjs/loader.js:502:24
+      1  100.0%        LazyCompile: ~Module.require internal/modules/cjs/loader.js:642:36
+      1  100.0%          LazyCompile: ~require internal/modules/cjs/helpers.js:17:19
+      1  100.0%            Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-types/node_modules/lodash/_assignValue.js:1:11
+      1    2.1%    LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+      1  100.0%      LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:560:35
+      1  100.0%        LazyCompile: ~Module._load internal/modules/cjs/loader.js:502:24
+      1  100.0%          LazyCompile: ~Module.require internal/modules/cjs/loader.js:642:36
+      1  100.0%            LazyCompile: ~require internal/modules/cjs/helpers.js:17:19
+      1    2.1%    LazyCompile: *pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1  100.0%      LazyCompile: *pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1  100.0%        LazyCompile: *pp$1.parseStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:720:31
+      1  100.0%          LazyCompile: ~pp$1.parseTopLevel /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:666:30
+      1  100.0%            LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:526:41
+      1    2.1%    LazyCompile: *lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:10:13
+      1  100.0%      LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:89:19
+      1  100.0%        LazyCompile: ~loadString /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:40:34
+      1  100.0%          LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:13:29
+      1  100.0%            LazyCompile: *walkAST /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:4:17
+      1    2.1%    LazyCompile: *forEachTile /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:384:13
+      1  100.0%      LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      1  100.0%        LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      1  100.0%          LazyCompile: ~playerReadyForNextTurn /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:203:24
+      1  100.0%            LazyCompile: ~socket.on /Users/Drew/Projects/games/ASCII_Wars/app/router.js:93:20
+      1    2.1%    LazyCompile: *base.Pattern /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:253:25
+      1  100.0%      LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%        LazyCompile: ~base.AssignmentExpression.base.AssignmentPattern /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:299:63
+      1  100.0%          LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%            LazyCompile: ~skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      1    2.1%    Builtin: ArrayMap
+      1  100.0%      Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/psl/index.js:1:11
+      1  100.0%        LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1  100.0%          LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      1  100.0%            LazyCompile: ~Module.load internal/modules/cjs/loader.js:603:33
+
+     47    1.5%  t node::fs::InternalModuleStat(v8::FunctionCallbackInfo<v8::Value> const&)
+     47  100.0%    T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+     47  100.0%      LazyCompile: ~stat internal/modules/cjs/loader.js:83:14
+     29   61.7%        LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+     29  100.0%          LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:560:35
+     29  100.0%            LazyCompile: ~Module._load internal/modules/cjs/loader.js:502:24
+     18   38.3%        LazyCompile: ~tryFile internal/modules/cjs/loader.js:193:17
+     17   94.4%          LazyCompile: ~tryExtensions internal/modules/cjs/loader.js:208:23
+     16   94.1%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+      1    5.9%            LazyCompile: ~tryPackage internal/modules/cjs/loader.js:173:20
+      1    5.6%          LazyCompile: ~tryPackage internal/modules/cjs/loader.js:173:20
+      1  100.0%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+
+     41    1.3%  t std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > std::__1::__pad_and_output<char, std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > >(std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> >, char const*, char const*, char const*, std::__1::ios_base&, char)
+     30   73.2%    LazyCompile: ~toConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:9:24
+     30  100.0%      LazyCompile: ~expressionToConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:6:30
+     30  100.0%        LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+     30  100.0%          LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:36:20
+     30  100.0%            LazyCompile: ~bufferExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:207:30
+      7   17.1%    LazyCompile: ~toRealPath internal/modules/cjs/loader.js:201:20
+      7  100.0%      LazyCompile: ~tryFile internal/modules/cjs/loader.js:193:17
+      7  100.0%        LazyCompile: ~tryPackage internal/modules/cjs/loader.js:173:20
+      7  100.0%          LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+      7  100.0%            LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:560:35
+      3    7.3%    T v8::internal::Runtime_CompileLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+      2   66.7%      LazyCompile: ~end _http_outgoing.js:686:45
+      2  100.0%        LazyCompile: ~send /Users/Drew/Projects/games/ASCII_Wars/node_modules/express/lib/response.js:107:25
+      2  100.0%          LazyCompile: ~done /Users/Drew/Projects/games/ASCII_Wars/node_modules/express/lib/response.js:1002:27
+      2  100.0%            LazyCompile: ~exports.renderFile /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:409:30
+      1   33.3%      LazyCompile: ~registerType /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-types/lib/index.js:343:22
+      1  100.0%        LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-types/lib/index.js:380:60
+      1  100.0%          Builtin: ArrayForEach
+      1  100.0%            Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-types/lib/index.js:1:11
+
+     41    1.3%  T _vm_read
+      3    7.3%    T v8::internal::Runtime_CompileOptimized_Concurrent(int, v8::internal::Object**, v8::internal::Isolate*)
+      1   33.3%      LazyCompile: ~map.forEachTile.t /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:274:24
+      1  100.0%        LazyCompile: *forEachTile /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:384:13
+      1  100.0%          LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      1  100.0%            LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      1   33.3%      LazyCompile: ~curPosition /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:626:53
+      1  100.0%        LazyCompile: ~nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:753:53
+      1  100.0%          LazyCompile: ~pp$3.getExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3279:31
+      1  100.0%            LazyCompile: ~parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:7308:25
+      1   33.3%      LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+      1  100.0%        LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:560:35
+      1  100.0%          LazyCompile: ~Module._load internal/modules/cjs/loader.js:502:24
+      1  100.0%            LazyCompile: ~Module.require internal/modules/cjs/loader.js:642:36
+
+     41    1.3%  Builtin: KeyedLoadIC_Megamorphic
+     15   36.6%    LazyCompile: *visibleTiles.player.getVisibleTiles.map.t /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:64:54
+     15  100.0%      Builtin: ArrayMap
+     15  100.0%        LazyCompile: ~getClientDataFor /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:62:18
+     15  100.0%          LazyCompile: ~emitMap /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:169:9
+     15  100.0%            LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      7   17.1%    LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      2   28.6%      LazyCompile: ~base.AssignmentExpression.base.AssignmentPattern /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:299:63
+      2  100.0%        LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      2  100.0%          LazyCompile: ~skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      2  100.0%            LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1   14.3%      LazyCompile: ~skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      1  100.0%        LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: ~base.BinaryExpression.base.LogicalExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:295:59
+      1  100.0%            LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1   14.3%      LazyCompile: ~base.Program.base.BlockStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:169:47
+      1  100.0%        LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: ~ancestor /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:37:18
+      1  100.0%            LazyCompile: ~findGlobals /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/index.js:30:21
+      1   14.3%      LazyCompile: ~base.BinaryExpression.base.LogicalExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:295:59
+      1  100.0%        LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: *skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      1  100.0%            LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1   14.3%      LazyCompile: *skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      1  100.0%        LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: ~base.BinaryExpression.base.LogicalExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:295:59
+      1  100.0%            LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1   14.3%      LazyCompile: *base.AssignmentExpression.base.AssignmentPattern /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:299:63
+      1  100.0%        LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: *skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      1  100.0%            LazyCompile: *c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      5   12.2%    LazyCompile: *getClientDataFor /Users/Drew/Projects/games/ASCII_Wars/app/models/Model.abstract.js:8:18
+      5  100.0%      LazyCompile: ~visibleTiles.player.getVisibleTiles.map.t /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:64:54
+      5  100.0%        Builtin: ArrayMap
+      5  100.0%          LazyCompile: ~getClientDataFor /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:62:18
+      5  100.0%            LazyCompile: ~emitMap /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:169:9
+      4    9.8%    LazyCompile: *forEachTile /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:384:13
+      4  100.0%      LazyCompile: ~processFluidTick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:264:18
+      4  100.0%        LazyCompile: ~tick /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:241:6
+      4  100.0%          LazyCompile: ~playerReadyForNextTurn /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:203:24
+      4  100.0%            LazyCompile: ~socket.on /Users/Drew/Projects/games/ASCII_Wars/app/router.js:93:20
+      2    4.9%    LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1   50.0%      LazyCompile: ~base.ExpressionStatement.base.ParenthesizedExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:176:12
+      1  100.0%        LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: ~skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      1  100.0%            LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1   50.0%      LazyCompile: ~base.AssignmentExpression.base.AssignmentPattern /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:299:63
+      1  100.0%        LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      1  100.0%          LazyCompile: ~skipThrough /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:162:21
+      1  100.0%            LazyCompile: ~c /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/walk.js:40:15
+      2    4.9%    LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      2  100.0%      LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      2  100.0%        LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      2  100.0%          LazyCompile: ~getTokens /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1510:23
+      2  100.0%            LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:10:13
+      1    2.4%    LazyCompile: ~visit /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:251:18
+      1  100.0%      LazyCompile: ~visitBlock /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:364:23
+      1  100.0%        LazyCompile: ~visitNode /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:307:22
+      1  100.0%          LazyCompile: ~visit /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:251:18
+      1  100.0%            LazyCompile: ~visitBlock /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:364:23
+      1    2.4%    LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%      LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%        LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~getTokens /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1510:23
+      1  100.0%            LazyCompile: ~lex /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:10:13
+      1    2.4%    LazyCompile: *t.(anonymous function) /Users/Drew/Projects/games/ASCII_Wars/node_modules/babel-types/lib/index.js:346:36
+      1  100.0%      LazyCompile: ~toConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:9:24
+      1  100.0%        LazyCompile: ~expressionToConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:6:30
+      1  100.0%          LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      1  100.0%            LazyCompile: ~toConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:339:20
+      1    2.4%    LazyCompile: *parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:28:15
+      1  100.0%      LazyCompile: ~assertNestingCorrect /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:91:34
+      1  100.0%        LazyCompile: ~attrs /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1265:18
+      1  100.0%          LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%            LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1    2.4%    LazyCompile: *State.current /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:200:36
+      1  100.0%      LazyCompile: ~State.isString /Users/Drew/Projects/games/ASCII_Wars/node_modules/character-parser/index.js:203:37
+      1  100.0%        LazyCompile: ~attributeValue /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1151:27
+      1  100.0%          LazyCompile: ~attribute /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1059:22
+      1  100.0%            LazyCompile: ~attrs /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1265:18
+      1    2.4%    LazyCompile: *<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/index.js:155:28
+      1  100.0%      Builtin: ArrayForEach
+      1  100.0%        LazyCompile: ~findGlobals /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/index.js:30:21
+      1  100.0%          LazyCompile: ~addWith /Users/Drew/Projects/games/ASCII_Wars/node_modules/with/index.js:24:17
+      1  100.0%            LazyCompile: ~compile /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:106:20
+
+     34    1.1%  t void v8::internal::RelocInfo::Visit<v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)0, (v8::internal::TraceRetainingPathMode)0, v8::internal::IncrementalMarkingState> >(v8::internal::MarkingVisitor<(v8::internal::FixedArrayVisitationMode)0, (v8::internal::TraceRetainingPathMode)0, v8::internal::IncrementalMarkingState>*)
+
+     34    1.1%  t node::fs::Read(v8::FunctionCallbackInfo<v8::Value> const&)
+     34  100.0%    T v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+     34  100.0%      LazyCompile: ~fs.readSync fs.js:613:23
+     34  100.0%        LazyCompile: ~tryReadSync fs.js:468:21
+     34  100.0%          LazyCompile: ~fs.readFileSync fs.js:480:27
+     30   88.2%            LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      2    5.9%            LazyCompile: ~handleTemplateCache /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:209:30
+      1    2.9%            LazyCompile: ~read /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-load/index.js:68:26
+      1    2.9%            LazyCompile: ~Server.serveClient /Users/Drew/Projects/games/ASCII_Wars/node_modules/socket.io/lib/index.js:105:40
+
+     32    1.0%  Builtin: StoreIC
+      2    6.3%    LazyCompile: ~writeOrBuffer _stream_writable.js:360:23
+      2  100.0%      LazyCompile: ~Writable.write _stream_writable.js:268:36
+      2  100.0%        LazyCompile: ~_decompress /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/PerMessageDeflate.js:336:15
+      2  100.0%          LazyCompile: ~zlibLimiter.push /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/PerMessageDeflate.js:303:22
+      2  100.0%            LazyCompile: ~Queue._run /Users/Drew/Projects/games/ASCII_Wars/node_modules/async-limiter/index.js:36:32
+      2    6.3%    LazyCompile: ~init /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:517:39
+      2  100.0%      LazyCompile: ~Tokenizer /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:673:21
+      2  100.0%        LazyCompile: ~Parser /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1563:18
+      2  100.0%          LazyCompile: ~parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:7308:25
+      2  100.0%            LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      2    6.3%    LazyCompile: ~TickObject internal/process/next_tick.js:74:16
+      2  100.0%      LazyCompile: ~nextTick internal/process/next_tick.js:96:20
+      1   50.0%        LazyCompile: ~onwrite _stream_writable.js:445:17
+      1  100.0%          LazyCompile: ~afterWriteDispatched internal/stream_base_commons.js:73:30
+      1  100.0%            LazyCompile: ~writeGeneric internal/stream_base_commons.js:67:22
+      1   50.0%        LazyCompile: ~maybeReadMore _stream_readable.js:563:23
+      1  100.0%          LazyCompile: ~addChunk _stream_readable.js:276:18
+      1  100.0%            LazyCompile: ~readableAddChunk _stream_readable.js:227:26
+      1    3.1%    LazyCompile: ~walkAST /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:4:17
+      1  100.0%      LazyCompile: ~walkAST /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:4:17
+      1  100.0%        LazyCompile: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:103:34
+      1  100.0%          Builtin: ArrayReduce
+      1  100.0%            LazyCompile: ~walkAndMergeNodes /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-walk/index.js:102:29
+      1    3.1%    LazyCompile: ~updateContext /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:1541:61
+      1  100.0%      LazyCompile: ~finishToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:888:57
+      1  100.0%        LazyCompile: ~nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:753:53
+      1  100.0%          LazyCompile: ~next /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:682:43
+      1  100.0%            LazyCompile: ~pp$3.parseLiteral /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3775:30
+      1    3.1%    LazyCompile: ~tokEnd /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:134:19
+      1  100.0%      LazyCompile: ~indent /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1312:19
+      1  100.0%        LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%            LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1    3.1%    LazyCompile: ~tok /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:109:16
+      1  100.0%      LazyCompile: ~eos /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:298:16
+      1  100.0%        LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%            LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1    3.1%    LazyCompile: ~scanIndentation /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:269:28
+      1  100.0%      LazyCompile: ~indent /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1312:19
+      1  100.0%        LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%            LazyCompile: ~callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1    3.1%    LazyCompile: ~remove internal/linkedlist.js:15:16
+      1  100.0%      LazyCompile: ~listOnTimeout timers.js:215:23
+      1  100.0%        LazyCompile: ~processTimers timers.js:209:23
+      1    3.1%    LazyCompile: ~realpathSync fs.js:1640:40
+      1  100.0%      LazyCompile: ~toRealPath internal/modules/cjs/loader.js:201:20
+      1  100.0%        LazyCompile: ~tryFile internal/modules/cjs/loader.js:193:17
+      1  100.0%          LazyCompile: ~tryPackage internal/modules/cjs/loader.js:173:20
+      1  100.0%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:220:28
+      1    3.1%    LazyCompile: ~readableAddChunk _stream_readable.js:227:26
+      1  100.0%      LazyCompile: ~Readable.push _stream_readable.js:202:35
+      1  100.0%        LazyCompile: ~onread net.js:618:16
+      1    3.1%    LazyCompile: ~pp$7.readInt /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3102:24
+      1  100.0%      LazyCompile: ~pp$7.readHexChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3291:28
+      1  100.0%        LazyCompile: ~pp$7.readCodePoint /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3160:30
+      1  100.0%          LazyCompile: ~pp$7.readEscapedChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3255:32
+      1  100.0%            LazyCompile: ~pp$7.readString /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3182:27
+      1    3.1%    LazyCompile: ~pp$7.readEscapedChar /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3255:32
+      1  100.0%      LazyCompile: *pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      1  100.0%        LazyCompile: *pp$7.next /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2676:21
+      1  100.0%          LazyCompile: *pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1  100.0%            LazyCompile: *pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1    3.1%    LazyCompile: ~pp$7.finishOp /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:3015:25
+      1  100.0%      LazyCompile: ~pp$7.readToken_eq_excl /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2932:34
+      1  100.0%        LazyCompile: ~pp$7.getTokenFromCode /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2942:33
+      1  100.0%          LazyCompile: ~pp$7.readToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2727:26
+      1  100.0%            LazyCompile: ~pp$7.nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:2715:26
+      1    3.1%    LazyCompile: ~pp$3.parseMaybeAssign /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1735:33
+      1  100.0%      LazyCompile: ~pp$3.parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:1718:32
+      1  100.0%        LazyCompile: ~pp$1.parseStatement /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:720:31
+      1  100.0%          LazyCompile: ~pp$1.parseTopLevel /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:666:30
+      1  100.0%            LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/acorn-globals/node_modules/acorn/dist/acorn.js:526:41
+      1    3.1%    LazyCompile: ~parseTag /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:1034:21
+      1  100.0%      LazyCompile: ~parseExpr /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:205:22
+      1  100.0%        LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:103:18
+      1  100.0%          LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:10:15
+      1  100.0%            LazyCompile: ~parse /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug/lib/index.js:101:21
+      1    3.1%    LazyCompile: ~nextToken /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:753:53
+      1  100.0%      LazyCompile: ~pp$3.getExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3279:31
+      1  100.0%        LazyCompile: ~parseExpression /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:7308:25
+      1  100.0%          LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/constantinople/lib/index.js:317:20
+      1  100.0%            LazyCompile: ~isConstant /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-attrs/index.js:8:20
+      1    3.1%    LazyCompile: ~maxPayloadExceeded /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Receiver.js:459:22
+      1  100.0%      LazyCompile: ~haveLength /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Receiver.js:288:14
+      1  100.0%        LazyCompile: ~getInfo /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Receiver.js:178:11
+      1  100.0%          LazyCompile: ~startLoop /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Receiver.js:147:13
+      1  100.0%            LazyCompile: ~add /Users/Drew/Projects/games/ASCII_Wars/node_modules/ws/lib/Receiver.js:134:7
+      1    3.1%    LazyCompile: ~makeRequireFunction internal/modules/cjs/helpers.js:14:29
+      1  100.0%      LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1  100.0%        LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+      1  100.0%          LazyCompile: ~Module.load internal/modules/cjs/loader.js:603:33
+      1  100.0%            LazyCompile: ~tryModuleLoad internal/modules/cjs/loader.js:548:23
+      1    3.1%    LazyCompile: ~initBlock /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:154:22
+      1  100.0%      LazyCompile: ~emptyBlock /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:167:23
+      1  100.0%        LazyCompile: ~block /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:987:18
+      1  100.0%          LazyCompile: ~tag /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:1056:16
+      1  100.0%            LazyCompile: ~parseTag /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-parser/index.js:1034:21
+      1    3.1%    LazyCompile: ~finishNodeAt /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4423:22
+      1  100.0%      LazyCompile: ~pp$4.finishNode /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4433:28
+      1  100.0%        LazyCompile: ~pp$3.parseLiteral /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3775:30
+      1  100.0%          LazyCompile: ~pp$3.parseExprAtom /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3606:31
+      1  100.0%            LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3490:37
+      1    3.1%    LazyCompile: ~buffer /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:176:20
+      1  100.0%      LazyCompile: ~bufferName /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:527:24
+      1  100.0%        LazyCompile: ~visitTag /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:521:21
+      1  100.0%          LazyCompile: ~visitNode /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:307:22
+      1  100.0%            LazyCompile: ~visit /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-code-gen/index.js:251:18
+      1    3.1%    LazyCompile: ~attribute /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1059:22
+      1  100.0%      LazyCompile: ~attrs /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1265:18
+      1  100.0%        LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1  100.0%          LazyCompile: ~advance /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1465:20
+      1  100.0%            LazyCompile: *callLexerFunction /Users/Drew/Projects/games/ASCII_Wars/node_modules/pug-lexer/index.js:1444:31
+      1    3.1%    LazyCompile: ~Tile /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Tile.js:7:13
+      1  100.0%      LazyCompile: ~Map /Users/Drew/Projects/games/ASCII_Wars/app/models/map/Map.js:14:13
+      1  100.0%        LazyCompile: ~start /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:43:7
+      1  100.0%          LazyCompile: ~countDown /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:70:19
+      1  100.0%            LazyCompile: ~beginGameStartCountdown /Users/Drew/Projects/games/ASCII_Wars/app/controller/game.js:67:25
+      1    3.1%    LazyCompile: ~Socket net.js:225:16
+      1  100.0%      LazyCompile: ~onconnection net.js:1521:22
+      1    3.1%    LazyCompile: ~Readable _stream_readable.js:144:18
+      1  100.0%      LazyCompile: ~IncomingMessage _http_incoming.js:38:25
+      1  100.0%        LazyCompile: ~parserOnHeadersComplete _http_common.js:64:33
+      1    3.1%    LazyCompile: ~Node /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4390:16
+      1  100.0%      LazyCompile: ~pp$4.startNodeAt /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:4419:29
+      1  100.0%        LazyCompile: ~pp$3.parseLiteral /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3775:30
+      1  100.0%          LazyCompile: ~pp$3.parseExprAtom /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3606:31
+      1  100.0%            LazyCompile: ~pp$3.parseExprSubscripts /Users/Drew/Projects/games/ASCII_Wars/node_modules/babylon/lib/index.js:3490:37
+      1    3.1%    LazyCompile: ~EventEmitter.init events.js:67:29
+      1  100.0%      LazyCompile: ~EventEmitter events.js:26:22
+      1  100.0%        LazyCompile: ~Stream internal/streams/legacy.js:6:16
+      1  100.0%          LazyCompile: ~SendStream /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:96:21
+      1  100.0%            LazyCompile: ~send /Users/Drew/Projects/games/ASCII_Wars/node_modules/send/index.js:83:15
+      1    3.1%    LazyCompile: ~DEFNODE :412:17
+      1  100.0%      Eval: ~<anonymous> :1:20
+      1  100.0%        Script: ~<anonymous> /Users/Drew/Projects/games/ASCII_Wars/node_modules/uglify-js/tools/node.js:1:11
+      1  100.0%          LazyCompile: ~Module._compile internal/modules/cjs/loader.js:663:37
+      1  100.0%            LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:711:37
+

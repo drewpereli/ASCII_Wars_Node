@@ -170,6 +170,7 @@ class Game{
 		for (var i in this.players){
 			var player = this.players[i];
 			var mapInfo = this.map.getClientDataFor(player);
+			if (config.logTimeStamps) console.log(Date.now(), 'Emitting map to player ' + i);
 			player.socket.emit('map updated', JSON.stringify(mapInfo));
 		}
 	}
@@ -201,9 +202,12 @@ class Game{
 	*
 	*/
 	playerReadyForNextTurn(player){
+		console.log(Date.now(), 'Player ready for next turn');
 		player.readyForNextTurn = true;
-		if (this.readyToTick())
+		if (this.readyToTick()){
+			console.log(Date.now(), 'Ready to tick');
 			this.tick();
+		}
 	}
 
 
