@@ -158,7 +158,11 @@ Game = (function() {
   };
 
   Game.prototype.end = function() {
-    return window.location = '/';
+    var redirect;
+    redirect = function() {
+      return window.location = 'http://localhost:' + config.port + '/startScreen';
+    };
+    return setTimeout(redirect, 1000);
   };
 
   return Game;
@@ -226,6 +230,14 @@ Socket = (function() {
     })(this));
     this.io.on('game over', (function(_this) {
       return function() {
+        _this.io.close();
+        return app.game.end();
+      };
+    })(this));
+    this.io.on('death', (function(_this) {
+      return function() {
+        app.view.displayMessage('You died!!!');
+        _this.io.close();
         return app.game.end();
       };
     })(this));

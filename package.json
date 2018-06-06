@@ -2,7 +2,7 @@
   "name": "ascii_wars",
   "version": "1.0.0",
   "description": "A game",
-  "main": "startGame.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron ."
   },

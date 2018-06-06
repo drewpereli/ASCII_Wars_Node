@@ -20,7 +20,12 @@ class Socket
 		@io.on('player added', (numPlayers) => app.view.addPlayer(numPlayers))
 		@io.on('game start', () => app.view.startGame())
 		@io.on('game over', () => 
-			@io.disconnect()
+			@io.close()
+			app.game.end()
+		)
+		@io.on('death', () =>
+			app.view.displayMessage('You died!!!')
+			@io.close()
 			app.game.end()
 		)
 		return @io

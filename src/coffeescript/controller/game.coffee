@@ -141,7 +141,8 @@ class Game
 
 	end: () ->
 		
-		window.location = '/';
+		redirect = -> window.location = 'http://localhost:' + config.port + '/startScreen'
+		setTimeout redirect, 1000
 
 
 

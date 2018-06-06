@@ -15,12 +15,13 @@ function initializeHTTPRoutes(_app){
 	app = _app;
 	//Home page
 	app.get('/', (req, res) => {
-		//If we're the first to connect, i.e. opening up the game
-		if (socketCount === 0)
-			res.render('start');
-		//Else we're coming in from an ngrok link
-		else
-			res.render('game')
+		console.log('Request to /, socket count: ', socketCount);
+		res.render('game');
+	});
+
+
+	app.get('/startScreen', (req, res) => {
+		res.render('start');
 	});
 
 
@@ -30,6 +31,9 @@ function initializeHTTPRoutes(_app){
 			//res.render('hostGame', {hostUrl: url});
 			console.log(gameId);
 			res.render('game');
+		})
+		.catch(err => {
+			console.log(err);
 		})
 	});
 
@@ -43,12 +47,23 @@ function initializeHTTPRoutes(_app){
 
 function initializeIORoutes(_io){
 	io = _io;
-	game = require('./controller/game')(io, ngrok);
+	game = require('./controller/game')(io);
 
 
 	io.on('connection', (socket) => {
 		console.log('connecting...');
 		socketCount++;
+		socket.on('disconnect', (socket) => {
+			console.log('Got disconnect!');
+			socketCount--;
+			console.log('New socket count: ', socketCount);
+			//If game over
+			if (socketCount === 0){
+				console.log('Disconnecting ngrok tunnel');
+				ngrok.disconnect();
+				game = require('./controller/game')(io); //Reset game
+			}
+		})
 		if (game.acceptingPlayers() && !authenticatePlayer(socket)){
 			game.addPlayer(socket);
 			initializePlayerSocketRoutes(socket);
@@ -64,6 +79,11 @@ function initializeIORoutes(_io){
 			else console.log('Unknown reason. Check error log?');
 		}
 	});
+}
+
+
+function deleteIORoutes(_io){
+	delete _io;
 }
 
 
@@ -105,10 +125,6 @@ function initializePlayerSocketRoutes(socket){
 	});
 
 
-	
-	socket.on('disconnect', () => {
-		socketCount--;
-	});
 	
 
 
@@ -175,9 +191,6 @@ function initializePlayerSocketRoutes(socket){
 }
 
 
-function initializeSpectatorSocketRoutes(socket){
-	socket.on('quit', () => {});
-}
 
 
 function authenticatePlayer(socket){
