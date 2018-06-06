@@ -157,6 +157,14 @@ Game = (function() {
     return app.view.updateTile(tile);
   };
 
+  Game.prototype.end = function() {
+    var redirect;
+    redirect = function() {
+      return window.location = 'http://localhost:' + config.port + '/startScreen';
+    };
+    return setTimeout(redirect, 1000);
+  };
+
   return Game;
 
 })();
@@ -210,6 +218,29 @@ Socket = (function() {
         return app.game.updateTile(tile);
       };
     })(this)));
+    this.io.on('player added', (function(_this) {
+      return function(numPlayers) {
+        return app.view.addPlayer(numPlayers);
+      };
+    })(this));
+    this.io.on('game start', (function(_this) {
+      return function() {
+        return app.view.startGame();
+      };
+    })(this));
+    this.io.on('game over', (function(_this) {
+      return function() {
+        _this.io.close();
+        return app.game.end();
+      };
+    })(this));
+    this.io.on('death', (function(_this) {
+      return function() {
+        app.view.displayMessage('You died!!!');
+        _this.io.close();
+        return app.game.end();
+      };
+    })(this));
     return this.io;
   }
 

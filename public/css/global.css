@@ -8,6 +8,9 @@
     top: 0;
     left: 0; }
 
+#message-container {
+  min-height: 2em; }
+
 ul.menu > li {
   text-align: center;
   list-style-type: none;
