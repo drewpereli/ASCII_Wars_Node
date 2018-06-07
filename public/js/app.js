@@ -213,9 +213,6 @@ Socket = class Socket {
       return app.view.displayMessage(message);
     });
     this.io.on('map updated', ((map) => {
-      if (config.logTimeStamps) {
-        console.log(Date.now(), 'Received map');
-      }
       map = JSON.parse(map);
       return app.game.updateMap(map);
     }));
@@ -392,8 +389,6 @@ Map = class Map {
   update(mapInfo) {
     var i, j, k, len, len1, len2, ref, ref1, results, row, tile;
     ref = this.tiles;
-    
-    //mark all tiles as invisible to start
     for (i = 0, len = ref.length; i < len; i++) {
       row = ref[i];
       for (j = 0, len1 = row.length; j < len1; j++) {
@@ -408,20 +403,7 @@ Map = class Map {
     for (k = 0, len2 = ref1.length; k < len2; k++) {
       tile = ref1[k];
       tile.visible = true;
-      //If this is the first time we have seen the tile, update all the values
-      if (this.tiles[tile.y][tile.x] === false) {
-        //Set default values if not sent
-        if (!('actor' in tile)) {
-          tile.actor = false;
-        }
-        if (!('waterDepth' in tile)) {
-          tile.waterDepth = 0;
-        }
-        results.push(this.tiles[tile.y][tile.x] = tile);
-      } else {
-        //Else, only changed values were sent
-        results.push(Object.assign(this.tiles[tile.y][tile.x], tile));
-      }
+      results.push(this.tiles[tile.y][tile.x] = tile);
     }
     return results;
   }
