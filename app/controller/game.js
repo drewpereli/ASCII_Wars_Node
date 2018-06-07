@@ -181,7 +181,7 @@ class Game{
 					t.changed[key] = false;
 				}
 			})
-		})
+		});
 	}
 
 	emitMapToSpectator(socket){
