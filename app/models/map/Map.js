@@ -315,10 +315,12 @@ class Map extends Model{
 			});
 		}
 		var setTerrain = () => {
+			/*
 			this.forEachTile(t => {
 				if (!t.hasWater())
 					t.setTerrain('forest');
 			});
+			*/
 			return Promise.resolve();
 		}
 		var placeCommandCenters = () => {
@@ -353,7 +355,7 @@ class Map extends Model{
 						for (var j = 0 ; j < config.debug.testActors ; j++){
 							//Place a random unit
 							this.game.addActor(
-								new actorClasses.Worker({
+								new actorClasses.Soldier({
 									tile: this.getRandomOpenTile(), 
 									player: this.game.players[i],
 									squad: 0
