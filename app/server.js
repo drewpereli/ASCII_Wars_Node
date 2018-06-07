@@ -9,7 +9,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 var server = app.listen(Number(env.SOCKET));
-var io = require('socket.io').listen(server);
+var io = require('socket.io')(server, {wsEngine: 'ws'});
 
 
 function start(){
