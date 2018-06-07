@@ -10,8 +10,8 @@ app = {
 
 var Game;
 
-Game = (function() {
-  function Game() {
+Game = class Game {
+  constructor() {
     this.state;
     this.timeState = 'paused';
     this.currentlyConstructing = false;
@@ -20,12 +20,12 @@ Game = (function() {
     this.hoveredTile = null;
   }
 
-  Game.prototype.changeState = function(state) {
+  changeState(state) {
     console.log('Changing state to ' + state);
     return this.state = state;
-  };
+  }
 
-  Game.prototype.changeTimeState = function(state) {
+  changeTimeState(state) {
     if (state === this.timeState) {
       return;
     }
@@ -33,17 +33,22 @@ Game = (function() {
     if (this.timeState === 'playing') {
       return app.socket.emit('next');
     }
-  };
+  }
 
-  Game.prototype.moveMap = function(dirIndex) {
+  //###############
+
+  // USER INPUT
+
+  //###############
+  moveMap(dirIndex) {
     return app.view.moveMap(dirIndex);
-  };
+  }
 
-  Game.prototype.zoom = function(direction) {
+  zoom(direction) {
     return app.view.zoom(direction);
-  };
+  }
 
-  Game.prototype.clickTile = function(tile) {
+  clickTile(tile) {
     if (this.state === 'constructing') {
       return app.socket.emit('construct', {
         tile: tile,
@@ -58,9 +63,9 @@ Game = (function() {
     } else if (this.state === 'creating water pump') {
       return app.socket.emit('create water pump', tile);
     }
-  };
+  }
 
-  Game.prototype.rightClickTile = function(tile) {
+  rightClickTile(tile) {
     var selectedSquad;
     console.log('right clicking tile ' + JSON.stringify(tile));
     selectedSquad = $('#squad-select').val();
@@ -71,9 +76,9 @@ Game = (function() {
         y: tile.y
       }
     });
-  };
+  }
 
-  Game.prototype.hoverTile = function(tile) {
+  hoverTile(tile) {
     if (!tile) {
       return;
     }
@@ -87,32 +92,32 @@ Game = (function() {
       app.view.drawGhostConstruction(tile, this.currentlyConstructingChar);
     }
     return this.hoveredTile = tile;
-  };
+  }
 
-  Game.prototype.mouseLeaveCanvas = function() {
+  mouseLeaveCanvas() {
     app.view.eraseGhostConstruction(this.hoveredTile);
     return this.hoveredTile = null;
-  };
+  }
 
-  Game.prototype.clickDiggingCheckbox = function(checked) {
+  clickDiggingCheckbox(checked) {
     var selectedSquad;
     selectedSquad = $('#squad-select').val();
     return app.socket.emit('update behavior params', {
       squad: selectedSquad,
       digging: checked
     });
-  };
+  }
 
-  Game.prototype.changeDiggingDirection = function(dir) {
+  changeDiggingDirection(dir) {
     var selectedSquad;
     selectedSquad = $('#squad-select').val();
     return app.socket.emit('update behavior params', {
       squad: selectedSquad,
       diggingDirection: dir
     });
-  };
+  }
 
-  Game.prototype.changeSquadAlignment = function(alignment) {
+  changeSquadAlignment(alignment) {
     var selectedSquad;
     if (alignment === 'none') {
       alignment = false;
@@ -122,148 +127,132 @@ Game = (function() {
       squad: selectedSquad,
       alignment: alignment
     });
-  };
+  }
 
-  Game.prototype.controlClickTile = function(tile) {};
+  controlClickTile(tile) {}
 
-  Game.prototype.next = function() {
+  next() {
     return app.socket.emit('next');
-  };
+  }
 
-  Game.prototype.play = function() {
+  play() {
     return this.changeTimeState('playing');
-  };
+  }
 
-  Game.prototype.pause = function() {
+  pause() {
     return this.changeTimeState('paused');
-  };
+  }
 
-  Game.prototype.clickCreateBuildingButton = function(building, character) {
+  clickCreateBuildingButton(building, character) {
     this.changeState('constructing');
     this.currentlyConstructing = building;
     return this.currentlyConstructingChar = character;
-  };
+  }
 
-  Game.prototype.updateMap = function(map) {
+  //###############
+
+  // SERVER RESPONSES
+
+  //###############
+  updateMap(map) {
     app.map.update(map);
     app.view.updateMap();
     if (this.timeState === 'playing') {
       return app.socket.emit('next');
     }
-  };
+  }
 
-  Game.prototype.updateTile = function(tile) {
+  updateTile(tile) {
     app.map.updateTile(tile.x, tile.y, tile);
     return app.view.updateTile(tile);
-  };
+  }
 
-  Game.prototype.end = function() {
+  end() {
     var redirect;
     redirect = function() {
       return window.location = 'http://localhost:' + config.port + '/startScreen';
     };
     return setTimeout(redirect, 1000);
-  };
+  }
 
-  return Game;
-
-})();
+};
 
 $(function() {
   $('ul.menu > li').first().addClass('selected');
-  return $('ul.menu').each((function(_this) {
-    return function(index, menu) {
-      return $('body').keydown(function(e) {
-        var dir, functionName, newlySelectedIndex, numItems, selectedItem, selectedItemIndex;
-        if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Enter') {
-          return;
-        }
-        event.preventDefault();
-        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-          selectedItemIndex = $(menu).find('.selected').index();
-          dir = e.key === 'ArrowUp' ? 1 : -1;
-          numItems = $(menu).children('li').length;
-          newlySelectedIndex = (numItems + selectedItemIndex + dir) % numItems;
-          $(menu).find('.selected').removeClass('selected');
-          return $(menu).find('li').eq(newlySelectedIndex).addClass('selected');
-        } else if (e.key === 'Enter') {
-          selectedItem = $(menu).find('.selected');
-          functionName = selectedItem.data('action');
-          return window[functionName](selectedItem[0]);
-        }
-      });
-    };
-  })(this));
+  return $('ul.menu').each((index, menu) => {
+    return $('body').keydown((e) => {
+      var dir, functionName, newlySelectedIndex, numItems, selectedItem, selectedItemIndex;
+      
+      //If it's not down or up, ignore it
+      if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Enter') {
+        return;
+      }
+      event.preventDefault();
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        selectedItemIndex = $(menu).find('.selected').index();
+        dir = e.key === 'ArrowUp' ? 1 : -1;
+        numItems = $(menu).children('li').length;
+        newlySelectedIndex = (numItems + selectedItemIndex + dir) % numItems;
+        $(menu).find('.selected').removeClass('selected');
+        return $(menu).find('li').eq(newlySelectedIndex).addClass('selected');
+      } else if (e.key === 'Enter') {
+        selectedItem = $(menu).find('.selected');
+        functionName = selectedItem.data('action');
+        return window[functionName](selectedItem[0]);
+      }
+    });
+  });
 });
 
 var Socket;
 
-Socket = (function() {
-  function Socket() {
+Socket = class Socket {
+  constructor() {
     this.io = io();
-    this.io.on('message', (function(_this) {
-      return function(message) {
-        return app.view.displayMessage(message);
-      };
-    })(this));
-    this.io.on('map updated', ((function(_this) {
-      return function(map) {
-        map = JSON.parse(map);
-        return app.game.updateMap(map);
-      };
-    })(this)));
-    this.io.on('tile updated', ((function(_this) {
-      return function(tile) {
-        tile = JSON.parse(tile);
-        return app.game.updateTile(tile);
-      };
-    })(this)));
-    this.io.on('player added', (function(_this) {
-      return function(numPlayers) {
-        return app.view.addPlayer(numPlayers);
-      };
-    })(this));
-    this.io.on('game start', (function(_this) {
-      return function() {
-        return app.view.startGame();
-      };
-    })(this));
-    this.io.on('game over', (function(_this) {
-      return function() {
-        _this.io.close();
-        return app.game.end();
-      };
-    })(this));
-    this.io.on('death', (function(_this) {
-      return function() {
-        app.view.displayMessage('You died!!!');
-        _this.io.close();
-        return app.game.end();
-      };
-    })(this));
+    this.io.on('message', (message) => {
+      return app.view.displayMessage(message);
+    });
+    this.io.on('map updated', ((map) => {
+      if (config.logTimeStamps) {
+        console.log(Date.now(), 'Received map');
+      }
+      map = JSON.parse(map);
+      return app.game.updateMap(map);
+    }));
+    this.io.on('tile updated', ((tile) => {
+      tile = JSON.parse(tile);
+      return app.game.updateTile(tile);
+    }));
+    this.io.on('player added', (numPlayers) => {
+      return app.view.addPlayer(numPlayers);
+    });
+    this.io.on('game start', () => {
+      return app.view.startGame();
+    });
+    this.io.on('game over', () => {
+      this.io.close();
+      return app.game.end();
+    });
+    this.io.on('death', () => {
+      app.view.displayMessage('You died!!!');
+      this.io.close();
+      return app.game.end();
+    });
     return this.io;
   }
 
-  return Socket;
-
-})();
+};
 
 var hexToRGBA, hexToRGBAComponents;
 
-hexToRGBA = function(hex, opacity) {
+hexToRGBA = function(hex, opacity = 1) {
   var c;
-  if (opacity == null) {
-    opacity = 1;
-  }
-  c = hexToRGBAComponents(hex, opacity);
-  return "rgba(" + (c.join(',')) + ")";
+  c = hexToRGBAComponents(hex, opacity); //components
+  return `rgba(${c.join(',')})`;
 };
 
-hexToRGBAComponents = function(hex, opacity) {
+hexToRGBAComponents = function(hex, opacity = 1) {
   var num;
-  if (opacity == null) {
-    opacity = 1;
-  }
   hex = hex.replace(/^#/, '');
   if (hex.length === 3) {
     hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
@@ -284,81 +273,57 @@ init = function() {
 
 var Input;
 
-Input = (function() {
-  function Input() {
+Input = class Input {
+  constructor() {
     this.usedKeys = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', '-', '='];
-    $('body').keydown((function(_this) {
-      return function(e) {
-        return _this.processKeyDown(e);
-      };
-    })(this));
-    $(app.view.components.map.clickableCanvas).mousedown((function(_this) {
-      return function(e) {
-        e.preventDefault();
-        switch (e.which) {
-          case 1:
-            return app.game.clickTile(_this.getTileFromEvent(e));
-          case 3:
-            return app.game.rightClickTile(_this.getTileFromEvent(e));
-        }
-      };
-    })(this));
-    $(app.view.components.map.clickableCanvas).mousemove((function(_this) {
-      return function(e) {
-        return app.game.hoverTile(_this.getTileFromEvent(e));
-      };
-    })(this));
-    $(app.view.components.map.clickableCanvas).mouseleave((function(_this) {
-      return function(e) {
-        return app.game.mouseLeaveCanvas();
-      };
-    })(this));
-    $('#digging-checkbox').change((function(_this) {
-      return function() {
-        return app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'));
-      };
-    })(this));
-    $('#digging-direction-select').change((function(_this) {
-      return function() {
-        return app.game.changeDiggingDirection($('#digging-direction-select').val());
-      };
-    })(this));
-    $('.alignment-selection').change((function(_this) {
-      return function() {
-        return app.game.changeSquadAlignment($('.alignment-selection:checked').val());
-      };
-    })(this));
-    $(app.view.components.map.clickableCanvas).contextmenu((function(_this) {
-      return function() {
-        return false;
-      };
-    })(this));
-    $("#next-btn").click((function(_this) {
-      return function() {
-        return app.game.next();
-      };
-    })(this));
-    $("#play-btn").click((function(_this) {
-      return function() {
-        return app.game.play();
-      };
-    })(this));
-    $("#pause-btn").click((function(_this) {
-      return function() {
-        return app.game.pause();
-      };
-    })(this));
-    $('.create-building-btn').click((function(_this) {
-      return function(e) {
-        var building, character;
-        building = $(e.target).data('building');
-        character = $(e.target).data('character');
-        return app.game.clickCreateBuildingButton(building, character);
-      };
-    })(this));
+    $('body').keydown((e) => {
+      return this.processKeyDown(e);
+    });
+    $(app.view.components.map.clickableCanvas).mousedown((e) => {
+      e.preventDefault();
+      switch (e.which) {
+        case 1:
+          return app.game.clickTile(this.getTileFromEvent(e));
+        case 3:
+          return app.game.rightClickTile(this.getTileFromEvent(e));
+      }
+    });
+    $(app.view.components.map.clickableCanvas).mousemove((e) => {
+      return app.game.hoverTile(this.getTileFromEvent(e));
+    });
+    $(app.view.components.map.clickableCanvas).mouseleave((e) => {
+      return app.game.mouseLeaveCanvas();
+    });
+    $('#digging-checkbox').change(() => {
+      return app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'));
+    });
+    $('#digging-direction-select').change(() => {
+      return app.game.changeDiggingDirection($('#digging-direction-select').val());
+    });
+    $('.alignment-selection').change(() => {
+      return app.game.changeSquadAlignment($('.alignment-selection:checked').val());
+    });
+    $(app.view.components.map.clickableCanvas).contextmenu(() => {
+      return false;
+    });
+    $("#next-btn").click(() => {
+      return app.game.next();
+    });
+    $("#play-btn").click(() => {
+      return app.game.play();
+    });
+    $("#pause-btn").click(() => {
+      return app.game.pause();
+    });
+    $('.create-building-btn').click((e) => {
+      var building, character;
+      building = $(e.target).data('building');
+      character = $(e.target).data('character');
+      return app.game.clickCreateBuildingButton(building, character);
+    });
   }
 
-  Input.prototype.getTileFromEvent = function(event) {
+  getTileFromEvent(event) {
     var cellX, cellY, x, y;
     cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
     cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);
@@ -368,24 +333,24 @@ Input = (function() {
       x: x,
       y: y
     };
+  }
 
-    /*
-    		x = new Number()
-    		y = new Number()
-    		canvas = app.view.components.map.clickableCanvas
-    		if event.x != undefined && event.y != undefined
-    			x = event.x
-    			y = event.y
-    		else #Firefox method to get the position
-    			x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
-    			y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop
-    		x -= canvas.offsetLeft
-    		y -= canvas.offsetTop
-    		return app.view.getTileFromPixels(x, y)
-     */
-  };
-
-  Input.prototype.processKeyDown = function(event) {
+  //return app.view.getTileFromPixels(event.offsetX, event.offsetY)
+  /*
+  x = new Number()
+  y = new Number()
+  canvas = app.view.components.map.clickableCanvas
+  if event.x != undefined && event.y != undefined
+  	x = event.x
+  	y = event.y
+  else #Firefox method to get the position
+  	x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
+  	y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop
+  x -= canvas.offsetLeft
+  y -= canvas.offsetTop
+  return app.view.getTileFromPixels(x, y)
+  */
+  processKeyDown(event) {
     if (!this.usedKeys.includes(event.key)) {
       return;
     }
@@ -404,31 +369,31 @@ Input = (function() {
       case '=':
         return app.game.zoom('in');
     }
-  };
+  }
 
-  return Input;
-
-})();
+};
 
 var Map;
 
-Map = (function() {
-  function Map() {
+Map = class Map {
+  constructor() {
     var i, j, ref, ref1, x, y;
     this.height = config.model.map.height;
     this.width = config.model.map.width;
     this.tiles = [];
-    for (y = i = 0, ref = this.height; 0 <= ref ? i <= ref : i >= ref; y = 0 <= ref ? ++i : --i) {
+    for (y = i = 0, ref = this.height; (0 <= ref ? i <= ref : i >= ref); y = 0 <= ref ? ++i : --i) {
       this.tiles.push([]);
-      for (x = j = 0, ref1 = this.width; 0 <= ref1 ? j <= ref1 : j >= ref1; x = 0 <= ref1 ? ++j : --j) {
+      for (x = j = 0, ref1 = this.width; (0 <= ref1 ? j <= ref1 : j >= ref1); x = 0 <= ref1 ? ++j : --j) {
         this.tiles[y].push(false);
       }
     }
   }
 
-  Map.prototype.update = function(mapInfo) {
+  update(mapInfo) {
     var i, j, k, len, len1, len2, ref, ref1, results, row, tile;
     ref = this.tiles;
+    
+    //mark all tiles as invisible to start
     for (i = 0, len = ref.length; i < len; i++) {
       row = ref[i];
       for (j = 0, len1 = row.length; j < len1; j++) {
@@ -443,33 +408,44 @@ Map = (function() {
     for (k = 0, len2 = ref1.length; k < len2; k++) {
       tile = ref1[k];
       tile.visible = true;
-      results.push(this.tiles[tile.y][tile.x] = tile);
+      //If this is the first time we have seen the tile, update all the values
+      if (this.tiles[tile.y][tile.x] === false) {
+        //Set default values if not sent
+        if (!('actor' in tile)) {
+          tile.actor = false;
+        }
+        if (!('waterDepth' in tile)) {
+          tile.waterDepth = 0;
+        }
+        results.push(this.tiles[tile.y][tile.x] = tile);
+      } else {
+        //Else, only changed values were sent
+        results.push(Object.assign(this.tiles[tile.y][tile.x], tile));
+      }
     }
     return results;
-  };
+  }
 
-  Map.prototype.getTile = function(x, y) {
+  getTile(x, y) {
     if ((0 <= x && x < this.width) && (0 <= y && y < this.height)) {
       return this.tiles[y][x];
     }
     return false;
-  };
+  }
 
-  Map.prototype.updateTile = function(x, y, tileParams) {
+  updateTile(x, y, tileParams) {
     if (!this.getTile(x, y)) {
       return false;
     }
     return Object.assign(this.tiles[y][x], tileParams);
-  };
+  }
 
-  return Map;
-
-})();
+};
 
 var Tile;
 
-Tile = (function() {
-  function Tile(x, y) {
+Tile = class Tile {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
     this.terrain = 'water';
@@ -477,14 +453,12 @@ Tile = (function() {
     this.actor = false;
   }
 
-  return Tile;
-
-})();
+};
 
 var Cell;
 
-Cell = (function() {
-  function Cell(x1, y1, layer) {
+Cell = class Cell {
+  constructor(x1, y1, layer) {
     this.x = x1;
     this.y = y1;
     this.layer = layer;
@@ -493,11 +467,9 @@ Cell = (function() {
     this.layer.textAlign = 'center';
   }
 
-  Cell.prototype.fill = function(color, opacity) {
+  //Fill rect, but with border
+  fill(color, opacity = 1) {
     var l, x, y;
-    if (opacity == null) {
-      opacity = 1;
-    }
     if (!this.cleared) {
       this.clear();
     }
@@ -513,35 +485,35 @@ Cell = (function() {
       this.stroke(config.view.colors.cellBorder);
     }
     return this.cleared = false;
-  };
+  }
 
-  Cell.prototype.write = function(char, color) {
+  write(char, color) {
     var l, x, y;
     l = this.getCellLength();
     x = this.getXPixel();
     y = this.getYPixel();
     this.layer.fillStyle = color;
     return this.layer.fillText(char, this.getXPixel() + this.getCellLength() / 2, this.getYPixel() + this.getCellLength() / 2);
-  };
+  }
 
-  Cell.prototype.stroke = function(color) {
+  stroke(color) {
     var l, x, y;
     x = this.getXPixel();
     y = this.getYPixel();
     l = this.getCellLength();
     this.layer.fillStyle = color;
     return this.layer.strokeRect(x + 1, y + 1, l - 2, l - 2);
-  };
+  }
 
-  Cell.prototype.clear = function() {
+  clear() {
     var l, x, y;
     x = this.getXPixel();
     y = this.getYPixel();
     l = this.getCellLength();
     return this.layer.clearRect(x - 0, y - 0, l + 0, l + 0);
-  };
+  }
 
-  Cell.prototype.drawTile = function(tile) {
+  drawTile(tile) {
     var a, borderColor, char, charColor, fillColor, xOffset, yOffset;
     fillColor = false;
     charColor = false;
@@ -598,53 +570,50 @@ Cell = (function() {
     if (borderColor) {
       return this.stroke(borderColor);
     }
-  };
+  }
 
-  Cell.prototype.drawGhostConstruction = function(character) {
+  drawGhostConstruction(character) {
     var color;
     this.clear();
     color = 'rgba(0,0,0,.5)';
     this.write(character, color);
     return this.stroke(color);
-  };
+  }
 
-  Cell.prototype.getCellLength = function() {
+  getCellLength() {
     return app.view.components.map.currentCellLength;
-  };
+  }
 
-  Cell.prototype.getFont = function() {
+  getFont() {
     return this.getCellLength() + 'px monospace';
-  };
+  }
 
-  Cell.prototype.getXPixel = function() {
+  getXPixel() {
     return this.getCellLength() * this.x;
-  };
+  }
 
-  Cell.prototype.getYPixel = function() {
+  getYPixel() {
     return this.getCellLength() * this.y;
-  };
+  }
 
-  Cell.prototype.getLayerName = function() {
+  getLayerName() {
     var mapLayers;
     mapLayers = app.view.components.map.layers;
-    return Object.keys(mapLayers).find((function(_this) {
-      return function(name) {
-        return mapLayers[name] === _this.layer;
-      };
-    })(this));
-  };
+    return Object.keys(mapLayers).find((name) => {
+      return mapLayers[name] === this.layer;
+    });
+  }
 
-  return Cell;
-
-})();
+};
 
 var View;
 
-View = (function() {
-  function View() {
+View = class View {
+  constructor() {
+    //These are all the ui/visual components
     this.components = {
       map: {
-        currentX: 0,
+        currentX: 0, //Coordinates of top left corner
         currentY: 0,
         currentZoom: 3,
         layers: {},
@@ -663,34 +632,33 @@ View = (function() {
     $('.tabs').tabs();
   }
 
-  View.prototype.displayMessage = function(message) {
+  displayMessage(message) {
     var m;
     m = this.components.message;
+    //If m is fading
     if (m.hasClass('has-message')) {
       m.stop(true).css('opacity', 1);
     }
     return m.html(message).addClass('has-message').animate({
       opacity: 1
     }, config.view.messageFadeDelay * 1000).fadeOut({
-      complete: (function(_this) {
-        return function() {
-          return m.empty().show().removeClass('has-message');
-        };
-      })(this)
+      complete: () => {
+        return m.empty().show().removeClass('has-message');
+      }
     });
-  };
+  }
 
-  View.prototype.addPlayer = function(numPlayers) {
+  addPlayer(numPlayers) {
     this.displayMessage('Player ' + numPlayers + ' added');
     return $('#playerCount').html(numPlayers);
-  };
+  }
 
-  View.prototype.startGame = function() {
+  startGame() {
     $('#preGameScreen').addClass('hidden');
     return $('#gameScreen').removeClass('hidden');
-  };
+  }
 
-  View.prototype.moveMap = function(dirIndex) {
+  moveMap(dirIndex) {
     switch (dirIndex) {
       case 0:
         this.components.map.currentY -= 5;
@@ -717,11 +685,12 @@ View = (function() {
       this.components.map.currentX -= app.map.width;
     }
     return this.updateMap();
-  };
+  }
 
-  View.prototype.updateMap = function() {
+  updateMap() {
     var cell, cells, layer, layername, results, row, tile, x, y;
     this.clearCanvases();
+    //for each cell, render based on the layer
     cells = this.components.map.cells;
     results = [];
     for (layername in cells) {
@@ -752,9 +721,9 @@ View = (function() {
       }).call(this));
     }
     return results;
-  };
+  }
 
-  View.prototype.updateTile = function(tile) {
+  updateTile(tile) {
     var cell, cells, i, len, results;
     cells = this.getCellsFromTile(tile);
     results = [];
@@ -763,9 +732,9 @@ View = (function() {
       results.push(cell.drawTile(tile));
     }
     return results;
-  };
+  }
 
-  View.prototype.clearCell = function(x, y) {
+  clearCell(x, y) {
     var cells, layer, layername, results;
     cells = this.components.map.cells;
     results = [];
@@ -774,9 +743,9 @@ View = (function() {
       results.push(layer[y][x].clear());
     }
     return results;
-  };
+  }
 
-  View.prototype.clearCanvases = function() {
+  clearCanvases() {
     var layer, layername, ref, results;
     ref = this.components.map.layers;
     results = [];
@@ -785,28 +754,28 @@ View = (function() {
       results.push(layer.clearRect(0, 0, config.view.map.width * this.components.map.currentCellLength, config.view.map.height * this.components.map.currentCellLength));
     }
     return results;
-  };
+  }
 
-  View.prototype.drawGhostConstruction = function(tile, character) {
+  drawGhostConstruction(tile, character) {
     return this.getCellFromTile(tile, 'graphics').drawGhostConstruction(character);
-  };
+  }
 
-  View.prototype.eraseGhostConstruction = function(tile) {
+  eraseGhostConstruction(tile) {
     return this.getCellFromTile(tile, 'graphics').clear();
-  };
+  }
 
-  View.prototype.getTileFromPixels = function(x, y) {
+  getTileFromPixels(x, y) {
     var cellX, cellY;
     cellX = Math.floor(x / this.components.map.currentCellLength);
     cellY = Math.floor(y / this.components.map.currentCellLength);
     return this.getTileFromCellCoordinates(cellX, cellY);
-  };
+  }
 
-  View.prototype.getTileFromCell = function(cell) {
+  getTileFromCell(cell) {
     return this.getTileFromCellCoordinates(cell.x, cell.y);
-  };
+  }
 
-  View.prototype.getCellsFromTile = function(tile) {
+  getCellsFromTile(tile) {
     var cells, layer, layername, ref, x, y;
     x = (app.map.width + tile.x - this.components.map.currentX) % app.map.width;
     y = (app.map.height + tile.y - this.components.map.currentY) % app.map.height;
@@ -817,23 +786,24 @@ View = (function() {
       cells.push(layer[y][x]);
     }
     return cells;
-  };
+  }
 
-  View.prototype.getCellFromTile = function(tile, layer) {
+  getCellFromTile(tile, layer) {
     var layerIndex;
     layerIndex = config.view.map.layers.indexOf(layer);
     if (layerIndex === -1) {
       throw new Error(layer + ' is not a valid layer');
     }
     return this.getCellsFromTile(tile)[layerIndex];
-  };
+  }
 
-  View.prototype.getTileFromCellCoordinates = function(x, y) {
+  getTileFromCellCoordinates(x, y) {
     return app.map.getTile((x + this.components.map.currentX) % app.map.width, (y + this.components.map.currentY) % app.map.height);
-  };
+  }
 
-  View.prototype.getColorFromElevation = function(el) {
+  getColorFromElevation(el) {
     var green, greenHex, red, redHex;
+    //Assume max elevation is 100, min is 0
     green = Math.round(el / 100 * 255);
     red = 255 - green;
     greenHex = green.toString(16);
@@ -844,17 +814,21 @@ View = (function() {
     if (redHex.length === 1) {
       redHex = '0' + redHex;
     }
-    return "#" + redHex + greenHex + "00";
-  };
+    //Return hex code
+    return `#${redHex}${greenHex}00`;
+  }
 
-  View.prototype.getPlayerColor = function(clientFacingPlayer) {
+  getPlayerColor(clientFacingPlayer) {
     return config.view.colors.players[clientFacingPlayer.team];
-  };
+  }
 
-  return View;
+};
 
-})();
+//#############################
 
+//	INITIALIZER FUNCTIONS
+
+//#############################
 View.prototype.initialize = {
   map: {
     canvases: function(v) {
@@ -864,7 +838,7 @@ View.prototype.initialize = {
       for (i = 0, len = ref.length; i < len; i++) {
         layerName = ref[i];
         c = $("<canvas>").addClass(layerName);
-        c.attr('width', config.view.map.width * config.view.map.initialCellLength).attr('height', config.view.map.height * config.view.map.initialCellLength).css('width', (config.view.map.width * config.view.map.initialCellLength) + "px").css('height', (config.view.map.height * config.view.map.initialCellLength) + "px");
+        c.attr('width', config.view.map.width * config.view.map.initialCellLength).attr('height', config.view.map.height * config.view.map.initialCellLength).css('width', `${config.view.map.width * config.view.map.initialCellLength}px`).css('height', `${config.view.map.height * config.view.map.initialCellLength}px`);
         context = c[0].getContext('2d');
         v.components.map.layers[layerName] = context;
         c.appendTo("#canvas-container");
@@ -881,12 +855,12 @@ View.prototype.initialize = {
         results.push((function() {
           var j, ref1, results1;
           results1 = [];
-          for (y = j = 0, ref1 = config.view.map.height - 1; 0 <= ref1 ? j <= ref1 : j >= ref1; y = 0 <= ref1 ? ++j : --j) {
+          for (y = j = 0, ref1 = config.view.map.height - 1; (0 <= ref1 ? j <= ref1 : j >= ref1); y = 0 <= ref1 ? ++j : --j) {
             v.components.map.cells[layer][y] = [];
             results1.push((function() {
               var k, ref2, results2;
               results2 = [];
-              for (x = k = 0, ref2 = config.view.map.width - 1; 0 <= ref2 ? k <= ref2 : k >= ref2; x = 0 <= ref2 ? ++k : --k) {
+              for (x = k = 0, ref2 = config.view.map.width - 1; (0 <= ref2 ? k <= ref2 : k >= ref2); x = 0 <= ref2 ? ++k : --k) {
                 results2.push(v.components.map.cells[layer][y][x] = new Cell(x, y, v.components.map.layers[layer]));
               }
               return results2;
@@ -901,6 +875,7 @@ View.prototype.initialize = {
   controlPanel: function(v) {
     var building, buildingName, i, ref, ref1, ref2, results, squadNum;
     ref = config.model.actors.buildings.producers;
+    //Building Tab
     for (buildingName in ref) {
       building = ref[buildingName];
       $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).data('character', building.character).html(building.readableName).appendTo("#construct-tab .buttons .producers");
@@ -910,8 +885,10 @@ View.prototype.initialize = {
       building = ref1[buildingName];
       $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).data('character', building.character).html(building.readableName).appendTo("#construct-tab .buttons .logistics");
     }
+//Command Tab
+//Add an dropdown menu for squads
     results = [];
-    for (squadNum = i = 1, ref2 = config.maxSquads; 1 <= ref2 ? i <= ref2 : i >= ref2; squadNum = 1 <= ref2 ? ++i : --i) {
+    for (squadNum = i = 1, ref2 = config.maxSquads; (1 <= ref2 ? i <= ref2 : i >= ref2); squadNum = 1 <= ref2 ? ++i : --i) {
       results.push($("<option>").attr('value', squadNum - 1).html(squadNum).appendTo('#squad-select'));
     }
     return results;
