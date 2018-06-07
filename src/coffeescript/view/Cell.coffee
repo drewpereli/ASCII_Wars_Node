@@ -48,7 +48,8 @@ class Cell
 		yOffset = 0
 		switch @getLayerName()
 			when 'terrain'
-				fillColor = config.view.colors.terrain[tile.terrain]
+				charColor = config.view.colors.terrain[tile.terrain]
+				char = config.view.map.terrainCharacters[tile.terrain]
 			when 'elevation'
 				fillColor = app.view.getColorFromElevation(tile.elevation)
 			when 'actors'

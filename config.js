@@ -58,7 +58,7 @@ var config = {
 			selectedTileBorder: 'gold',
 			terrain: {
 				water: '#007',
-				forest: '#070',
+				forest: '#7d0',
 				desert: '#0aa',
 				plains: '#055',
 				mountain: '#777'
@@ -69,8 +69,11 @@ var config = {
 			height: 30,
 			width: 30,
 			initialCellLength: 14, //In pixels
-			layers: ['terrain', 'elevation', 'water', 'actors',	'visibility', 'graphics'],
-			cellBorders: false
+			layers: ['elevation', 'terrain', 'water', 'actors',	'visibility', 'graphics'],
+			cellBorders: false,
+			terrainCharacters: {
+				forest: 'f'
+			}
 		},
 		messageFadeDelay: 3
 	},

@@ -139,6 +139,11 @@ class Tile extends Model{
 		this.setActor(false);
 	}
 
+	setTerrain(terrain){
+		this.terrain = terrain;
+		this.changed.terrain = true;
+	}
+
 	setWaterDepth(depth){
 		if (Math.round(depth) !== depth){
 			throw new Error('Water depth must be an integer. Received ' + depth);
