@@ -2,13 +2,13 @@
 var config = {
 	port: 8100,
 	gameStartCountdownTime: 0, //In seconds
-	maxPlayers: 2,
+	maxPlayers: 3,
 	tickTime: 0, //In milliseconds
 	maxSquads: 100,
 	model: {
 		map: {
-			height: 30,
-			width: 30,
+			height: 40,
+			width: 40,
 			maxElevation: 100,
 			minElevation: 0
 		},
@@ -66,9 +66,9 @@ var config = {
 			players: ['black', 'white']
 		},
 		map: {
-			height: 40,
-			width: 40,
-			initialCellLength: 13, //In pixels
+			height: 30,
+			width: 30,
+			initialCellLength: 14, //In pixels
 			layers: ['terrain', 'elevation', 'water', 'actors',	'visibility', 'graphics'],
 			cellBorders: false
 		},
@@ -83,7 +83,8 @@ var config = {
 		allTilesVisible: false,
 		testActors: 10,
 		flatMap: true
-	}
+	},
+	logTimeStamps: false
 }
 
 if (config.view.map.height > config.model.map.height)

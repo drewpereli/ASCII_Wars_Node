@@ -10,13 +10,26 @@ class Map
 
 
 	update: (mapInfo) -> 
+		#mark all tiles as invisible to start
 		for row in @tiles
 			for tile in row
 				if tile
 					tile.visible = false
+
 		for tile in mapInfo.visibleTiles
 			tile.visible = true
-			@tiles[tile.y][tile.x] = tile
+			#If this is the first time we have seen the tile, update all the values
+			if @tiles[tile.y][tile.x] is false
+				#Set default values if not sent
+				if 'actor' not of tile 
+					tile.actor = false
+				if 'waterDepth' not of tile
+					tile.waterDepth = 0
+				@tiles[tile.y][tile.x] = tile
+			else
+				#Else, only changed values were sent
+				Object.assign @tiles[tile.y][tile.x], tile
+
 	
 
 

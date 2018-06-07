@@ -6,6 +6,8 @@ class Socket
 		@io.on(
 			'map updated', 
 			((map) => 
+				if config.logTimeStamps
+					console.log Date.now(), 'Received map'
 				map = JSON.parse(map)
 				app.game.updateMap(map)
 			)

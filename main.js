@@ -1,10 +1,7 @@
 require('dotenv').config();
 
-const electron = require('electron')
-// Module to control application life.
-const app = electron.app
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
+const {app, contentTracing, BrowserWindow} = require('electron')
+
 
 const path = require('path')
 const url = require('url')
@@ -14,6 +11,25 @@ server.start()
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+/*
+app.on('ready', () => {
+    const options = {
+      categoryFilter: '*',
+      traceOptions: 'record-until-full,enable-sampling'
+    }
+  
+    contentTracing.startRecording(options, () => {
+      console.log('Tracing started')
+  
+      setTimeout(() => {
+        contentTracing.stopRecording('./prof.txt', (path) => {
+          console.log('Tracing data recorded to ' + path)
+        })
+      }, 10000)
+    })
+  })
+*/
 
 function createWindow () {
   // Create the browser window.

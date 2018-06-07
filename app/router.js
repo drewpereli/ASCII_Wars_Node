@@ -53,7 +53,7 @@ function initializeIORoutes(_io){
 	io.on('connection', (socket) => {
 		console.log('connecting...');
 		socketCount++;
-		socket.on('disconnect', (socket) => {
+		socket.once('disconnect', (socket) => {
 			console.log('Got disconnect!');
 			socketCount--;
 			console.log('New socket count: ', socketCount);
@@ -110,7 +110,7 @@ function initializePlayerSocketRoutes(socket){
 	});
 
 
-	socket.on('quit', () => {
+	socket.once('quit', () => {
 		var p = authenticatePlayer(socket);
 		if (!p) return;
 		game.playerQuit(p);
