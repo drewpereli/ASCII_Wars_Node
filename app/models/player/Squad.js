@@ -13,7 +13,11 @@ class Squad extends Model{
 			alignment: false,
 			alignmentWeight: 2,
 			digging: false,
-			diggingDirection: 0
+			diggingDirection: 0,
+			harvesting: false,
+			harvestingNear: false,
+			harvestingWithinDistance: false,
+			dropOff: false
 		};
 	}
 

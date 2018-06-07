@@ -4,14 +4,16 @@ var rand = require('random-seed').create();
 
 class Unit extends Actor{
 
-	constructor(args){
-		args.maxHealth = 100;
-		args.moveTime = 1;
-		args.defense = 4;
-		args.damage = 20;
-		args.attackTime = 1;
-		args.character = '\u2022';
-		args.type = 'unit';
+	constructor(specifiedArgs){
+		var defaultArgs = {	
+			maxHealth: 100,
+			moveTime: 1,
+			defense: 0,
+			damage: false,
+			attackTime: false
+		}
+		var args = defaultArgs;
+		Object.assign(args, specifiedArgs);
 		super(args);
 		this.clientFacingFields.push('squad');
 		this.squad = args.squad;
