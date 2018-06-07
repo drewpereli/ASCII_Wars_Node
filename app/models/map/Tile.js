@@ -21,13 +21,14 @@ class Tile extends Model{
 
 		this.siblings = [];
 
-		this.discoveredBy = this.game.players.map(() => false);
-		this.visibilityChangedFor = this.game.players.map(() => true);
+		//this.discoveredBy = this.game.players.map(() => false);
+		//this.visibilityChangedFor = this.game.players.map(() => true);
 		//this.visibleTo = this.game.players.map(() => false);
 		this.changed = {
 			'terrain': true,
 			'elevation': true,
 			'actor': true,
+			'waterDepth': true
 		}
 
 		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor', 'waterDepth'];
@@ -143,8 +144,7 @@ class Tile extends Model{
 			throw new Error('Water depth must be an integer. Received ' + depth);
 		}
 		this.waterDepth = depth;
-		this.setAsChanged();
-		this.changed.water = true;
+		this.changed.waterDepth = true;
 	}
 
 	setNextTurnsWaterDepth(depth = false){
@@ -334,6 +334,16 @@ class Tile extends Model{
 	setAsChanged(){
 		if (!this.map.changedTiles.includes(this))
 			this.map.changedTiles.push(this);
+	}
+
+	//
+	getClientDataFor(player){
+		var clientData = {x: this.x, y: this.y};
+		if (this.changed.terrain) clientData.terrain = this.terrain;
+		if (this.changed.elevation) clientData.elevation = this.elevation;
+		if (this.changed.actor) clientData.actor = this.actor ? this.actor.getClientDataFor(player): false;
+		if (this.changed.waterDepth) clientData.waterDepth = this.waterDepth;
+		return clientData;
 	}
 
 }

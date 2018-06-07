@@ -167,12 +167,15 @@ class Game{
 
 
 	emitMap(){
+		var tilesEmitted = [];
 		for (var i in this.players){
 			var player = this.players[i];
 			var mapInfo = this.map.getClientDataFor(player);
 			if (config.logTimeStamps) console.log(Date.now(), 'Emitting map to player ' + i);
 			player.socket.emit('map updated', JSON.stringify(mapInfo));
 		}
+		//Mark all tiles as not changed
+		this.map.setAllTilesAsUnchanged();
 	}
 
 	emitMapToSpectator(socket){

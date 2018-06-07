@@ -66,9 +66,9 @@ var config = {
 			players: ['black', 'white']
 		},
 		map: {
-			height: 40,
-			width: 40,
-			initialCellLength: 13, //In pixels
+			height: 30,
+			width: 30,
+			initialCellLength: 14, //In pixels
 			layers: ['terrain', 'elevation', 'water', 'actors',	'visibility', 'graphics'],
 			cellBorders: false
 		},
@@ -81,7 +81,7 @@ var config = {
 		setViewDimensionsToMapDimensions: false,
 		water: false,
 		allTilesVisible: false,
-		testActors: 20,
+		testActors: 10,
 		flatMap: true
 	},
 	logTimeStamps: false

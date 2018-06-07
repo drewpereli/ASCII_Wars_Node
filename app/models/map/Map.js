@@ -64,6 +64,14 @@ class Map extends Model{
 		return {visibleTiles: player.getVisibleTiles().map(t => t.getClientDataFor(player))};
 	}
 
+	setAllTilesAsUnchanged(){
+		this.forEachTile(t => {
+			for (var key in t.changed){
+				t.changed[key] = false;
+			}
+		});
+	}
+
 
 	setTileSiblings() {
 		for (var y = 0 ; y < this.height ; y++){
