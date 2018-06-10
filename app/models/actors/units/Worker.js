@@ -1,5 +1,5 @@
 var config = require('../../../config');
-var Unit = require('./Unit');
+var Unit = require('./Unit.abstract');
 var rand = require('random-seed').create();
 
 class Worker extends Unit{
