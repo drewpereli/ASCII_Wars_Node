@@ -20,8 +20,6 @@ class Player extends Model{
 		for (var i = 0 ; i < config.maxSquads ; i++){
 			this.squads.push(new Squad({squadNum: i}));
 		}
-		this.visibleTilesLastEmit = [];
-		//this.visibleTilesThisEmit = [];
 	}
 
 	getActors(){

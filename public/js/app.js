@@ -223,6 +223,9 @@ Socket = class Socket {
       tile = JSON.parse(tile);
       return app.game.updateTile(tile);
     }));
+    this.io.on('new building', ((building) => {
+      return app.view.addBuilding(building);
+    }));
     this.io.on('player added', (numPlayers) => {
       return app.view.addPlayer(numPlayers);
     });
@@ -723,6 +726,8 @@ View = class View {
     }
     return results;
   }
+
+  addBuilding(building) {}
 
   updateTile(tile) {
     var cell, cells, i, len, results;

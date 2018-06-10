@@ -138,6 +138,7 @@ class Game{
 
 	addActor(actor){
 		this.actors.push(actor);
+		this.emitToPlayer(actor.player, 'new building', actor.getClientDataFor(actor.player));
 	}
 
 	deleteActor(actor){
@@ -155,6 +156,11 @@ class Game{
 
 	emit(event, data=null){
 		this.io.emit(event, data);
+	}
+
+
+	emitToPlayer(player, event, data=null){
+		player.socket.emit(event, data);
 	}
 
 
@@ -180,7 +186,7 @@ class Game{
 				for (var key in t.changed){
 					t.changed[key] = false;
 				}
-			})
+			});
 		});
 	}
 

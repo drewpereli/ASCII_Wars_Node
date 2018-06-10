@@ -9,13 +9,14 @@ class Actor extends Model{
 		var defaultArgs = {
 			name: null,
 			readableName: null,
+			playerGivenName: args.readableName + ' at (' + args.tile.x + ', ' + args.tile.y + ')',
 			character: null,
 			tile: null,
 			player: null,
 			maxHealth: null,
 			moveTime: null,
 			sightRange: 3,
-			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type']
+			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type', 'name', 'playerGivenName']
 		};
 		Object.assign(defaultArgs, args);
 
@@ -36,6 +37,7 @@ class Actor extends Model{
 
 	takeDamage(damage){
 		this.health -= damage;
+		this.tile.changed.actor = true;
 		if (this.health <= 0) this.die();
 	}
 

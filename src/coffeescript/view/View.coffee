@@ -85,6 +85,12 @@ class View
 						cell.fill('#000')
 
 
+	addBuilding: (building) ->
+		row = $('<tr>')
+		row.appendChild('<td>' + building.playerGivenName + '</td>')
+		$(@components.buildingsTable).appendChild(row)
+
+
 	updateTile: (tile) -> 
 		cells = @getCellsFromTile(tile);
 		for cell in cells
@@ -206,6 +212,7 @@ View.prototype.initialize =
 				.data('character', building.character)
 				.html(building.readableName)
 				.appendTo("#construct-tab .buttons .logistics")
+		v.components.buildingsTable = $('#current-buildings')[0]
 		#Command Tab
 		#Add an dropdown menu for squads
 		for squadNum in [1..config.maxSquads]
