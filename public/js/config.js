@@ -31,6 +31,10 @@ var config = {
 						readableName: 'Wall',
 						character: 'W'
 					},
+					SupplyDepot: {
+						readableName: 'Supply Depot',
+						character: 's'
+					},
 					WaterPumpNorth: {
 						readableName: 'Water Pump -- North',
 						character: '\u21e1'
@@ -84,7 +88,7 @@ var config = {
 		setViewDimensionsToMapDimensions: false,
 		water: false,
 		allTilesVisible: false,
-		testActors: 10,
+		testActors: 1,
 		flatMap: true
 	},
 	logTimeStamps: false

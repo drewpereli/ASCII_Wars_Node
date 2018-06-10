@@ -211,16 +211,15 @@ class Game{
 	*
 	*/
 	playerReadyForNextTurn(player){
-		console.log(Date.now(), 'Player ready for next turn');
 		player.readyForNextTurn = true;
 		if (this.readyToTick()){
-			console.log(Date.now(), 'Ready to tick');
 			this.tick();
 		}
 	}
 
 
 	attemptBuildingConstruction(player, tile, buildingName){
+		console.log('Attemtping to build', buildingName);
 		var success = player.attemptBuildingConstruction(tile, buildingName);
 		if (success) this.emitTile(tile);
 	}

@@ -1,5 +1,5 @@
-var config = require('../../../config');
-var Actor = require('./Actor.abstract');
+var config = require('../../../../config');
+var Actor = require('../Actor.abstract');
 var rand = require('random-seed').create();
 
 class Unit extends Actor{

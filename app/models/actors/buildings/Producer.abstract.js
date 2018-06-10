@@ -1,9 +1,9 @@
 
-var Building = require('./building.abstract')
+var Building = require('./Building.abstract')
 var unitClasses = require('require-dir-all')(
 	'../units', {recursive: true}
 	);
-var shuffle  shuf = require('shuffle-array');
+var shuffle = require('shuffle-array');
 
 
 class Producer extends Building{
@@ -13,6 +13,7 @@ class Producer extends Building{
 		this.producedUnitName = args.producedUnitName;
 		this.producedUnitClass = unitClasses[args.producedUnitName];
 		this.productionTime = args.productionTime;
+		this.producedUnitSquad = 0;
 	}
 
 	act(){
@@ -23,7 +24,8 @@ class Producer extends Building{
 			return t.isOpen();
 		});
 		if (openTile){
-			var actor = new this.producedUnitClass({tile: tile, player: this.player});
+			var actor = new this.producedUnitClass({tile: openTile, player: this.player, squad: this.producedUnitSquad});
+			this.game.addActor(actor);
 			this.timeUntilNextAction = this.productionTime;
 		}
 		else{

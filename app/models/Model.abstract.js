@@ -14,7 +14,7 @@ class Model{
 		for (var i in fieldsToSendToClient){
 			var field = fieldsToSendToClient[i];
 			var val = this[field];
-			if (typeof val === 'object'){
+			if (typeof val === 'object' && !!val){
 				if ('getClientDataFor' in val)
 					returnObject[field] = val.getClientDataFor(player);
 				else
