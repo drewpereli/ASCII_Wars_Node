@@ -11,8 +11,14 @@ class Worker extends Unit{
 
 	act(){
 		var behaviorParams = this.getBehaviorParams();
-		if (behaviorParams.harvesting){
-			//Harvest
+		if (behaviorParams.behavior === 'harvesting'){
+			var resource = behaviorParams.resourceHarvested;
+			//If the worker isn't holding anything, find the nearest tile that has 'resource'
+			var target = this.findClosestExploredTileConditional(t => {
+				return t.canHarvestResourceFrom(resource);
+			});
+			if (target) this.moveTowards(target);
+			else return;
 		}
 		else{
 			this.moveRandomly();

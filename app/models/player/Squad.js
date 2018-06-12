@@ -7,17 +7,14 @@ class Squad extends Model{
 		this.number = args.squadNumber;
 		this.units = [];
 		this.behaviorParams = {
+			behavior: 'attacking',
 			movingTo: null,
 			moveTowardsPointWeight: 1,
 			moveTowardsSquadMatesWeight: 1,
 			alignment: false,
 			alignmentWeight: 2,
-			digging: false,
 			diggingDirection: 0,
-			harvesting: false,
-			harvestingNear: false,
-			harvestingWithinDistance: false,
-			dropOff: false
+			resourceHarvested: 'wood',
 		};
 	}
 

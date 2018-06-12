@@ -22,8 +22,11 @@ class Soldier extends Unit{
 		var behaviorParams = this.getBehaviorParams();
 		var behaviorChoice;
 		var enemy;
-		if (enemy = this.canSeeEnemy()) behaviorChoice = 'ATTACKING';
-		else if (behaviorParams.digging) behaviorChoice = Math.random() < .5 ? 'DIGGING' : 'MOVING'; 
+		if (behaviorParams.behavior === 'attacking')
+			if (enemy = this.canSeeEnemy()) behaviorChoice = 'ATTACKING';
+			else behaviorChoice = 'MOVING';
+		else if (behaviorParams.behavior === 'digging') behaviorChoice = Math.random() < .5 ? 'DIGGING' : 'MOVING'; 
+		else if (behaviorParams.behavior === 'harvesting') behaviorChoice = 'HARVESTING';
 		else if (behaviorParams.movingTo) behaviorChoice = 'MOVING';
 		if (behaviorChoice === 'DIGGING'){
 			this.dig(behaviorParams.diggingDirection);
@@ -35,6 +38,12 @@ class Soldier extends Unit{
 				this.moveRandomly();
 			else
 				this.moveTowardsSquadMovePoint();
+		}
+		else if (behaviorChoice === 'HARVESTING'){
+			//If a supply depot hasn't been selected, select the closest one
+			//But for now, do nothing
+			if (!behaviorParams.dropOff) return;
+			
 		}
 	}
 

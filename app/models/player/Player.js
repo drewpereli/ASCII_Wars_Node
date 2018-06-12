@@ -40,6 +40,9 @@ class Player extends Model{
 				if (!visibleTiles.includes(t)) visibleTiles.push(t);
 			})
 		});
+		visibleTiles.forEach(t => {
+			if (!t.seenBy.includes(this)) t.seenBy.push(this);
+		})
 		return visibleTiles;
 	}
 

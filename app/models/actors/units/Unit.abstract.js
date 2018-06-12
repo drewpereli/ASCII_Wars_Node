@@ -17,6 +17,7 @@ class Unit extends Actor{
 		super(args);
 		this.clientFacingFields.push('squad');
 		this.squad = args.squad;
+		this.holding = false;
 	}
 
 
@@ -43,8 +44,14 @@ class Unit extends Actor{
 		var behaviorParams = this.getBehaviorParams();
 		if (!behaviorParams.movingTo) return;
 		var target = this.tile.map.getTile(behaviorParams.movingTo.x, behaviorParams.movingTo.y);
+		this.moveTowards(target);
+	}
+
+
+	moveTowards(target){
 		if (this.tile.siblings.includes(target) && this.canOccupy(target))
 			return this.move(target);
+		var behaviorParams = this.getBehaviorParams();
 		var scores = [0,0,0,0,0,0,0,0];
 		//Get which sib is closest to tile
 		var tileInfos = [];

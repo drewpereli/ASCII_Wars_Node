@@ -318,7 +318,7 @@ class Map extends Model{
 		}
 		var setTerrain = () => {
 			this.forEachTile(t => {
-				if (!t.hasWater())
+				if (!t.hasWater() && Math.random() < .05)
 					t.setTerrain('forest');
 			});
 			return Promise.resolve();

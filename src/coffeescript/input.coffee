@@ -24,6 +24,8 @@ class Input
 			app.game.mouseLeaveCanvas()
 		)
 
+		
+
 		$('#digging-checkbox').change( => 
 			app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'))
 		)
@@ -36,6 +38,7 @@ class Input
 			app.game.changeSquadAlignment($('.alignment-selection:checked').val())
 		)
 
+		#I think this prevents right clicking from opening up a menu? I dunno, it's been a bit since I wrote it
 		$(app.view.components.map.clickableCanvas).contextmenu( => return false)
 
 		$("#next-btn").click( =>

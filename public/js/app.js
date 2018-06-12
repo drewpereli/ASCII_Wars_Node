@@ -320,6 +320,7 @@ Input = class Input {
     $('.alignment-selection').change(() => {
       return app.game.changeSquadAlignment($('.alignment-selection:checked').val());
     });
+    //I think this prevents right clicking from opening up a menu? I dunno, it's been a bit since I wrote it
     $(app.view.components.map.clickableCanvas).contextmenu(() => {
       return false;
     });

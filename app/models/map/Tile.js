@@ -12,6 +12,7 @@ class Tile extends Model{
 		this.y = y;
 
 		this.terrain = 'plains';
+		this.produces = []; //What resources can be harvested from this tile (based on terrain mostly?)
 		this.elevation = 50;
 		this.waterDepth = 0;
 		this.nextTurnsWaterDepth = false;
@@ -32,6 +33,8 @@ class Tile extends Model{
 		}
 
 		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor', 'waterDepth'];
+
+		this.seenBy = [];
 
 		//Debug
 		if (config.debug.debugMode){
@@ -141,7 +144,16 @@ class Tile extends Model{
 
 	setTerrain(terrain){
 		this.terrain = terrain;
+		switch (terrain){
+			case 'forest':
+				this.produces = ['wood', 'food'];
+		}
 		this.changed.terrain = true;
+	}
+
+
+	canHarvestResourceFrom(resource){
+		return this.produces.includes(resource);
 	}
 
 	setWaterDepth(depth){

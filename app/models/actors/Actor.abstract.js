@@ -2,6 +2,8 @@ var Model = require('../Model.abstract');
 var rand = require('random-seed').create();
 var config = require('../../../config');
 var shortId = require('shortid');
+var shuffle = require('shuffle-array');
+
 
 class Actor extends Model{
 
@@ -36,20 +38,17 @@ class Actor extends Model{
 		this.setVisibleTiles();
 	}
 
-
 	takeDamage(damage){
 		this.health -= damage;
 		this.tile.changed.actor = true;
 		if (this.health <= 0) this.die();
 	}
 
-
 	tick(){
 		this.timeUntilNextAction--;
 		if (this.timeUntilNextAction <= 0)
 			this.act();
 	}
-
 
 	act(){}
 
@@ -59,7 +58,6 @@ class Actor extends Model{
 		this.tile = false;
 		this.dead = true;
 	}
-
 
 	setVisibleTiles(){
 		this.visibleTiles = [];
@@ -80,7 +78,6 @@ class Actor extends Model{
 		}
 	}
 
-
 	getVisibleTiles(){ return this.visibleTiles; }
 
 	static canOccupy(tile){
@@ -99,6 +96,21 @@ class Actor extends Model{
 		else return false;
 	}
 
+	findClosestExploredTileConditional(conditionFunction, limit=false){
+		if (conditionFunction(this.tile)) return this.tile;
+		var tilesSearched = [this.tile];
+		var queue = [this.tile];
+		while (queue.length > 0 && (limit === false || tilesSearched.length < limit)){
+			var currentTile = queue.shift();
+			var shuffledUncheckedSibs = currentTile.siblings.filter(t => t.seenBy.includes(this.player) !tilesSearched.includes(t));
+			shuffle(shuffledUncheckedSibs);
+			for (let sib of shuffledUncheckedSibs){
+				if (conditionFunction(sib)) return sib;
+				queue.push(sib);
+				tilesSearched.push(sib);
+			}
+		}
+	}
 }
 
 
