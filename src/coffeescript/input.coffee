@@ -56,6 +56,19 @@ class Input
 			app.game.clickCreateBuildingButton(building, character)
 		)
 
+		$('#current-buildings').on('change', '.producer-squad-select', () -> 
+			buildingId = $(this).attr('id').split('-')[3];
+			#Get the values of the two select fields
+			vals = $(this).parent().find('select').map(() -> return $(this).val()).get()
+			app.game.updateProducedSquad(buildingId, vals[0], vals[1])
+		)
+
+		$('#current-buildings').on('change', '.producer-on-off', () -> 
+			buildingId = $(this).attr('id').split('-')[0];
+			producerOn = !!$(this).prop('checked')
+			app.game.updateProducerOnOff(buildingId, producerOn)
+		)
+
 
 
 

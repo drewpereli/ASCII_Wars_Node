@@ -19,29 +19,6 @@ class Unit extends Actor{
 		this.squad = args.squad;
 	}
 
-	act(){
-		var randomNum = rand.random();
-		if (randomNum < .00){
-			return;
-		}
-		var behaviorParams = this.getBehaviorParams();
-		var behaviorChoice;
-		var enemy;
-		if (enemy = this.canSeeEnemy()) behaviorChoice = 'ATTACKING';
-		else if (behaviorParams.digging) behaviorChoice = Math.random() < .5 ? 'DIGGING' : 'MOVING'; 
-		else if (behaviorParams.movingTo) behaviorChoice = 'MOVING';
-		if (behaviorChoice === 'DIGGING'){
-			this.dig(behaviorParams.diggingDirection);
-		}
-		else if (behaviorChoice === 'ATTACKING')
-			this.attack(enemy);
-		else if (behaviorChoice === 'MOVING'){
-			if (randomNum < .2)
-				this.moveRandomly();
-			else
-				this.moveTowardsSquadMovePoint();
-		}
-	}
 
 	move(tile){
 		this.tile.setActor(false);
@@ -161,10 +138,6 @@ class Unit extends Actor{
 		//Don't work harder than you have to
 		if (candidates.includes(this.tile)) return;
 		this.move(candidates[rand(candidates.length)]);
-	}
-
-	attack(enemy){
-		enemy.takeDamage(this.damage);
 	}
 
 

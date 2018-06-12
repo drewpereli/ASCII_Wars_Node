@@ -1,6 +1,7 @@
 var Model = require('../Model.abstract');
 var rand = require('random-seed').create();
 var config = require('../../../config');
+var shortId = require('shortid');
 
 class Actor extends Model{
 
@@ -16,13 +17,14 @@ class Actor extends Model{
 			maxHealth: null,
 			moveTime: null,
 			sightRange: 3,
-			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type', 'name', 'playerGivenName']
+			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type', 'name', 'playerGivenName', 'id']
 		};
 		Object.assign(defaultArgs, args);
 
 		super(defaultArgs);
 
 		Object.assign(this, args);
+		this.id = shortId.generate();
 		this.game = this.tile.map.game;
 		this.map = this.game.map;
 		this.tile.setActor(this);

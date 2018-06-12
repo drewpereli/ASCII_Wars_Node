@@ -13,10 +13,14 @@ class Producer extends Building{
 		this.producedUnitName = args.producedUnitName;
 		this.producedUnitClass = unitClasses[args.producedUnitName];
 		this.productionTime = args.productionTime;
-		this.producedUnitSquad = 0;
+		this.producedUnitSquadRange = [0, 0];
+		this.lastUnitSquad = 0;
+		this.producer = true;
+		this.clientFacingFields = this.clientFacingFields.concat(['productionTime', 'producing', 'producer']);
 	}
 
 	act(){
+		if (!this.acting) return;
 		//Find an open tile adjacent to this tile
 		var randomTiles = this.tile.siblings;
 		shuffle(randomTiles);
@@ -24,13 +28,20 @@ class Producer extends Building{
 			return t.isOpen();
 		});
 		if (openTile){
-			var actor = new this.producedUnitClass({tile: openTile, player: this.player, squad: this.producedUnitSquad});
+			var squad = this.lastUnitSquad + 1;
+			if (squad > this.producedUnitSquadRange[1]) squad = this.producedUnitSquadRange[0];
+			var actor = new this.producedUnitClass({tile: openTile, player: this.player, squad: squad});
+			this.lastUnitSquad = squad;
 			this.game.addActor(actor);
 			this.timeUntilNextAction = this.productionTime;
 		}
 		else{
 			return;
 		}
+	}
+
+	setProducedSquad(n1, n2){
+		this.producedUnitSquadRange = [Math.min(n1, n2), Math.max(n1, n2)];
 	}
 
 }

@@ -103,7 +103,25 @@ class Game
 				squad: selectedSquad,
 				alignment: alignment
 			}
-		) 
+		)
+
+	updateProducedSquad: (buildingId, val1, val2) ->
+		app.socket.emit(
+			'update produced squad',
+			{
+				buildingId: buildingId,
+				squadVals: [val1, val2]
+			}
+		)
+
+	updateProducerOnOff: (buildingId, producerOn) ->
+		app.socket.emit(
+			'update producer on off',
+			{
+				buildingId: buildingId,
+				producerOn: producerOn
+			}
+		)
 
 	controlClickTile: (tile) ->
 
@@ -138,6 +156,7 @@ class Game
 	updateTile: (tile) ->
 		app.map.updateTile(tile.x, tile.y, tile)
 		app.view.updateTile(tile)
+
 
 	end: () ->
 		

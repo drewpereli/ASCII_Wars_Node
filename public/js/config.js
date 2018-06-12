@@ -21,10 +21,15 @@ var config = {
 			},
 			buildings: {
 				producers: {
+					//Key name must be the same as file/class name
 					ResidentialArea: {
 						readableName: 'Residential Area',
 						character: 'R'
-					}
+					},
+					Barracks: {
+						readableName: 'Barracks',
+						character: 'B'
+					},
 				},
 				logistics: {
 					Wall: {
@@ -88,7 +93,7 @@ var config = {
 		setViewDimensionsToMapDimensions: false,
 		water: false,
 		allTilesVisible: false,
-		testActors: 1,
+		testActors: 0,
 		flatMap: true
 	},
 	logTimeStamps: false

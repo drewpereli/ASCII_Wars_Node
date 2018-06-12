@@ -125,6 +125,24 @@ function initializePlayerSocketRoutes(socket){
 	});
 
 
+	socket.on('update produced squad', (params) => {
+		var p = authenticatePlayer(socket);
+		if (!p) return;
+		var actor = game.getActorById(params.buildingId);
+		if (actor && actor.producer) actor.setProducedSquad(params.squadVals[0], params.squadVals[1]); 
+	})
+
+
+	socket.on('update producer on off', (params) => {
+		var p = authenticatePlayer(socket);
+		if (!p) return;
+		var actor = game.getActorById(params.buildingId);
+		if (actor && actor.producer) {
+			actor.setOnOff(params.producerOn); 
+		}
+	})
+
+
 	
 
 

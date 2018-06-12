@@ -17,3 +17,6 @@ ul.menu > li {
   padding: .5em; }
   ul.menu > li.selected {
     background-color: pink; }
+
+#current-buildings td {
+  border: 1px solid black; }

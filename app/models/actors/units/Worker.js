@@ -1,11 +1,10 @@
-var config = require('../../../../config');
+
 var Unit = require('./Unit.abstract');
-var rand = require('random-seed').create();
 
 class Worker extends Unit{
 	constructor(args){
 		args.character = 'w';
-		args.type = 'worker';
+		args.name = 'worker';
 		super(args);
 	}
 

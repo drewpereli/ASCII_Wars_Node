@@ -129,6 +129,20 @@ Game = class Game {
     });
   }
 
+  updateProducedSquad(buildingId, val1, val2) {
+    return app.socket.emit('update produced squad', {
+      buildingId: buildingId,
+      squadVals: [val1, val2]
+    });
+  }
+
+  updateProducerOnOff(buildingId, producerOn) {
+    return app.socket.emit('update producer on off', {
+      buildingId: buildingId,
+      producerOn: producerOn
+    });
+  }
+
   controlClickTile(tile) {}
 
   next() {
@@ -323,6 +337,20 @@ Input = class Input {
       building = $(e.target).data('building');
       character = $(e.target).data('character');
       return app.game.clickCreateBuildingButton(building, character);
+    });
+    $('#current-buildings').on('change', '.producer-squad-select', function() {
+      var buildingId, vals;
+      buildingId = $(this).attr('id').split('-')[3];
+      vals = $(this).parent().find('select').map(function() {
+        return $(this).val();
+      }).get();
+      return app.game.updateProducedSquad(buildingId, vals[0], vals[1]);
+    });
+    $('#current-buildings').on('change', '.producer-on-off', function() {
+      var buildingId, producerOn;
+      buildingId = $(this).attr('id').split('-')[0];
+      producerOn = !!$(this).prop('checked');
+      return app.game.updateProducerOnOff(buildingId, producerOn);
     });
   }
 
@@ -727,7 +755,28 @@ View = class View {
     return results;
   }
 
-  addBuilding(building) {}
+  addBuilding(building) {
+    var controlCell, i, ref, row, squadNum, squadSelectLower, squadSelectUpper;
+    row = $('<tr>').attr('id', 'building-row-' + building.id).append('<td>' + building.playerGivenName + '</td>');
+    if (building.producer) {
+      controlCell = $('<td>');
+      controlCell.append('<h4>Producing: </h4>');
+      $('<input>').attr('type', 'checkbox').attr('id', building.id + '-on').prop('checked', true).addClass('producer-on-off').appendTo(controlCell);
+      controlCell.append('<h4>Squad</h4>');
+      controlCell.append('<label>From: </label>');
+      squadSelectLower = $('<select>').addClass('producer-squad-select');
+      squadSelectLower.attr('id', 'squad-select-lower-' + building.id).appendTo(controlCell);
+      controlCell.append('<label>To: </label>');
+      squadSelectUpper = $('<select>').addClass('producer-squad-select');
+      squadSelectUpper.attr('id', 'squad-select-upper-' + building.id).appendTo(controlCell);
+      for (squadNum = i = 1, ref = config.maxSquads; (1 <= ref ? i <= ref : i >= ref); squadNum = 1 <= ref ? ++i : --i) {
+        $("<option>").attr('value', squadNum - 1).html(squadNum).appendTo(squadSelectLower);
+        $("<option>").attr('value', squadNum - 1).html(squadNum).appendTo(squadSelectUpper);
+      }
+      controlCell.appendTo(row);
+    }
+    return $(this.components.buildingsTable).append(row);
+  }
 
   updateTile(tile) {
     var cell, cells, i, len, results;
@@ -891,6 +940,7 @@ View.prototype.initialize = {
       building = ref1[buildingName];
       $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).data('character', building.character).html(building.readableName).appendTo("#construct-tab .buttons .logistics");
     }
+    v.components.buildingsTable = $('#current-buildings')[0];
 //Command Tab
 //Add an dropdown menu for squads
     results = [];

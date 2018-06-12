@@ -87,8 +87,35 @@ class View
 
 	addBuilding: (building) ->
 		row = $('<tr>')
-		row.appendChild('<td>' + building.playerGivenName + '</td>')
-		$(@components.buildingsTable).appendChild(row)
+			.attr('id', 'building-row-' + building.id)
+			.append('<td>' + building.playerGivenName + '</td>')
+		if building.producer
+			controlCell = $('<td>')
+			controlCell.append('<h4>Producing: </h4>')
+			$('<input>')
+				.attr('type', 'checkbox')
+				.attr('id', building.id + '-on')
+				.prop('checked', true)
+				.addClass('producer-on-off')
+				.appendTo(controlCell)
+			controlCell.append('<h4>Squad</h4>')
+			controlCell.append('<label>From: </label>')
+			squadSelectLower = $('<select>').addClass('producer-squad-select')
+			squadSelectLower.attr('id', 'squad-select-lower-' + building.id).appendTo(controlCell)
+			controlCell.append('<label>To: </label>')
+			squadSelectUpper = $('<select>').addClass('producer-squad-select')
+			squadSelectUpper.attr('id', 'squad-select-upper-' + building.id).appendTo(controlCell)
+			for squadNum in [1..config.maxSquads]
+				$("<option>")
+					.attr('value', squadNum - 1)
+					.html(squadNum)
+					.appendTo(squadSelectLower)
+				$("<option>")
+					.attr('value', squadNum - 1)
+					.html(squadNum)
+					.appendTo(squadSelectUpper)
+			controlCell.appendTo(row)
+		$(@components.buildingsTable).append(row)
 
 
 	updateTile: (tile) -> 

@@ -138,11 +138,19 @@ class Game{
 
 	addActor(actor){
 		this.actors.push(actor);
-		this.emitToPlayer(actor.player, 'new building', actor.getClientDataFor(actor.player));
+		if (actor.type === 'building' && actor.name !== 'wall')
+			this.emitToPlayer(actor.player, 'new building', actor.getClientDataFor(actor.player));
 	}
 
 	deleteActor(actor){
 		this.actors.splice(this.actors.indexOf(actor), 1);
+	}
+
+
+	getActorById(actorId){
+		var actor = this.actors.find(a => a.id === actorId);
+		if (actor) return actor;
+		else return false;
 	}
 
 

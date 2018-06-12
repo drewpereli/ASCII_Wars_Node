@@ -19,6 +19,7 @@
     "pug": "^2.0.0-rc.2",
     "random-seed": "^0.3.0",
     "require-dir-all": "^0.4.12",
+    "shortid": "^2.2.8",
     "shuffle-array": "^1.0.1",
     "simple-array-diff": "^1.1.0",
     "socket.io": "^2.1.1"
