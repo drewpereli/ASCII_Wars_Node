@@ -150,7 +150,10 @@ class Game{
 	getActorById(actorId){
 		var actor = this.actors.find(a => a.id === actorId);
 		if (actor) return actor;
-		else return false;
+		else { 
+			console.log('Could not find actor with id ', actorId);
+			return false;
+		}
 	}
 
 

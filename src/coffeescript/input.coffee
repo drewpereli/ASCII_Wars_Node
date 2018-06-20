@@ -26,16 +26,12 @@ class Input
 
 		
 
-		$('#digging-checkbox').change( => 
-			app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'))
-		)
-
 		$('#digging-direction-select').change( => 
-			app.game.changeDiggingDirection($('#digging-direction-select').val())
+			app.game.updateSquadParams(@getSelectedSquad(), 'diggingDirection', $('#digging-direction-select').val())
 		)
 
 		$('.alignment-selection').change( =>
-			app.game.changeSquadAlignment($('.alignment-selection:checked').val())
+			app.game.updateSquadParams(@getSelectedSquad(), 'alignment', $('.alignment-selection:checked').val())
 		)
 
 		#I think this prevents right clicking from opening up a menu? I dunno, it's been a bit since I wrote it
@@ -72,6 +68,18 @@ class Input
 			app.game.updateProducerOnOff(buildingId, producerOn)
 		)
 
+		$('#set-resource-pickup').click((e) => 
+			app.game.changeState('setting resource pickup')
+		)
+
+		$('#set-resource-dropoff').click((e) => 
+			app.game.changeState('setting resource dropoff')
+		)
+
+
+
+	getSelectedSquad: ->
+		return $('#squad-select').val()
 
 
 

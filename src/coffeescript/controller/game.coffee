@@ -8,6 +8,11 @@ class Game
 		@currentlyConstructingChar = false
 		@selectedTile = null
 		@hoveredTile = null
+		@squads = []
+		for squadNum in [1..config.maxSquads]
+			squadParams = {}
+			Object.assign(squadParams, config.model.squads.defaultBehaviorParams)
+			@squads.push(squadParams)
 
 
 	changeState: (state) ->
@@ -46,17 +51,17 @@ class Game
 			app.socket.emit('create wall', tile)
 		else if @state is 'creating water pump'
 			app.socket.emit('create water pump', tile)
+		else if @state is 'setting resource pickup'
+			app.socket.emit('set resource pickup', {squad: @getSelectedSquad, tile: tile})
+		else if @state is 'setting resource dropoff'
+			app.socket.emit('set resource dropoff', {squad: @getSelectedSquad, tile: tile})
+
+
 
 	rightClickTile: (tile) ->
 		console.log('right clicking tile ' + JSON.stringify(tile))
-		selectedSquad = $('#squad-select').val()
-		app.socket.emit(
-			'update behavior params', 
-			{
-				squad: selectedSquad,
-				movingTo: {x: tile.x, y: tile.y}
-			}
-		)
+		selectedSquad = @getSelectedSquad()
+		@updateSquadParams(selectedSquad, 'movingTo', {x: tile.x, y: tile.y})
 
 	hoverTile: (tile) ->
 		if !tile
@@ -73,37 +78,15 @@ class Game
 		app.view.eraseGhostConstruction(@hoveredTile)
 		@hoveredTile = null
 
-	clickDiggingCheckbox: (checked) ->
-		selectedSquad = $('#squad-select').val()
-		app.socket.emit(
-			'update behavior params', 
-			{
-				squad: selectedSquad,
-				digging: checked
-			}
-		)
+	updateSquadParams: (squad, name, value)->
+		newParams = {squad: squad}
+		newParams[name] = value
+		console.log 'updating squad params: ' + JSON.stringify(newParams)
+		app.socket.emit('update behavior params', newParams)
+		Object.assign(@squads[squad], newParams)
 
-	changeDiggingDirection: (dir) ->
-		selectedSquad = $('#squad-select').val()
-		app.socket.emit(
-			'update behavior params', 
-			{
-				squad: selectedSquad,
-				diggingDirection: dir
-			}
-		)
 
-	changeSquadAlignment: (alignment) ->
-		if alignment is'none'
-			alignment = false
-		selectedSquad = $('#squad-select').val()
-		app.socket.emit(
-			'update behavior params', 
-			{
-				squad: selectedSquad,
-				alignment: alignment
-			}
-		)
+
 
 	updateProducedSquad: (buildingId, val1, val2) ->
 		app.socket.emit(
@@ -138,6 +121,9 @@ class Game
 		@changeState('constructing')
 		@currentlyConstructing = building
 		@currentlyConstructingChar = character
+
+	getSelectedSquad: ->
+		return $('#squad-select').val()
 
 
 	################

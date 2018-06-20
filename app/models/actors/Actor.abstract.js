@@ -102,7 +102,7 @@ class Actor extends Model{
 		var queue = [this.tile];
 		while (queue.length > 0 && (limit === false || tilesSearched.length < limit)){
 			var currentTile = queue.shift();
-			var shuffledUncheckedSibs = currentTile.siblings.filter(t => t.seenBy.includes(this.player) !tilesSearched.includes(t));
+			var shuffledUncheckedSibs = currentTile.siblings.filter(t => t.seenBy.includes(this.player) && !tilesSearched.includes(t));
 			shuffle(shuffledUncheckedSibs);
 			for (let sib of shuffledUncheckedSibs){
 				if (conditionFunction(sib)) return sib;

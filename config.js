@@ -58,6 +58,20 @@ var config = {
 					},
 				}
 			}
+		},
+		squads: {
+			defaultBehavior: {
+				behavior: 'attacking',
+				movingTo: null,
+				moveTowardsPointWeight: 1,
+				moveTowardsSquadMatesWeight: 1,
+				alignment: false,
+				alignmentWeight: 10,
+				diggingDirection: 0,
+				resourceHarvested: 'wood',
+				resourcePickup: null,
+				resourceDropoff: null
+			}
 		}
 	},
 	view: {

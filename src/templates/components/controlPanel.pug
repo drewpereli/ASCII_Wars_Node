@@ -32,15 +32,15 @@
 					label(for="#behavior") Behavior
 					div#behavior
 						label(for="#behavior-attacking") Attacking
-						input#behavior-attacking(type="radio" value="attacking")
+						input#behavior-attacking(type="radio" value="attacking" name="behavior")
 						label(for="#behavior-moving") Moving
-						input#behavior-moving(type="radio" value="moving")
+						input#behavior-moving(type="radio" value="moving" name="behavior")
 						label(for="#behavior-digging") Digging
-						input#behavior-digging(type="radio" value="digging")
+						input#behavior-digging(type="radio" value="digging" name="behavior")
 						label(for="#behavior-harvesting") Harvesting
-						input#behavior-harvesting(type="radio" value="harvesting")
+						input#behavior-harvesting(type="radio" value="harvesting" name="behavior")
 						label(for="#behavior-fortifying") Fortifying
-						input#behavior-fortifying(type="radio" value="fortifying")
+						input#behavior-fortifying(type="radio" value="fortifying" name="behavior")
 					label(for="#digging-direction-select") Direction
 					select#digging-direction-select
 						option(value=0) N
@@ -60,6 +60,12 @@
 					br
 					label(for="alignment-EW") E-W
 					input.alignment-selection#alignment-none(type="radio", name="alignment", value="E-W")
+					select#resource-picked-up
+						option(value='wood') Wood
+						option(value='metal') Metal
+					button#set-resource-pickup(value="Set Resource Pickup")
+					button#set-resource-dropoff(value="Set Resource Dropoff")
+
 
 
 

@@ -12,12 +12,19 @@ var Game;
 
 Game = class Game {
   constructor() {
+    var i, ref, squadNum, squadParams;
     this.state;
     this.timeState = 'paused';
     this.currentlyConstructing = false;
     this.currentlyConstructingChar = false;
     this.selectedTile = null;
     this.hoveredTile = null;
+    this.squads = [];
+    for (squadNum = i = 1, ref = config.maxSquads; (1 <= ref ? i <= ref : i >= ref); squadNum = 1 <= ref ? ++i : --i) {
+      squadParams = {};
+      Object.assign(squadParams, config.model.squads.defaultBehaviorParams);
+      this.squads.push(squadParams);
+    }
   }
 
   changeState(state) {
@@ -62,19 +69,26 @@ Game = class Game {
       return app.socket.emit('create wall', tile);
     } else if (this.state === 'creating water pump') {
       return app.socket.emit('create water pump', tile);
+    } else if (this.state === 'setting resource pickup') {
+      return app.socket.emit('set resource pickup', {
+        squad: this.getSelectedSquad,
+        tile: tile
+      });
+    } else if (this.state === 'setting resource dropoff') {
+      return app.socket.emit('set resource dropoff', {
+        squad: this.getSelectedSquad,
+        tile: tile
+      });
     }
   }
 
   rightClickTile(tile) {
     var selectedSquad;
     console.log('right clicking tile ' + JSON.stringify(tile));
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      movingTo: {
-        x: tile.x,
-        y: tile.y
-      }
+    selectedSquad = this.getSelectedSquad();
+    return this.updateSquadParams(selectedSquad, 'movingTo', {
+      x: tile.x,
+      y: tile.y
     });
   }
 
@@ -99,34 +113,15 @@ Game = class Game {
     return this.hoveredTile = null;
   }
 
-  clickDiggingCheckbox(checked) {
-    var selectedSquad;
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      digging: checked
-    });
-  }
-
-  changeDiggingDirection(dir) {
-    var selectedSquad;
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      diggingDirection: dir
-    });
-  }
-
-  changeSquadAlignment(alignment) {
-    var selectedSquad;
-    if (alignment === 'none') {
-      alignment = false;
-    }
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      alignment: alignment
-    });
+  updateSquadParams(squad, name, value) {
+    var newParams;
+    newParams = {
+      squad: squad
+    };
+    newParams[name] = value;
+    console.log('updating squad params: ' + JSON.stringify(newParams));
+    app.socket.emit('update behavior params', newParams);
+    return Object.assign(this.squads[squad], newParams);
   }
 
   updateProducedSquad(buildingId, val1, val2) {
@@ -161,6 +156,10 @@ Game = class Game {
     this.changeState('constructing');
     this.currentlyConstructing = building;
     return this.currentlyConstructingChar = character;
+  }
+
+  getSelectedSquad() {
+    return $('#squad-select').val();
   }
 
   //###############
@@ -311,14 +310,11 @@ Input = class Input {
     $(app.view.components.map.clickableCanvas).mouseleave((e) => {
       return app.game.mouseLeaveCanvas();
     });
-    $('#digging-checkbox').change(() => {
-      return app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'));
-    });
     $('#digging-direction-select').change(() => {
-      return app.game.changeDiggingDirection($('#digging-direction-select').val());
+      return app.game.updateSquadParams(this.getSelectedSquad(), 'diggingDirection', $('#digging-direction-select').val());
     });
     $('.alignment-selection').change(() => {
-      return app.game.changeSquadAlignment($('.alignment-selection:checked').val());
+      return app.game.updateSquadParams(this.getSelectedSquad(), 'alignment', $('.alignment-selection:checked').val());
     });
     //I think this prevents right clicking from opening up a menu? I dunno, it's been a bit since I wrote it
     $(app.view.components.map.clickableCanvas).contextmenu(() => {
@@ -353,6 +349,16 @@ Input = class Input {
       producerOn = !!$(this).prop('checked');
       return app.game.updateProducerOnOff(buildingId, producerOn);
     });
+    $('#set-resource-pickup').click((e) => {
+      return app.game.changeState('setting resource pickup');
+    });
+    $('#set-resource-dropoff').click((e) => {
+      return app.game.changeState('setting resource dropoff');
+    });
+  }
+
+  getSelectedSquad() {
+    return $('#squad-select').val();
   }
 
   getTileFromEvent(event) {
