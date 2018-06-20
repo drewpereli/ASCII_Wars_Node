@@ -79,12 +79,8 @@ var config = {
 			black: '#000',
 			cellBorder: 'gray',
 			selectedTileBorder: 'gold',
-			terrain: {
-				water: '#007',
-				forest: '#7d0',
-				desert: '#0aa',
-				plains: '#055',
-				mountain: '#777'
+			resources: {
+				wood: 'brown'
 			},
 			players: ['black', 'white']
 		},
@@ -94,8 +90,8 @@ var config = {
 			initialCellLength: 14, //In pixels
 			layers: ['elevation', 'terrain', 'water', 'actors',	'visibility', 'graphics'],
 			cellBorders: false,
-			terrainCharacters: {
-				forest: 'f'
+			resourceCharacters: {
+				wood: 'w'
 			}
 		},
 		messageFadeDelay: 3

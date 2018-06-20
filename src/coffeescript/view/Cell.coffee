@@ -48,8 +48,17 @@ class Cell
 		yOffset = 0
 		switch @getLayerName()
 			when 'terrain'
-				charColor = config.view.colors.terrain[tile.terrain]
-				char = config.view.map.terrainCharacters[tile.terrain]
+				#Get max resource
+				maxVal = -Infinity
+				resource = false
+				for currentResource, val of tile.resources
+					if val > maxVal
+						maxVal = val
+						resource = currentResource
+				if resource
+					charColor = config.view.colors.resources[resource]
+					char = config.view.map.resourceCharacters[resource]
+
 			when 'elevation'
 				fillColor = app.view.getColorFromElevation(tile.elevation)
 			when 'actors'

@@ -70,14 +70,14 @@ Game = class Game {
     } else if (this.state === 'creating water pump') {
       return app.socket.emit('create water pump', tile);
     } else if (this.state === 'setting resource pickup') {
-      return app.socket.emit('set resource pickup', {
-        squad: this.getSelectedSquad,
-        tile: tile
+      return this.updateSquadParams(this.getSelectedSquad(), 'resourcePickup', {
+        x: tile.x,
+        y: tile.y
       });
     } else if (this.state === 'setting resource dropoff') {
-      return app.socket.emit('set resource dropoff', {
-        squad: this.getSelectedSquad,
-        tile: tile
+      return this.updateSquadParams(this.getSelectedSquad(), 'resourceDropoff', {
+        x: tile.x,
+        y: tile.y
       });
     }
   }
@@ -309,6 +309,9 @@ Input = class Input {
     });
     $(app.view.components.map.clickableCanvas).mouseleave((e) => {
       return app.game.mouseLeaveCanvas();
+    });
+    $('#behavior > input[name="behavior"]').change(() => {
+      return app.game.updateSquadParams(this.getSelectedSquad(), 'behavior', $('#behavior > input:checked').val());
     });
     $('#digging-direction-select').change(() => {
       return app.game.updateSquadParams(this.getSelectedSquad(), 'diggingDirection', $('#digging-direction-select').val());
@@ -552,7 +555,7 @@ Cell = class Cell {
   }
 
   drawTile(tile) {
-    var a, borderColor, char, charColor, fillColor, xOffset, yOffset;
+    var a, borderColor, char, charColor, currentResource, fillColor, maxVal, ref, resource, val, xOffset, yOffset;
     fillColor = false;
     charColor = false;
     borderColor = false;
@@ -561,8 +564,21 @@ Cell = class Cell {
     yOffset = 0;
     switch (this.getLayerName()) {
       case 'terrain':
-        charColor = config.view.colors.terrain[tile.terrain];
-        char = config.view.map.terrainCharacters[tile.terrain];
+        //Get max resource
+        maxVal = -2e308;
+        resource = false;
+        ref = tile.resources;
+        for (currentResource in ref) {
+          val = ref[currentResource];
+          if (val > maxVal) {
+            maxVal = val;
+            resource = currentResource;
+          }
+        }
+        if (resource) {
+          charColor = config.view.colors.resources[resource];
+          char = config.view.map.resourceCharacters[resource];
+        }
         break;
       case 'elevation':
         fillColor = app.view.getColorFromElevation(tile.elevation);

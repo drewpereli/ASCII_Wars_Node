@@ -318,8 +318,8 @@ class Map extends Model{
 		}
 		var setTerrain = () => {
 			this.forEachTile(t => {
-				if (!t.hasWater() && Math.random() < .05)
-					t.setTerrain('forest');
+				if (!t.hasWater() && Math.random() < .01)
+					t.setResources({'wood': 200});
 			});
 			return Promise.resolve();
 		}

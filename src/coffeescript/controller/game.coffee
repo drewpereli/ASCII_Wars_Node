@@ -52,10 +52,9 @@ class Game
 		else if @state is 'creating water pump'
 			app.socket.emit('create water pump', tile)
 		else if @state is 'setting resource pickup'
-			app.socket.emit('set resource pickup', {squad: @getSelectedSquad, tile: tile})
+			@updateSquadParams(@getSelectedSquad(), 'resourcePickup', {x: tile.x, y: tile.y})
 		else if @state is 'setting resource dropoff'
-			app.socket.emit('set resource dropoff', {squad: @getSelectedSquad, tile: tile})
-
+			@updateSquadParams(@getSelectedSquad(), 'resourceDropoff', {x: tile.x, y: tile.y})
 
 
 	rightClickTile: (tile) ->

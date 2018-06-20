@@ -32,7 +32,7 @@
 					label(for="#behavior") Behavior
 					div#behavior
 						label(for="#behavior-attacking") Attacking
-						input#behavior-attacking(type="radio" value="attacking" name="behavior")
+						input#behavior-attacking(type="radio" value="attacking" name="behavior" checked='checked')
 						label(for="#behavior-moving") Moving
 						input#behavior-moving(type="radio" value="moving" name="behavior")
 						label(for="#behavior-digging") Digging
@@ -63,8 +63,8 @@
 					select#resource-picked-up
 						option(value='wood') Wood
 						option(value='metal') Metal
-					button#set-resource-pickup(value="Set Resource Pickup")
-					button#set-resource-dropoff(value="Set Resource Dropoff")
+					button#set-resource-pickup(value="Set Resource Pickup") Set Resource Pickup
+					button#set-resource-dropoff(value="Set Resource Dropoff") Set Resource Dropoff
 
 
 

@@ -57,8 +57,7 @@ class Player extends Model{
 		//Construct building!
 		console.log('Constructing new ' + buildingName);
 		var building = new buildingClass({player: this, tile: tile});
-		this.game.addActor(building);
-		return true;
+		return this.game.addActor(building);
 	}
 
 

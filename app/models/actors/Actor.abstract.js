@@ -2,6 +2,7 @@ var Model = require('../Model.abstract');
 var rand = require('random-seed').create();
 var config = require('../../../config');
 var shortId = require('shortid');
+shortId.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_=');
 var shuffle = require('shuffle-array');
 
 
@@ -19,6 +20,7 @@ class Actor extends Model{
 			maxHealth: null,
 			moveTime: null,
 			sightRange: 3,
+			holding: false,
 			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type', 'name', 'playerGivenName', 'id']
 		};
 		Object.assign(defaultArgs, args);
@@ -49,8 +51,6 @@ class Actor extends Model{
 		if (this.timeUntilNextAction <= 0)
 			this.act();
 	}
-
-	act(){}
 
 
 	die(){
@@ -96,10 +96,13 @@ class Actor extends Model{
 		else return false;
 	}
 
-	findClosestExploredTileConditional(conditionFunction, limit=false){
-		if (conditionFunction(this.tile)) return this.tile;
-		var tilesSearched = [this.tile];
-		var queue = [this.tile];
+	findClosestExploredTileConditional(conditionFunction, searchStart = false, limit=false){
+		if (!searchStart) searchStart = this.tile;
+		//If the search start isn't a pointer to an object in the map, make it one if we can
+		if (!('siblings' in searchStart)) searchStart = this.game.map.getTile(searchStart.x, searchStart.y);
+		if (conditionFunction(searchStart)) return searchStart;
+		var tilesSearched = [searchStart];
+		var queue = [searchStart];
 		while (queue.length > 0 && (limit === false || tilesSearched.length < limit)){
 			var currentTile = queue.shift();
 			var shuffledUncheckedSibs = currentTile.siblings.filter(t => t.seenBy.includes(this.player) && !tilesSearched.includes(t));
@@ -110,6 +113,12 @@ class Actor extends Model{
 				tilesSearched.push(sib);
 			}
 		}
+	}
+
+	isNextToOrOn(tile){
+		if (this.tile === tile) return true;
+		if (this.tile.siblings.includes(tile)) return true;
+		return false;
 	}
 }
 

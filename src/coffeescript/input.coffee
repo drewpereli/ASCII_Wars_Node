@@ -24,6 +24,10 @@ class Input
 			app.game.mouseLeaveCanvas()
 		)
 
+
+		$('#behavior > input[name="behavior"]').change( => 
+			app.game.updateSquadParams(@getSelectedSquad(), 'behavior', $('#behavior > input:checked').val())
+		)
 		
 
 		$('#digging-direction-select').change( => 

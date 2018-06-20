@@ -20,6 +20,74 @@ class Unit extends Actor{
 		this.holding = false;
 	}
 
+	act(){
+		var behaviorParams = this.getBehaviorParams();
+		var behavior = behaviorParams.behavior;
+		if (behavior === 'attacking'){
+			var enemy;
+			if (enemy = this.canSeeEnemy()) this.attack(enemy);
+			if (Math.random() < .2)
+				this.moveRandomly();
+			else
+				this.moveTowardsSquadMovePoint();
+		}
+		else if (behavior === 'digging') {
+			if (Math.random() < .5) this.moveRandomly();
+			else this.dig(behaviorParams.diggingDirection);
+		}
+		else if (behavior === 'moving'){
+			if (Math.random() < .2)
+				this.moveRandomly();
+			else
+				this.moveTowardsSquadMovePoint();
+		}
+		else if (behavior === 'harvesting'){
+			var resource = behaviorParams.resourceHarvested;
+			//If the worker isn't holding anything, find tile that has 'resource'
+			if (!this.holding) {
+				//If there is a pickup location, find closest tile with 'resource' that location
+				//Else, find the tile closest to this.tile with 'resource'
+				var pickupTarget = behaviorParams.resourcePickup ? behaviorParams.resourcePickup : this.tile;
+				var pickupActual = this.findClosestExploredTileConditional(t => {
+					return t.canProduce(resource);
+				}, pickupTarget);
+				if (pickupActual){
+					if (this.isNextToOrOn(pickupActual)) this.harvest(resource, pickupActual);
+					else this.moveTowards(pickupActual);
+				}
+				else
+					console.log('Could not find tile to pick up resource at');
+			}
+			//Else if we are holding a resource
+			else{
+				//If there is a dropoff location, dropoff there
+				//Else, find the nearest building with storage space > 0
+				var dropoffActual = behaviorParams.resourceDropoff ? 
+										behaviorParams.resourceDropoff : 
+										this.findClosestExploredTileConditional(t => {
+											return t.actor && t.actor.type === 'building' && t.actor.getRemainingStorage() > 0;
+										});
+				if (dropoffActual) {
+					//If the dropoff target is a sibling, drop it off!
+					if (this.isNextToOrOn(dropoffActual)) {
+						var dropoffBuilding = dropoffActual.actor;
+						if (dropoffBuilding.getRemainingStorage() <= 0) return
+						else this.dropOff(dropoffActual.actor);
+					}
+					else this.moveTowards(dropoffActual);
+				}
+				else console.log('Could not find tile to drop off resource at');
+			}
+		}
+		else{
+			this.moveRandomly();
+		}
+	}
+
+	attack(enemy){
+		enemy.takeDamage(this.damage);
+	}
+
 
 	move(tile){
 		this.tile.setActor(false);
@@ -158,6 +226,27 @@ class Unit extends Actor{
 		this.timeUntilNextAction = elDiff <= 1 ? 1 : Math.round(elDiff);
 		this.tile.decrementElevation();
 		this.tile.siblings[dir].incrementElevation();
+	}
+
+
+	harvest(resource, tile){
+		if (tile.produceResource(resource)){
+			this.holding = resource;
+		}
+		else{
+			console.log('Tile did not produce resource ' + resource + '. Tile: ' + tile);
+			return;
+		}
+	}
+
+
+	dropOff(building){
+		if (building.addStorage(this.holding)){
+			this.holding = false;
+		}
+		else{
+			console.log('Building would not accept resource ' + this.holding + '. Building: ' + building);
+		}
 	}
 
 	getBehaviorParams(){

@@ -136,12 +136,16 @@ function initializePlayerSocketRoutes(socket){
 	socket.on('update producer on off', (params) => {
 		var p = authenticatePlayer(socket);
 		if (!p) return;
+		console.log('Attempting to toggle building ', params.buildingId);
+		console.log('On: ', params.producerOn);
 		var actor = game.getActorById(params.buildingId);
 		if (actor && actor.producer) {
+			console.log('Found building');
 			actor.setOnOff(params.producerOn); 
 		}
 	})
 
+	
 
 	
 

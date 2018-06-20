@@ -12,7 +12,7 @@ class Tile extends Model{
 		this.y = y;
 
 		this.terrain = 'plains';
-		this.produces = []; //What resources can be harvested from this tile (based on terrain mostly?)
+		this.resources = {}; //What resources can be harvested from this tile (based on terrain mostly?)
 		this.elevation = 50;
 		this.waterDepth = 0;
 		this.nextTurnsWaterDepth = false;
@@ -26,13 +26,13 @@ class Tile extends Model{
 		//this.visibilityChangedFor = this.game.players.map(() => true);
 		//this.visibleTo = this.game.players.map(() => false);
 		this.changed = {
-			'terrain': true,
+			'resources': true,
 			'elevation': true,
 			'actor': true,
 			'waterDepth': true
 		}
 
-		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor', 'waterDepth'];
+		this.clientFacingFields = ['x', 'y', 'terrain', 'elevation', 'actor', 'waterDepth', 'resources'];
 
 		this.seenBy = [];
 
@@ -121,8 +121,34 @@ class Tile extends Model{
 	}
 
 
+	produceResource(resource){
+		if (this.isStoring(resource)) {
+			return this.actor.removeStorage(resource);
+		}
+		else if (this.producesNaturally(resource))
+			return this.removeNaturalResource(resource);
+		return false
+	}
 
+	removeNaturalResource(resource){
 
+		this.resources[resource]--;
+		return true;
+	}
+
+	canProduce(resource){
+		return this.isStoring(resource) || this.producesNaturally(resource);
+		return this.producesNaturally(resource);
+	}
+
+	isStoring(resource){
+		if (this.actor && this.actor.type === 'building' && this.actor.isStoring(resource)) return true;
+	}
+
+	producesNaturally(resource){
+		if (this.getResourceValue(resource) > 0) return true;
+		else return false;	
+	}
 
 
 	setSiblings(){
@@ -142,19 +168,24 @@ class Tile extends Model{
 		this.setActor(false);
 	}
 
-	setTerrain(terrain){
-		this.terrain = terrain;
-		switch (terrain){
-			case 'forest':
-				this.produces = ['wood', 'food'];
-		}
-		this.changed.terrain = true;
+	setResources(resources){
+		this.resources = resources;
+		this.changed.resources = true;
 	}
 
-
-	canHarvestResourceFrom(resource){
-		return this.produces.includes(resource);
+	getResourceValue(resource){
+		return this.resources[resource] ? this.resources[resource] : 0;
 	}
+
+	setResource(resource, value){
+		this.resources[resource] = value;
+		this.changed.resources = true;
+	}
+
+	decrementResource(resource){
+		this.setResource(resource, this.getResourceValue(resource) - 1);
+	}
+
 
 	setWaterDepth(depth){
 		if (Math.round(depth) !== depth){
@@ -356,7 +387,7 @@ class Tile extends Model{
 	//
 	getClientDataFor(player){
 		var clientData = {x: this.x, y: this.y};
-		if (this.changed.terrain) clientData.terrain = this.terrain;
+		if (this.changed.resources) clientData.resources = this.resources;
 		if (this.changed.elevation) clientData.elevation = this.elevation;
 		if (this.changed.actor) clientData.actor = this.actor ? this.actor.getClientDataFor(player): false;
 		if (this.changed.waterDepth) clientData.waterDepth = this.waterDepth;
