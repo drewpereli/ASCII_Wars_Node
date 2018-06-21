@@ -52,7 +52,7 @@ class Cell
 				maxVal = -Infinity
 				resource = false
 				for currentResource, val of tile.resources
-					if val > maxVal
+					if val > maxVal and val > 0
 						maxVal = val
 						resource = currentResource
 				if resource

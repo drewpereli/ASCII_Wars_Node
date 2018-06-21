@@ -13,7 +13,7 @@ var Game;
 Game = class Game {
   constructor() {
     var i, ref, squadNum, squadParams;
-    this.state;
+    this.state = 'default';
     this.timeState = 'paused';
     this.currentlyConstructing = false;
     this.currentlyConstructingChar = false;
@@ -56,30 +56,40 @@ Game = class Game {
   }
 
   clickTile(tile) {
-    if (this.state === 'constructing') {
-      return app.socket.emit('construct', {
+    var additionalTileInfo;
+    if (this.state === 'default') {
+      additionalTileInfo = app.map.getTile(tile.x, tile.y);
+      if (additionalTileInfo) {
+        Object.assign(tile, additionalTileInfo);
+      } else {
+        tile.visible = false;
+      }
+      app.view.selectTile(tile);
+    } else if (this.state === 'constructing') {
+      app.socket.emit('construct', {
         tile: tile,
         building: this.currentlyConstructing
       });
     } else if (this.state === 'raising elevation') {
-      return app.socket.emit('raise elevation', tile);
+      app.socket.emit('raise elevation', tile);
     } else if (this.state === 'lowering elevation') {
-      return app.socket.emit('lower elevation', tile);
+      app.socket.emit('lower elevation', tile);
     } else if (this.state === 'creating wall') {
-      return app.socket.emit('create wall', tile);
+      app.socket.emit('create wall', tile);
     } else if (this.state === 'creating water pump') {
-      return app.socket.emit('create water pump', tile);
+      app.socket.emit('create water pump', tile);
     } else if (this.state === 'setting resource pickup') {
-      return this.updateSquadParams(this.getSelectedSquad(), 'resourcePickup', {
+      this.updateSquadParams(this.getSelectedSquad(), 'resourcePickup', {
         x: tile.x,
         y: tile.y
       });
     } else if (this.state === 'setting resource dropoff') {
-      return this.updateSquadParams(this.getSelectedSquad(), 'resourceDropoff', {
+      this.updateSquadParams(this.getSelectedSquad(), 'resourceDropoff', {
         x: tile.x,
         y: tile.y
       });
     }
+    return this.changeState('default');
   }
 
   rightClickTile(tile) {
@@ -376,21 +386,6 @@ Input = class Input {
     };
   }
 
-  //return app.view.getTileFromPixels(event.offsetX, event.offsetY)
-  /*
-  x = new Number()
-  y = new Number()
-  canvas = app.view.components.map.clickableCanvas
-  if event.x != undefined && event.y != undefined
-  	x = event.x
-  	y = event.y
-  else #Firefox method to get the position
-  	x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
-  	y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop
-  x -= canvas.offsetLeft
-  y -= canvas.offsetTop
-  return app.view.getTileFromPixels(x, y)
-  */
   processKeyDown(event) {
     if (!this.usedKeys.includes(event.key)) {
       return;
@@ -570,7 +565,7 @@ Cell = class Cell {
         ref = tile.resources;
         for (currentResource in ref) {
           val = ref[currentResource];
-          if (val > maxVal) {
+          if (val > maxVal && val > 0) {
             maxVal = val;
             resource = currentResource;
           }
@@ -678,7 +673,9 @@ View = class View {
         selectedTile: null
       },
       control: {},
-      info: {},
+      info: {
+        selectedTile: $('#selected-tile')
+      },
       message: $('.message')
     };
     this.initialize.map.canvases(this);
@@ -898,6 +895,24 @@ View = class View {
 
   getPlayerColor(clientFacingPlayer) {
     return config.view.colors.players[clientFacingPlayer.team];
+  }
+
+  selectTile(tile) {
+    var tileInfo;
+    if (!tile) {
+      return;
+    }
+    this.components.map.selectedTile = tile;
+    tileInfo = this.components.info.selectedTile;
+    tileInfo.find('.x').html(tile.x);
+    tileInfo.find('.y').html(tile.y);
+    if ('resources' in tile) {
+      tileInfo.find('#wood').html(tile.resources.wood ? tile.resources.wood : 0);
+      tileInfo.find('#food').html(tile.resources.food ? tile.resources.food : 0);
+      return tileInfo.find('#metal').html(tile.resources.metal ? tile.resources.metal : 0);
+    } else {
+      return tileInfo.find('.resourceCount').html('?');
+    }
   }
 
 };

@@ -1,5 +1,6 @@
 
 var Actor = require('../Actor.abstract');
+var config = require('../../../../config');
 
 class Building extends Actor{
 
@@ -31,8 +32,9 @@ class Building extends Actor{
 	}
 
 	addStorage(resource){
+		if (!config.model.map.resourceTypes.includes(resource)) throw new Error('Resource ' + resource + ' not in list of resources in config');
 		if (this.getRemainingStorage() <= 0) return false;
-		if (this.storing[resource]) this.storing[resource]++;
+		if (this.isStoring(resource)) this.storing[resource]++;
 		else this.storing[resource] = 1;
 		return true;
 	}

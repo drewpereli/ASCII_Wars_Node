@@ -49,21 +49,29 @@ class Unit extends Actor{
 				//Else, find the tile closest to this.tile with 'resource'
 				var pickupTarget = behaviorParams.resourcePickup ? behaviorParams.resourcePickup : this.tile;
 				var pickupActual = this.findClosestExploredTileConditional(t => {
-					return t.canProduce(resource);
+					if (!t.canProduce(resource)) return false;
+					//We don't want to pick up from our drop off point
+					if (behaviorParams.resourceDropoff && t.x === behaviorParams.resourceDropoff.x && t.y === behaviorParams.resourceDropoff.y) return false;
+					return true;
 				}, pickupTarget);
 				if (pickupActual){
 					if (this.isNextToOrOn(pickupActual)) this.harvest(resource, pickupActual);
 					else this.moveTowards(pickupActual);
 				}
-				else
-					console.log('Could not find tile to pick up resource at');
+				else{
+					//console.log('Could not find tile to pick up resource at');
+					//Auto explore
+					var unexplored = this.findClosestUnexploredTile();
+					if (unexplored) this.moveTowards(unexplored);
+					else this.moveRandomly();
+				}
 			}
 			//Else if we are holding a resource
 			else{
 				//If there is a dropoff location, dropoff there
 				//Else, find the nearest building with storage space > 0
 				var dropoffActual = behaviorParams.resourceDropoff ? 
-										behaviorParams.resourceDropoff : 
+										this.game.map.getTile(behaviorParams.resourceDropoff.x, behaviorParams.resourceDropoff.y) : 
 										this.findClosestExploredTileConditional(t => {
 											return t.actor && t.actor.type === 'building' && t.actor.getRemainingStorage() > 0;
 										});
@@ -71,7 +79,10 @@ class Unit extends Actor{
 					//If the dropoff target is a sibling, drop it off!
 					if (this.isNextToOrOn(dropoffActual)) {
 						var dropoffBuilding = dropoffActual.actor;
-						if (dropoffBuilding.getRemainingStorage() <= 0) return
+						if (dropoffBuilding.getRemainingStorage() <= 0){
+							console.log('Dropoff building has no remaining storage');
+							return;
+						}
 						else this.dropOff(dropoffActual.actor);
 					}
 					else this.moveTowards(dropoffActual);
@@ -232,6 +243,7 @@ class Unit extends Actor{
 	harvest(resource, tile){
 		if (tile.produceResource(resource)){
 			this.holding = resource;
+			//console.log('Harvested ' + resource + ' from ', tile.x, tile.y);
 		}
 		else{
 			console.log('Tile did not produce resource ' + resource + '. Tile: ' + tile);
@@ -242,6 +254,7 @@ class Unit extends Actor{
 
 	dropOff(building){
 		if (building.addStorage(this.holding)){
+			//console.log('Dropped off ' + this.holding + ' at ', building.tile.x, building.tile.y);
 			this.holding = false;
 		}
 		else{

@@ -2,7 +2,7 @@
 class Game
 
 	constructor: ->
-		@state
+		@state = 'default'
 		@timeState = 'paused'
 		@currentlyConstructing = false
 		@currentlyConstructingChar = false
@@ -41,7 +41,14 @@ class Game
 
 
 	clickTile: (tile) ->
-		if @state is 'constructing'
+		if @state is 'default'
+			additionalTileInfo = app.map.getTile tile.x, tile.y
+			if additionalTileInfo
+				Object.assign tile, additionalTileInfo
+			else
+				tile.visible = false
+			app.view.selectTile(tile)
+		else if @state is 'constructing'
 			app.socket.emit('construct', {tile: tile, building: @currentlyConstructing})
 		else if @state is 'raising elevation'
 			app.socket.emit('raise elevation', tile)
@@ -55,6 +62,7 @@ class Game
 			@updateSquadParams(@getSelectedSquad(), 'resourcePickup', {x: tile.x, y: tile.y})
 		else if @state is 'setting resource dropoff'
 			@updateSquadParams(@getSelectedSquad(), 'resourceDropoff', {x: tile.x, y: tile.y})
+		@changeState('default')
 
 
 	rightClickTile: (tile) ->

@@ -7,12 +7,11 @@ class SupplyDepot extends Building{
 		args.readableName = 'Supply Depot';
 		args.character = 's';
 		args.maxHealth = 1000;
+		args.maxStorage = 10000;
 		super(args);
-		this.stored = {
-			food: 0,
-			ammo: 0
-		};
 	}
+
+	act(){}
 }
 
 module.exports = SupplyDepot;

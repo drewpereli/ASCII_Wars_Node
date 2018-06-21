@@ -14,7 +14,8 @@ class View
 				clickableCanvas: {}
 				selectedTile: null
 			control: {}
-			info: {}	
+			info: 
+				selectedTile: $('#selected-tile')
 			message: $('.message')
 		@initialize.map.canvases(this)
 		@initialize.map.cells(this)
@@ -195,6 +196,22 @@ class View
 
 	getPlayerColor: (clientFacingPlayer) -> 
 		return config.view.colors.players[clientFacingPlayer.team]
+
+
+	selectTile: (tile) ->
+		if not tile
+			return
+		@components.map.selectedTile = tile
+		tileInfo = @components.info.selectedTile
+		tileInfo.find('.x').html(tile.x)
+		tileInfo.find('.y').html(tile.y)
+		if 'resources' of tile
+			tileInfo.find('#wood').html(if tile.resources.wood then tile.resources.wood else 0)
+			tileInfo.find('#food').html(if tile.resources.food then tile.resources.food else 0)
+			tileInfo.find('#metal').html(if tile.resources.metal then tile.resources.metal else 0)
+		else
+			tileInfo.find('.resourceCount').html('?')
+
 
 
 

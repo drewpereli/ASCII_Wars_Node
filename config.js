@@ -10,7 +10,8 @@ var config = {
 			height: 40,
 			width: 40,
 			maxElevation: 100,
-			minElevation: 0
+			minElevation: 0,
+			resourceTypes: ['food', 'wood', 'metal']
 		},
 		actors: {
 			units: {

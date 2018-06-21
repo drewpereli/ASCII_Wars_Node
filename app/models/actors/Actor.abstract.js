@@ -96,15 +96,16 @@ class Actor extends Model{
 		else return false;
 	}
 
-	findClosestExploredTileConditional(conditionFunction, searchStart = false, limit=false){
+	findClosestExploredTileConditional(conditionFunction, searchStart=false, limit=10000){
 		if (!searchStart) searchStart = this.tile;
 		//If the search start isn't a pointer to an object in the map, make it one if we can
 		if (!('siblings' in searchStart)) searchStart = this.game.map.getTile(searchStart.x, searchStart.y);
 		if (conditionFunction(searchStart)) return searchStart;
 		var tilesSearched = [searchStart];
+		//Depth first search
 		var queue = [searchStart];
 		while (queue.length > 0 && (limit === false || tilesSearched.length < limit)){
-			var currentTile = queue.shift();
+			var currentTile = queue.shift(); //Take out first element
 			var shuffledUncheckedSibs = currentTile.siblings.filter(t => t.seenBy.includes(this.player) && !tilesSearched.includes(t));
 			shuffle(shuffledUncheckedSibs);
 			for (let sib of shuffledUncheckedSibs){
@@ -113,7 +114,28 @@ class Actor extends Model{
 				tilesSearched.push(sib);
 			}
 		}
+		return false;
 	}
+
+	findClosestUnexploredTile(searchStart=false, limit=10000){
+		if (!searchStart) searchStart = this.tile;
+		//If the search start isn't a pointer to an object in the map, make it one if we can
+		if (!('siblings' in searchStart)) searchStart = this.game.map.getTile(searchStart.x, searchStart.y);
+		var tilesSearched = [];
+		//Depth first search
+		var queue = [searchStart];
+		while (queue.length > 0 && (limit === false || tilesSearched.length < limit)){
+			//console.log(queue.length);
+			var currentTile = queue.shift(); //Take out first element
+			if (!currentTile.seenBy.includes(this.player)) return currentTile;
+			tilesSearched.push(currentTile);
+			var shuffledUncheckedSibs = currentTile.siblings.filter(t => !tilesSearched.includes(t));
+			shuffle(shuffledUncheckedSibs);
+			queue = queue.concat(shuffledUncheckedSibs);
+		}
+		return false;
+	}
+
 
 	isNextToOrOn(tile){
 		if (this.tile === tile) return true;
