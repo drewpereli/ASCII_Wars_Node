@@ -62,8 +62,12 @@ class Unit extends Actor{
 					//console.log('Could not find tile to pick up resource at');
 					//Auto explore
 					var unexplored = this.findClosestUnexploredTile();
-					if (unexplored) this.moveTowards(unexplored);
-					else this.moveRandomly();
+					if (unexplored){
+						this.moveTowards(unexplored);
+					} 
+					else{
+						this.moveRandomly();
+					} 
 				}
 			}
 			//Else if we are holding a resource

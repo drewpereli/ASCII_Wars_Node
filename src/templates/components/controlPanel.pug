@@ -31,16 +31,21 @@
 				div
 					label(for="#behavior") Behavior
 					div#behavior
-						label(for="#behavior-attacking") Attacking
 						input#behavior-attacking(type="radio" value="attacking" name="behavior" checked='checked')
-						label(for="#behavior-moving") Moving
+						label(for="#behavior-attacking") Attacking
+						br
 						input#behavior-moving(type="radio" value="moving" name="behavior")
-						label(for="#behavior-digging") Digging
+						label(for="#behavior-moving") Moving
+						br
 						input#behavior-digging(type="radio" value="digging" name="behavior")
-						label(for="#behavior-harvesting") Harvesting
+						label(for="#behavior-digging") Digging
+						br
 						input#behavior-harvesting(type="radio" value="harvesting" name="behavior")
-						label(for="#behavior-fortifying") Fortifying
+						label(for="#behavior-harvesting") Harvesting
+						br
 						input#behavior-fortifying(type="radio" value="fortifying" name="behavior")
+						label(for="#behavior-fortifying") Fortifying
+						br
 					label(for="#digging-direction-select") Direction
 					select#digging-direction-select
 						option(value=0) N

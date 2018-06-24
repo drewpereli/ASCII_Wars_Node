@@ -426,7 +426,7 @@ Map = class Map {
   }
 
   update(mapInfo) {
-    var i, j, k, len, len1, len2, ref, ref1, results, row, tile;
+    var i, j, k, len, len1, len2, mapTile, ref, ref1, results, row, tile;
     ref = this.tiles;
     
     //mark all tiles as invisible to start
@@ -455,7 +455,15 @@ Map = class Map {
         }
         results.push(this.tiles[tile.y][tile.x] = tile);
       } else {
+        mapTile = this.tiles[tile.y][tile.x];
         //Else, only changed values were sent
+        if (tile.resources) {
+          if (!mapTile.resources) {
+            mapTile.resources = tile.resources;
+          } else {
+            Object.assign(mapTile.resources, tile.resources);
+          }
+        }
         results.push(Object.assign(this.tiles[tile.y][tile.x], tile));
       }
     }

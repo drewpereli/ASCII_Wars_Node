@@ -69,11 +69,7 @@ class Actor extends Model{
 				var realY = (y + mapHeight) % mapHeight;
 				var t = this.tile.map.getTile(realX, realY)
 				this.visibleTiles.push(t);
-				/*
-				if (!this.player.visibleTilesThisTurn.includes(t)){
-					this.player.visibleTilesThisTurn.push(t);
-				}
-				*/
+				if (!t.seenBy.includes(this.player)) t.seenBy.push(this.player);
 			}
 		}
 	}
@@ -96,7 +92,7 @@ class Actor extends Model{
 		else return false;
 	}
 
-	findClosestExploredTileConditional(conditionFunction, searchStart=false, limit=10000){
+	findClosestExploredTileConditional(conditionFunction, searchStart=false, limit=false){
 		if (!searchStart) searchStart = this.tile;
 		//If the search start isn't a pointer to an object in the map, make it one if we can
 		if (!('siblings' in searchStart)) searchStart = this.game.map.getTile(searchStart.x, searchStart.y);
@@ -104,12 +100,14 @@ class Actor extends Model{
 		var tilesSearched = [searchStart];
 		//Depth first search
 		var queue = [searchStart];
-		while (queue.length > 0 && (limit === false || tilesSearched.length < limit)){
+		var numSearched = 0;
+		while (queue.length > 0 && (limit === false || numSearched < limit)){
 			var currentTile = queue.shift(); //Take out first element
 			var shuffledUncheckedSibs = currentTile.siblings.filter(t => t.seenBy.includes(this.player) && !tilesSearched.includes(t));
 			shuffle(shuffledUncheckedSibs);
 			for (let sib of shuffledUncheckedSibs){
 				if (conditionFunction(sib)) return sib;
+				numSearched++;
 				queue.push(sib);
 				tilesSearched.push(sib);
 			}
@@ -117,14 +115,15 @@ class Actor extends Model{
 		return false;
 	}
 
-	findClosestUnexploredTile(searchStart=false, limit=10000){
+	findClosestUnexploredTile(searchStart=false, limit=1000){
 		if (!searchStart) searchStart = this.tile;
 		//If the search start isn't a pointer to an object in the map, make it one if we can
 		if (!('siblings' in searchStart)) searchStart = this.game.map.getTile(searchStart.x, searchStart.y);
 		var tilesSearched = [];
 		//Depth first search
 		var queue = [searchStart];
-		while (queue.length > 0 && (limit === false || tilesSearched.length < limit)){
+		var numSearched = 0;
+		while (queue.length > 0 && (limit === false || numSearched < limit)){
 			//console.log(queue.length);
 			var currentTile = queue.shift(); //Take out first element
 			if (!currentTile.seenBy.includes(this.player)) return currentTile;
@@ -132,6 +131,7 @@ class Actor extends Model{
 			var shuffledUncheckedSibs = currentTile.siblings.filter(t => !tilesSearched.includes(t));
 			shuffle(shuffledUncheckedSibs);
 			queue = queue.concat(shuffledUncheckedSibs);
+			numSearched++
 		}
 		return false;
 	}

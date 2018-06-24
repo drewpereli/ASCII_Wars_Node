@@ -131,8 +131,7 @@ class Tile extends Model{
 	}
 
 	removeNaturalResource(resource){
-
-		this.resources[resource]--;
+		this.decrementResource(resource);
 		return true;
 	}
 
@@ -384,8 +383,7 @@ class Tile extends Model{
 			this.map.changedTiles.push(this);
 	}
 
-	//
-	/*
+
 	getClientDataFor(player){
 		var clientData = {x: this.x, y: this.y};
 		if (this.changed.resources) clientData.resources = this.resources;
@@ -394,8 +392,6 @@ class Tile extends Model{
 		if (this.changed.waterDepth) clientData.waterDepth = this.waterDepth;
 		return clientData;
 	}
-	*/
-
 }
 
 
