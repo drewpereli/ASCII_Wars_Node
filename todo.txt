@@ -1,1 +1,3 @@
 Make 'can see enemy' return random enemy it can see instead of first one, or maybe return all seen enemies or some shit
+
+Don't call 'setVisibleTiles' on every actor every turn. Only do it when they move

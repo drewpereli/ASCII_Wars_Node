@@ -8,6 +8,7 @@ class CommandCenter extends Building{
 		arguments[0].readableName = 'Command Center';
 		arguments[0].character = 'c';
 		arguments[0].maxHealth = 300;
+		arguments[0].maxStorage = 1000;
 		super(arguments[0]);
 	}
 

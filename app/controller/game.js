@@ -138,10 +138,27 @@ class Game{
 
 	addActor(actor){
 		this.actors.push(actor);
+		if (actor.name === 'command_center') {
+			actor.player.addCommandCenter(actor);
+		}
+		console.log('Actor id: ', actor.id);
+		if (actor.type === 'building' && actor.name !== 'wall')
+			this.emitToPlayer(actor.player, 'new building', actor.getClientDataFor(actor.player));
+		return true;
 	}
 
 	deleteActor(actor){
 		this.actors.splice(this.actors.indexOf(actor), 1);
+	}
+
+
+	getActorById(actorId){
+		var actor = this.actors.find(a => a.id === actorId);
+		if (actor) return actor;
+		else { 
+			console.log('Could not find actor with id ', actorId);
+			return false;
+		}
 	}
 
 
@@ -155,6 +172,11 @@ class Game{
 
 	emit(event, data=null){
 		this.io.emit(event, data);
+	}
+
+
+	emitToPlayer(player, event, data=null){
+		player.socket.emit(event, data);
 	}
 
 
@@ -180,7 +202,7 @@ class Game{
 				for (var key in t.changed){
 					t.changed[key] = false;
 				}
-			})
+			});
 		});
 	}
 
@@ -211,16 +233,15 @@ class Game{
 	*
 	*/
 	playerReadyForNextTurn(player){
-		console.log(Date.now(), 'Player ready for next turn');
 		player.readyForNextTurn = true;
 		if (this.readyToTick()){
-			console.log(Date.now(), 'Ready to tick');
 			this.tick();
 		}
 	}
 
 
 	attemptBuildingConstruction(player, tile, buildingName){
+		console.log('Attemtping to build', buildingName);
 		var success = player.attemptBuildingConstruction(tile, buildingName);
 		if (success) this.emitTile(tile);
 	}

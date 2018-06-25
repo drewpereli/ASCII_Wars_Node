@@ -27,7 +27,13 @@ class Map
 					tile.waterDepth = 0
 				@tiles[tile.y][tile.x] = tile
 			else
+				mapTile = @tiles[tile.y][tile.x]
 				#Else, only changed values were sent
+				if tile.resources
+					if !mapTile.resources 
+						mapTile.resources = tile.resources
+					else
+						Object.assign mapTile.resources, tile.resources
 				Object.assign @tiles[tile.y][tile.x], tile
 
 	

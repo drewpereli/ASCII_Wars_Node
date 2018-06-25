@@ -19,6 +19,12 @@ class Socket
 				app.game.updateTile(tile)
 			)
 		)
+		@io.on(
+			'new building',
+			((building) =>
+				app.view.addBuilding(building)
+			)
+		)
 		@io.on('player added', (numPlayers) => app.view.addPlayer(numPlayers))
 		@io.on('game start', () => app.view.startGame())
 		@io.on('game over', () => 

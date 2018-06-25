@@ -61,7 +61,9 @@ class Map extends Model{
 	//Gets an object containing the map data to send to the client
 	getClientDataFor(player){
 		//return {changedTiles: this.changedTiles.map(t => t.getClientDataFor(player))};
-		return {visibleTiles: player.getVisibleTiles().map(t => t.getClientDataFor(player))};
+		var data = {};
+		data.visibleTiles = player.getVisibleTiles().map(t => t.getClientDataFor(player));
+		return data;
 	}
 
 	setAllTilesAsUnchanged(){
@@ -317,8 +319,8 @@ class Map extends Model{
 		var setTerrain = () => {
 			/*
 			this.forEachTile(t => {
-				if (!t.hasWater())
-					t.setTerrain('forest');
+				if (!t.hasWater() && Math.random() < .01)
+					t.setResources({'wood': 1});
 			});
 			*/
 			return Promise.resolve();
@@ -355,7 +357,8 @@ class Map extends Model{
 						for (var j = 0 ; j < config.debug.testActors ; j++){
 							//Place a random unit
 							this.game.addActor(
-								new actorClasses.Soldier({
+
+								new actorClasses.units.Worker({
 									tile: this.getRandomOpenTile(), 
 									player: this.game.players[i],
 									squad: 0

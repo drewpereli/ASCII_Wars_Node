@@ -1,4 +1,5 @@
 
+var config = require('../../../config');
 var Model = require('../Model.abstract');
 
 class Squad extends Model{
@@ -6,19 +7,8 @@ class Squad extends Model{
 		super();
 		this.number = args.squadNumber;
 		this.units = [];
-		this.behaviorParams = {
-			movingTo: null,
-			moveTowardsPointWeight: 1,
-			moveTowardsSquadMatesWeight: 1,
-			alignment: false,
-			alignmentWeight: 2,
-			digging: false,
-			diggingDirection: 0,
-			harvesting: false,
-			harvestingNear: false,
-			harvestingWithinDistance: false,
-			dropOff: false
-		};
+		this.behaviorParams = {};
+		Object.assign(this.behaviorParams, config.model.squads.defaultBehavior);
 	}
 
 	setBehaviorParams(params){

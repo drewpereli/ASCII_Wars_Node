@@ -10,7 +10,8 @@ var config = {
 			height: 40,
 			width: 40,
 			maxElevation: 100,
-			minElevation: 0
+			minElevation: 0,
+			resourceTypes: ['food', 'wood', 'metal']
 		},
 		actors: {
 			units: {
@@ -21,15 +22,24 @@ var config = {
 			},
 			buildings: {
 				producers: {
+					//Key name must be the same as file/class name
 					ResidentialArea: {
 						readableName: 'Residential Area',
 						character: 'R'
-					}
+					},
+					Barracks: {
+						readableName: 'Barracks',
+						character: 'B'
+					},
 				},
 				logistics: {
 					Wall: {
 						readableName: 'Wall',
 						character: 'W'
+					},
+					SupplyDepot: {
+						readableName: 'Supply Depot',
+						character: 's'
 					},
 					WaterPumpNorth: {
 						readableName: 'Water Pump -- North',
@@ -49,6 +59,20 @@ var config = {
 					},
 				}
 			}
+		},
+		squads: {
+			defaultBehavior: {
+				behavior: 'attacking',
+				movingTo: null,
+				moveTowardsPointWeight: 1,
+				moveTowardsSquadMatesWeight: 1,
+				alignment: false,
+				alignmentWeight: 10,
+				diggingDirection: 0,
+				resourceHarvested: 'wood',
+				resourcePickup: null,
+				resourceDropoff: null
+			}
 		}
 	},
 	view: {
@@ -56,14 +80,11 @@ var config = {
 			black: '#000',
 			cellBorder: 'gray',
 			selectedTileBorder: 'gold',
-			terrain: {
-				water: '#007',
-				forest: '#7d0',
-				desert: '#0aa',
-				plains: '#055',
-				mountain: '#777'
+			resources: {
+				wood: 'brown'
 			},
-			players: ['black', 'white']
+			//Must be in hex!!!
+			players: ['#000', '#FFF']
 		},
 		map: {
 			height: 30,
@@ -71,8 +92,8 @@ var config = {
 			initialCellLength: 14, //In pixels
 			layers: ['elevation', 'terrain', 'water', 'actors',	'visibility', 'graphics'],
 			cellBorders: false,
-			terrainCharacters: {
-				forest: 'f'
+			resourceCharacters: {
+				wood: 'w'
 			}
 		},
 		messageFadeDelay: 3
@@ -84,8 +105,9 @@ var config = {
 		setViewDimensionsToMapDimensions: false,
 		water: false,
 		allTilesVisible: false,
-		testActors: 10,
-		flatMap: true
+		testActors: 0,
+		flatMap: true,
+		producerLimit: 1
 	},
 	logTimeStamps: false
 }

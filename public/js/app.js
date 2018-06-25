@@ -12,12 +12,19 @@ var Game;
 
 Game = class Game {
   constructor() {
-    this.state;
+    var i, ref, squadNum, squadParams;
+    this.state = 'default';
     this.timeState = 'paused';
     this.currentlyConstructing = false;
     this.currentlyConstructingChar = false;
     this.selectedTile = null;
     this.hoveredTile = null;
+    this.squads = [];
+    for (squadNum = i = 1, ref = config.maxSquads; (1 <= ref ? i <= ref : i >= ref); squadNum = 1 <= ref ? ++i : --i) {
+      squadParams = {};
+      Object.assign(squadParams, config.model.squads.defaultBehaviorParams);
+      this.squads.push(squadParams);
+    }
   }
 
   changeState(state) {
@@ -49,32 +56,49 @@ Game = class Game {
   }
 
   clickTile(tile) {
-    if (this.state === 'constructing') {
-      return app.socket.emit('construct', {
+    var additionalTileInfo;
+    if (this.state === 'default') {
+      additionalTileInfo = app.map.getTile(tile.x, tile.y);
+      if (additionalTileInfo) {
+        Object.assign(tile, additionalTileInfo);
+      } else {
+        tile.visible = false;
+      }
+      app.view.selectTile(tile);
+    } else if (this.state === 'constructing') {
+      app.socket.emit('construct', {
         tile: tile,
         building: this.currentlyConstructing
       });
     } else if (this.state === 'raising elevation') {
-      return app.socket.emit('raise elevation', tile);
+      app.socket.emit('raise elevation', tile);
     } else if (this.state === 'lowering elevation') {
-      return app.socket.emit('lower elevation', tile);
+      app.socket.emit('lower elevation', tile);
     } else if (this.state === 'creating wall') {
-      return app.socket.emit('create wall', tile);
+      app.socket.emit('create wall', tile);
     } else if (this.state === 'creating water pump') {
-      return app.socket.emit('create water pump', tile);
+      app.socket.emit('create water pump', tile);
+    } else if (this.state === 'setting resource pickup') {
+      this.updateSquadParams(this.getSelectedSquad(), 'resourcePickup', {
+        x: tile.x,
+        y: tile.y
+      });
+    } else if (this.state === 'setting resource dropoff') {
+      this.updateSquadParams(this.getSelectedSquad(), 'resourceDropoff', {
+        x: tile.x,
+        y: tile.y
+      });
     }
+    return this.changeState('default');
   }
 
   rightClickTile(tile) {
     var selectedSquad;
     console.log('right clicking tile ' + JSON.stringify(tile));
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      movingTo: {
-        x: tile.x,
-        y: tile.y
-      }
+    selectedSquad = this.getSelectedSquad();
+    return this.updateSquadParams(selectedSquad, 'movingTo', {
+      x: tile.x,
+      y: tile.y
     });
   }
 
@@ -95,37 +119,34 @@ Game = class Game {
   }
 
   mouseLeaveCanvas() {
-    app.view.eraseGhostConstruction(this.hoveredTile);
+    if (this.hoveredTile) {
+      app.view.eraseGhostConstruction(this.hoveredTile);
+    }
     return this.hoveredTile = null;
   }
 
-  clickDiggingCheckbox(checked) {
-    var selectedSquad;
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      digging: checked
+  updateSquadParams(squad, name, value) {
+    var newParams;
+    newParams = {
+      squad: squad
+    };
+    newParams[name] = value;
+    console.log('updating squad params: ' + JSON.stringify(newParams));
+    app.socket.emit('update behavior params', newParams);
+    return Object.assign(this.squads[squad], newParams);
+  }
+
+  updateProducedSquad(buildingId, val1, val2) {
+    return app.socket.emit('update produced squad', {
+      buildingId: buildingId,
+      squadVals: [val1, val2]
     });
   }
 
-  changeDiggingDirection(dir) {
-    var selectedSquad;
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      diggingDirection: dir
-    });
-  }
-
-  changeSquadAlignment(alignment) {
-    var selectedSquad;
-    if (alignment === 'none') {
-      alignment = false;
-    }
-    selectedSquad = $('#squad-select').val();
-    return app.socket.emit('update behavior params', {
-      squad: selectedSquad,
-      alignment: alignment
+  updateProducerOnOff(buildingId, producerOn) {
+    return app.socket.emit('update producer on off', {
+      buildingId: buildingId,
+      producerOn: producerOn
     });
   }
 
@@ -147,6 +168,10 @@ Game = class Game {
     this.changeState('constructing');
     this.currentlyConstructing = building;
     return this.currentlyConstructingChar = character;
+  }
+
+  getSelectedSquad() {
+    return $('#squad-select').val();
   }
 
   //###############
@@ -223,6 +248,9 @@ Socket = class Socket {
       tile = JSON.parse(tile);
       return app.game.updateTile(tile);
     }));
+    this.io.on('new building', ((building) => {
+      return app.view.addBuilding(building);
+    }));
     this.io.on('player added', (numPlayers) => {
       return app.view.addPlayer(numPlayers);
     });
@@ -294,15 +322,16 @@ Input = class Input {
     $(app.view.components.map.clickableCanvas).mouseleave((e) => {
       return app.game.mouseLeaveCanvas();
     });
-    $('#digging-checkbox').change(() => {
-      return app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'));
+    $('#behavior > input[name="behavior"]').change(() => {
+      return app.game.updateSquadParams(this.getSelectedSquad(), 'behavior', $('#behavior > input:checked').val());
     });
     $('#digging-direction-select').change(() => {
-      return app.game.changeDiggingDirection($('#digging-direction-select').val());
+      return app.game.updateSquadParams(this.getSelectedSquad(), 'diggingDirection', $('#digging-direction-select').val());
     });
     $('.alignment-selection').change(() => {
-      return app.game.changeSquadAlignment($('.alignment-selection:checked').val());
+      return app.game.updateSquadParams(this.getSelectedSquad(), 'alignment', $('.alignment-selection:checked').val());
     });
+    //I think this prevents right clicking from opening up a menu? I dunno, it's been a bit since I wrote it
     $(app.view.components.map.clickableCanvas).contextmenu(() => {
       return false;
     });
@@ -321,6 +350,30 @@ Input = class Input {
       character = $(e.target).data('character');
       return app.game.clickCreateBuildingButton(building, character);
     });
+    $('#current-buildings').on('change', '.producer-squad-select', function() {
+      var buildingId, vals;
+      buildingId = $(this).attr('id').split('-')[3];
+      vals = $(this).parent().find('select').map(function() {
+        return $(this).val();
+      }).get();
+      return app.game.updateProducedSquad(buildingId, vals[0], vals[1]);
+    });
+    $('#current-buildings').on('change', '.producer-on-off', function() {
+      var buildingId, producerOn;
+      buildingId = $(this).attr('id').split('-')[0];
+      producerOn = !!$(this).prop('checked');
+      return app.game.updateProducerOnOff(buildingId, producerOn);
+    });
+    $('#set-resource-pickup').click((e) => {
+      return app.game.changeState('setting resource pickup');
+    });
+    $('#set-resource-dropoff').click((e) => {
+      return app.game.changeState('setting resource dropoff');
+    });
+  }
+
+  getSelectedSquad() {
+    return $('#squad-select').val();
   }
 
   getTileFromEvent(event) {
@@ -335,21 +388,6 @@ Input = class Input {
     };
   }
 
-  //return app.view.getTileFromPixels(event.offsetX, event.offsetY)
-  /*
-  x = new Number()
-  y = new Number()
-  canvas = app.view.components.map.clickableCanvas
-  if event.x != undefined && event.y != undefined
-  	x = event.x
-  	y = event.y
-  else #Firefox method to get the position
-  	x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
-  	y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop
-  x -= canvas.offsetLeft
-  y -= canvas.offsetTop
-  return app.view.getTileFromPixels(x, y)
-  */
   processKeyDown(event) {
     if (!this.usedKeys.includes(event.key)) {
       return;
@@ -390,7 +428,7 @@ Map = class Map {
   }
 
   update(mapInfo) {
-    var i, j, k, len, len1, len2, ref, ref1, results, row, tile;
+    var i, j, k, len, len1, len2, mapTile, ref, ref1, results, row, tile;
     ref = this.tiles;
     
     //mark all tiles as invisible to start
@@ -419,7 +457,15 @@ Map = class Map {
         }
         results.push(this.tiles[tile.y][tile.x] = tile);
       } else {
+        mapTile = this.tiles[tile.y][tile.x];
         //Else, only changed values were sent
+        if (tile.resources) {
+          if (!mapTile.resources) {
+            mapTile.resources = tile.resources;
+          } else {
+            Object.assign(mapTile.resources, tile.resources);
+          }
+        }
         results.push(Object.assign(this.tiles[tile.y][tile.x], tile));
       }
     }
@@ -514,7 +560,7 @@ Cell = class Cell {
   }
 
   drawTile(tile) {
-    var a, borderColor, char, charColor, fillColor, xOffset, yOffset;
+    var a, borderColor, char, charColor, currentResource, fillColor, maxVal, ref, resource, val, xOffset, yOffset;
     fillColor = false;
     charColor = false;
     borderColor = false;
@@ -523,8 +569,21 @@ Cell = class Cell {
     yOffset = 0;
     switch (this.getLayerName()) {
       case 'terrain':
-        charColor = config.view.colors.terrain[tile.terrain];
-        char = config.view.map.terrainCharacters[tile.terrain];
+        //Get max resource
+        maxVal = -2e308;
+        resource = false;
+        ref = tile.resources;
+        for (currentResource in ref) {
+          val = ref[currentResource];
+          if (val > maxVal && val > 0) {
+            maxVal = val;
+            resource = currentResource;
+          }
+        }
+        if (resource) {
+          charColor = config.view.colors.resources[resource];
+          char = config.view.map.resourceCharacters[resource];
+        }
         break;
       case 'elevation':
         fillColor = app.view.getColorFromElevation(tile.elevation);
@@ -533,9 +592,11 @@ Cell = class Cell {
         if (tile.actor) {
           a = tile.actor;
           char = a.character;
-          charColor = app.view.getPlayerColor(a.player);
           if (a.type === 'building') {
+            charColor = hexToRGBA(app.view.getPlayerColor(a.player), a.completeness + .2);
             borderColor = charColor;
+          } else {
+            charColor = app.view.getPlayerColor(a.player);
           }
         }
         break;
@@ -624,7 +685,9 @@ View = class View {
         selectedTile: null
       },
       control: {},
-      info: {},
+      info: {
+        selectedTile: $('#selected-tile')
+      },
       message: $('.message')
     };
     this.initialize.map.canvases(this);
@@ -724,6 +787,29 @@ View = class View {
     return results;
   }
 
+  addBuilding(building) {
+    var controlCell, i, ref, row, squadNum, squadSelectLower, squadSelectUpper;
+    row = $('<tr>').attr('id', 'building-row-' + building.id).append('<td>' + building.playerGivenName + '</td>');
+    if (building.producer) {
+      controlCell = $('<td>');
+      controlCell.append('<h4>Producing: </h4>');
+      $('<input>').attr('type', 'checkbox').attr('id', building.id + '-on').prop('checked', true).addClass('producer-on-off').appendTo(controlCell);
+      controlCell.append('<h4>Squad</h4>');
+      controlCell.append('<label>From: </label>');
+      squadSelectLower = $('<select>').addClass('producer-squad-select');
+      squadSelectLower.attr('id', 'squad-select-lower-' + building.id).appendTo(controlCell);
+      controlCell.append('<label>To: </label>');
+      squadSelectUpper = $('<select>').addClass('producer-squad-select');
+      squadSelectUpper.attr('id', 'squad-select-upper-' + building.id).appendTo(controlCell);
+      for (squadNum = i = 1, ref = config.maxSquads; (1 <= ref ? i <= ref : i >= ref); squadNum = 1 <= ref ? ++i : --i) {
+        $("<option>").attr('value', squadNum - 1).html(squadNum).appendTo(squadSelectLower);
+        $("<option>").attr('value', squadNum - 1).html(squadNum).appendTo(squadSelectUpper);
+      }
+      controlCell.appendTo(row);
+    }
+    return $(this.components.buildingsTable).append(row);
+  }
+
   updateTile(tile) {
     var cell, cells, i, len, results;
     cells = this.getCellsFromTile(tile);
@@ -758,7 +844,11 @@ View = class View {
   }
 
   drawGhostConstruction(tile, character) {
-    return this.getCellFromTile(tile, 'graphics').drawGhostConstruction(character);
+    var cell;
+    cell = this.getCellFromTile(tile, 'graphics');
+    if (cell) {
+      return cell.drawGhostConstruction(character);
+    }
   }
 
   eraseGhostConstruction(tile) {
@@ -821,6 +911,24 @@ View = class View {
 
   getPlayerColor(clientFacingPlayer) {
     return config.view.colors.players[clientFacingPlayer.team];
+  }
+
+  selectTile(tile) {
+    var tileInfo;
+    if (!tile) {
+      return;
+    }
+    this.components.map.selectedTile = tile;
+    tileInfo = this.components.info.selectedTile;
+    tileInfo.find('.x').html(tile.x);
+    tileInfo.find('.y').html(tile.y);
+    if ('resources' in tile) {
+      tileInfo.find('#wood').html(tile.resources.wood ? tile.resources.wood : 0);
+      tileInfo.find('#food').html(tile.resources.food ? tile.resources.food : 0);
+      return tileInfo.find('#metal').html(tile.resources.metal ? tile.resources.metal : 0);
+    } else {
+      return tileInfo.find('.resourceCount').html('?');
+    }
   }
 
 };
@@ -886,6 +994,7 @@ View.prototype.initialize = {
       building = ref1[buildingName];
       $("<div>").addClass('btn btn-default create-building-btn').data('building', buildingName).data('character', building.character).html(building.readableName).appendTo("#construct-tab .buttons .logistics");
     }
+    v.components.buildingsTable = $('#current-buildings')[0];
 //Command Tab
 //Add an dropdown menu for squads
     results = [];

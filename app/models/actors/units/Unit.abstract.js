@@ -1,5 +1,5 @@
-var config = require('../../../config');
-var Actor = require('./Actor.abstract');
+var config = require('../../../../config');
+var Actor = require('../Actor.abstract');
 var rand = require('random-seed').create();
 
 class Unit extends Actor{
@@ -9,17 +9,111 @@ class Unit extends Actor{
 			maxHealth: 100,
 			moveTime: 1,
 			defense: 0,
-			damage: false,
-			attackTime: false
+			damage: 1,
+			attackTime: 10,
+			constructionTime: 10
 		}
 		var args = defaultArgs;
 		Object.assign(args, specifiedArgs);
 		super(args);
 		this.clientFacingFields.push('squad');
 		this.squad = args.squad;
+		this.holding = false;
 	}
 
-	
+	act(){
+		var behaviorParams = this.getBehaviorParams();
+		var behavior = behaviorParams.behavior;
+		if (behavior === 'attacking'){
+			var enemy;
+			if (enemy = this.canSeeEnemy()) this.attack(enemy);
+			if (Math.random() < .2)
+				this.moveRandomly();
+			else
+				this.moveTowardsSquadMovePoint();
+		}
+		else if (behavior === 'digging') {
+			if (Math.random() < .5) this.moveRandomly();
+			else this.dig(behaviorParams.diggingDirection);
+		}
+		else if (behavior === 'moving'){
+			if (Math.random() < .2)
+				this.moveRandomly();
+			else
+				this.moveTowardsSquadMovePoint();
+		}
+		else if (behavior === 'harvesting'){
+			var resource = behaviorParams.resourceHarvested;
+			//If the worker isn't holding anything, find tile that has 'resource'
+			if (!this.holding) {
+				//If there is a pickup location, find closest tile with 'resource' that location
+				//Else, find the tile closest to this.tile with 'resource'
+				var pickupTarget = behaviorParams.resourcePickup ? behaviorParams.resourcePickup : this.tile;
+				var pickupActual = this.findClosestExploredTileConditional(t => {
+					if (!t.canProduce(resource)) return false;
+					//We don't want to pick up from our drop off point
+					if (t.x === behaviorParams.resourceDropoff.x && t.y === behaviorParams.resourceDropoff.y) return false;
+					return true;
+				}, pickupTarget);
+				if (pickupActual){
+					console.log('Found tile to pick up at');
+					if (this.isNextToOrOn(pickupActual)) this.harvest(resource, pickupActual);
+					else this.moveTowards(pickupActual);
+				}
+				else{
+					console.log('Could not find tile to pick up resource at');
+					//Auto explore
+					var unexplored = this.findClosestUnexploredTile();
+					if (unexplored){
+						this.moveTowards(unexplored);
+					} 
+					else{
+						this.moveRandomly();
+					} 
+				}
+			}
+			//Else if we are holding a resource
+			else{
+				var dropoffActual = this.game.map.getTile(behaviorParams.resourceDropoff.x, behaviorParams.resourceDropoff.y);
+				if (dropoffActual) {
+					//If the dropoff target is a sibling, drop it off!
+					if (this.isNextToOrOn(dropoffActual)) {
+						var dropoffBuilding = dropoffActual.actor;
+						if (dropoffBuilding.getRemainingStorage() <= 0){
+							console.log('Dropoff building has no remaining storage');
+							return;
+						}
+						else {
+							console.log('Dropping off resource');
+							this.dropOff(dropoffActual.actor);
+						}
+					}
+					else {
+						console.log('Moving towards drop point');
+						this.moveTowards(dropoffActual);
+					} 
+				}
+				else console.log('Could not find tile to drop off resource at');
+			}
+		}
+		else if (behavior  === 'building'){
+			//Find nearest incomplete building
+			var buildingTile = this.findClosestExploredTileConditional(t => {
+				return t.actor && t.actor.type === 'building' && t.actor.isIncomplete() && t.actor.player === this.player;
+			});
+			if (!buildingTile) return this.moveRandomly();
+			if (this.isNextToOrOn(buildingTile)) return this.construct(buildingTile.actor);
+			else this.moveTowards(buildingTile);
+		}
+		else{
+			this.moveRandomly();
+		}
+	}
+
+	attack(enemy){
+		enemy.takeDamage(this.damage);
+	}
+
 
 	move(tile){
 		this.tile.setActor(false);
@@ -44,8 +138,14 @@ class Unit extends Actor{
 		var behaviorParams = this.getBehaviorParams();
 		if (!behaviorParams.movingTo) return;
 		var target = this.tile.map.getTile(behaviorParams.movingTo.x, behaviorParams.movingTo.y);
+		this.moveTowards(target);
+	}
+
+
+	moveTowards(target){
 		if (this.tile.siblings.includes(target) && this.canOccupy(target))
 			return this.move(target);
+		var behaviorParams = this.getBehaviorParams();
 		var scores = [0,0,0,0,0,0,0,0];
 		//Get which sib is closest to tile
 		var tileInfos = [];
@@ -141,10 +241,6 @@ class Unit extends Actor{
 		this.move(candidates[rand(candidates.length)]);
 	}
 
-	attack(enemy){
-		enemy.takeDamage(this.damage);
-	}
-
 
 	dig(dir){
 		//Make sure the current tile is above the lowest elevation, and the tile in the direction of dir is below the highest elevation
@@ -157,6 +253,36 @@ class Unit extends Actor{
 		this.tile.decrementElevation();
 		this.tile.siblings[dir].incrementElevation();
 	}
+
+
+	harvest(resource, tile){
+		if (tile.produceResource(resource)){
+			this.holding = resource;
+			//console.log('Harvested ' + resource + ' from ', tile.x, tile.y);
+		}
+		else{
+			console.log('Tile did not produce resource ' + resource + '. Tile: ' + tile);
+			return;
+		}
+	}
+
+
+	dropOff(building){
+		if (building.addStorage(this.holding)){
+			//console.log('Dropped off ' + this.holding + ' at ', building.tile.x, building.tile.y);
+			this.holding = false;
+		}
+		else{
+			console.log('Building would not accept resource ' + this.holding + '. Building: ' + building);
+		}
+	}
+
+
+	construct(building){
+		building.increaseCompleteness();
+		this.timeUntilNextAction = this.constructionTime;
+	}
+
 
 	getBehaviorParams(){
 		return this.player.getSquad(this.squad).getBehaviorParams();

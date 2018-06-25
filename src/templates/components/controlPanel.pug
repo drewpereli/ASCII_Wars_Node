@@ -21,14 +21,34 @@
 						.logistics
 				#current-buildings-tab
 					h3 Current Buildings
+					table#current-buildings
+						
 		#command-tab
 			h2 Command tab
 			.div
 				h3 Selected Squad
 				select#squad-select
 				div
-					label(for="#digging-checkbox") Dig
-					input#digging-checkbox(type="checkbox")
+					label(for="#behavior") Behavior
+					div#behavior
+						input#behavior-attacking(type="radio" value="attacking" name="behavior" checked='checked')
+						label(for="#behavior-attacking") Attacking
+						br
+						input#behavior-moving(type="radio" value="moving" name="behavior")
+						label(for="#behavior-moving") Moving
+						br
+						input#behavior-digging(type="radio" value="digging" name="behavior")
+						label(for="#behavior-digging") Digging
+						br
+						input#behavior-harvesting(type="radio" value="harvesting" name="behavior")
+						label(for="#behavior-harvesting") Harvesting
+						br
+						input#behavior-harvesting(type="radio" value="building" name="behavior")
+						label(for="#behavior-building") Building
+						br
+						input#behavior-fortifying(type="radio" value="fortifying" name="behavior")
+						label(for="#behavior-fortifying") Fortifying
+						br
 					label(for="#digging-direction-select") Direction
 					select#digging-direction-select
 						option(value=0) N
@@ -48,6 +68,12 @@
 					br
 					label(for="alignment-EW") E-W
 					input.alignment-selection#alignment-none(type="radio", name="alignment", value="E-W")
+					select#resource-picked-up
+						option(value='wood') Wood
+						option(value='metal') Metal
+					button#set-resource-pickup(value="Set Resource Pickup") Set Resource Pickup
+					button#set-resource-dropoff(value="Set Resource Dropoff") Set Resource Dropoff
+
 
 
 

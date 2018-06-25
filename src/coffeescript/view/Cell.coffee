@@ -48,17 +48,28 @@ class Cell
 		yOffset = 0
 		switch @getLayerName()
 			when 'terrain'
-				charColor = config.view.colors.terrain[tile.terrain]
-				char = config.view.map.terrainCharacters[tile.terrain]
+				#Get max resource
+				maxVal = -Infinity
+				resource = false
+				for currentResource, val of tile.resources
+					if val > maxVal and val > 0
+						maxVal = val
+						resource = currentResource
+				if resource
+					charColor = config.view.colors.resources[resource]
+					char = config.view.map.resourceCharacters[resource]
+
 			when 'elevation'
 				fillColor = app.view.getColorFromElevation(tile.elevation)
 			when 'actors'
 				if tile.actor
 					a = tile.actor
 					char = a.character
-					charColor = app.view.getPlayerColor(a.player)
 					if a.type is 'building'
+						charColor = hexToRGBA app.view.getPlayerColor(a.player), a.completeness + .2
 						borderColor = charColor
+					else
+						charColor = app.view.getPlayerColor(a.player)
 			when 'water'
 				if tile.waterDepth > 0
 					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')'

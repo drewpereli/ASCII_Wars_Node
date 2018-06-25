@@ -2,12 +2,17 @@
 class Game
 
 	constructor: ->
-		@state
+		@state = 'default'
 		@timeState = 'paused'
 		@currentlyConstructing = false
 		@currentlyConstructingChar = false
 		@selectedTile = null
 		@hoveredTile = null
+		@squads = []
+		for squadNum in [1..config.maxSquads]
+			squadParams = {}
+			Object.assign(squadParams, config.model.squads.defaultBehaviorParams)
+			@squads.push(squadParams)
 
 
 	changeState: (state) ->
@@ -36,7 +41,14 @@ class Game
 
 
 	clickTile: (tile) ->
-		if @state is 'constructing'
+		if @state is 'default'
+			additionalTileInfo = app.map.getTile tile.x, tile.y
+			if additionalTileInfo
+				Object.assign tile, additionalTileInfo
+			else
+				tile.visible = false
+			app.view.selectTile(tile)
+		else if @state is 'constructing'
 			app.socket.emit('construct', {tile: tile, building: @currentlyConstructing})
 		else if @state is 'raising elevation'
 			app.socket.emit('raise elevation', tile)
@@ -46,17 +58,17 @@ class Game
 			app.socket.emit('create wall', tile)
 		else if @state is 'creating water pump'
 			app.socket.emit('create water pump', tile)
+		else if @state is 'setting resource pickup'
+			@updateSquadParams(@getSelectedSquad(), 'resourcePickup', {x: tile.x, y: tile.y})
+		else if @state is 'setting resource dropoff'
+			@updateSquadParams(@getSelectedSquad(), 'resourceDropoff', {x: tile.x, y: tile.y})
+		@changeState('default')
+
 
 	rightClickTile: (tile) ->
 		console.log('right clicking tile ' + JSON.stringify(tile))
-		selectedSquad = $('#squad-select').val()
-		app.socket.emit(
-			'update behavior params', 
-			{
-				squad: selectedSquad,
-				movingTo: {x: tile.x, y: tile.y}
-			}
-		)
+		selectedSquad = @getSelectedSquad()
+		@updateSquadParams(selectedSquad, 'movingTo', {x: tile.x, y: tile.y})
 
 	hoverTile: (tile) ->
 		if !tile
@@ -70,40 +82,36 @@ class Game
 		@hoveredTile = tile
 
 	mouseLeaveCanvas: -> 
-		app.view.eraseGhostConstruction(@hoveredTile)
+		if @hoveredTile then app.view.eraseGhostConstruction(@hoveredTile)
 		@hoveredTile = null
 
-	clickDiggingCheckbox: (checked) ->
-		selectedSquad = $('#squad-select').val()
+	updateSquadParams: (squad, name, value)->
+		newParams = {squad: squad}
+		newParams[name] = value
+		console.log 'updating squad params: ' + JSON.stringify(newParams)
+		app.socket.emit('update behavior params', newParams)
+		Object.assign(@squads[squad], newParams)
+
+
+
+
+	updateProducedSquad: (buildingId, val1, val2) ->
 		app.socket.emit(
-			'update behavior params', 
+			'update produced squad',
 			{
-				squad: selectedSquad,
-				digging: checked
+				buildingId: buildingId,
+				squadVals: [val1, val2]
 			}
 		)
 
-	changeDiggingDirection: (dir) ->
-		selectedSquad = $('#squad-select').val()
+	updateProducerOnOff: (buildingId, producerOn) ->
 		app.socket.emit(
-			'update behavior params', 
+			'update producer on off',
 			{
-				squad: selectedSquad,
-				diggingDirection: dir
+				buildingId: buildingId,
+				producerOn: producerOn
 			}
 		)
-
-	changeSquadAlignment: (alignment) ->
-		if alignment is'none'
-			alignment = false
-		selectedSquad = $('#squad-select').val()
-		app.socket.emit(
-			'update behavior params', 
-			{
-				squad: selectedSquad,
-				alignment: alignment
-			}
-		) 
 
 	controlClickTile: (tile) ->
 
@@ -120,6 +128,9 @@ class Game
 		@changeState('constructing')
 		@currentlyConstructing = building
 		@currentlyConstructingChar = character
+
+	getSelectedSquad: ->
+		return $('#squad-select').val()
 
 
 	################
@@ -138,6 +149,7 @@ class Game
 	updateTile: (tile) ->
 		app.map.updateTile(tile.x, tile.y, tile)
 		app.view.updateTile(tile)
+
 
 	end: () ->
 		

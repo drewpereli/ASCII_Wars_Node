@@ -1,6 +1,10 @@
 var Model = require('../Model.abstract');
 var rand = require('random-seed').create();
 var config = require('../../../config');
+var shortId = require('shortid');
+shortId.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_=');
+var shuffle = require('shuffle-array');
+
 
 class Actor extends Model{
 
@@ -9,19 +13,22 @@ class Actor extends Model{
 		var defaultArgs = {
 			name: null,
 			readableName: null,
+			playerGivenName: args.readableName + ' at (' + args.tile.x + ', ' + args.tile.y + ')',
 			character: null,
 			tile: null,
 			player: null,
 			maxHealth: null,
 			moveTime: null,
 			sightRange: 3,
-			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type']
+			holding: false,
+			clientFacingFields: ['player', 'maxHealth', 'health', 'character', 'type', 'name', 'playerGivenName', 'id']
 		};
 		Object.assign(defaultArgs, args);
 
 		super(defaultArgs);
 
 		Object.assign(this, args);
+		this.id = shortId.generate();
 		this.game = this.tile.map.game;
 		this.map = this.game.map;
 		this.tile.setActor(this);
@@ -33,12 +40,11 @@ class Actor extends Model{
 		this.setVisibleTiles();
 	}
 
-
 	takeDamage(damage){
 		this.health -= damage;
+		this.tile.changed.actor = true;
 		if (this.health <= 0) this.die();
 	}
-
 
 	tick(){
 		this.timeUntilNextAction--;
@@ -47,15 +53,11 @@ class Actor extends Model{
 	}
 
 
-	act(){}
-
-
 	die(){
 		this.tile.unsetActor();
 		this.tile = false;
 		this.dead = true;
 	}
-
 
 	setVisibleTiles(){
 		this.visibleTiles = [];
@@ -67,15 +69,10 @@ class Actor extends Model{
 				var realY = (y + mapHeight) % mapHeight;
 				var t = this.tile.map.getTile(realX, realY)
 				this.visibleTiles.push(t);
-				/*
-				if (!this.player.visibleTilesThisTurn.includes(t)){
-					this.player.visibleTilesThisTurn.push(t);
-				}
-				*/
+				if (!t.seenBy.includes(this.player)) t.seenBy.push(this.player);
 			}
 		}
 	}
-
 
 	getVisibleTiles(){ return this.visibleTiles; }
 
@@ -95,6 +92,56 @@ class Actor extends Model{
 		else return false;
 	}
 
+	findClosestExploredTileConditional(conditionFunction, searchStart=false, limit=false){
+		if (!searchStart) searchStart = this.tile;
+		//If the search start isn't a pointer to an object in the map, make it one if we can
+		if (!('siblings' in searchStart)) searchStart = this.game.map.getTile(searchStart.x, searchStart.y);
+		if (conditionFunction(searchStart)) return searchStart;
+		var tilesSearched = [searchStart];
+		//Depth first search
+		var queue = [searchStart];
+		var numSearched = 0;
+		while (queue.length > 0 && (limit === false || numSearched < limit)){
+			var currentTile = queue.shift(); //Take out first element
+			var shuffledUncheckedSibs = currentTile.siblings.filter(t => t.seenBy.includes(this.player) && !tilesSearched.includes(t));
+			shuffle(shuffledUncheckedSibs);
+			for (let sib of shuffledUncheckedSibs){
+				if (conditionFunction(sib)) return sib;
+				numSearched++;
+				queue.push(sib);
+				tilesSearched.push(sib);
+			}
+		}
+		return false;
+	}
+
+	findClosestUnexploredTile(searchStart=false, limit=1000){
+		if (!searchStart) searchStart = this.tile;
+		//If the search start isn't a pointer to an object in the map, make it one if we can
+		if (!('siblings' in searchStart)) searchStart = this.game.map.getTile(searchStart.x, searchStart.y);
+		var tilesSearched = [];
+		//Depth first search
+		var queue = [searchStart];
+		var numSearched = 0;
+		while (queue.length > 0 && (limit === false || numSearched < limit)){
+			//console.log(queue.length);
+			var currentTile = queue.shift(); //Take out first element
+			if (!currentTile.seenBy.includes(this.player)) return currentTile;
+			tilesSearched.push(currentTile);
+			var shuffledUncheckedSibs = currentTile.siblings.filter(t => !tilesSearched.includes(t));
+			shuffle(shuffledUncheckedSibs);
+			queue = queue.concat(shuffledUncheckedSibs);
+			numSearched++
+		}
+		return false;
+	}
+
+
+	isNextToOrOn(tile){
+		if (this.tile === tile) return true;
+		if (this.tile.siblings.includes(tile)) return true;
+		return false;
+	}
 }
 
 

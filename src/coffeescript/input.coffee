@@ -24,18 +24,21 @@ class Input
 			app.game.mouseLeaveCanvas()
 		)
 
-		$('#digging-checkbox').change( => 
-			app.game.clickDiggingCheckbox($('#digging-checkbox').is(':checked'))
+
+		$('#behavior > input[name="behavior"]').change( => 
+			app.game.updateSquadParams(@getSelectedSquad(), 'behavior', $('#behavior > input:checked').val())
 		)
+		
 
 		$('#digging-direction-select').change( => 
-			app.game.changeDiggingDirection($('#digging-direction-select').val())
+			app.game.updateSquadParams(@getSelectedSquad(), 'diggingDirection', $('#digging-direction-select').val())
 		)
 
 		$('.alignment-selection').change( =>
-			app.game.changeSquadAlignment($('.alignment-selection:checked').val())
+			app.game.updateSquadParams(@getSelectedSquad(), 'alignment', $('.alignment-selection:checked').val())
 		)
 
+		#I think this prevents right clicking from opening up a menu? I dunno, it's been a bit since I wrote it
 		$(app.view.components.map.clickableCanvas).contextmenu( => return false)
 
 		$("#next-btn").click( =>
@@ -56,32 +59,40 @@ class Input
 			app.game.clickCreateBuildingButton(building, character)
 		)
 
+		$('#current-buildings').on('change', '.producer-squad-select', () -> 
+			buildingId = $(this).attr('id').split('-')[3];
+			#Get the values of the two select fields
+			vals = $(this).parent().find('select').map(() -> return $(this).val()).get()
+			app.game.updateProducedSquad(buildingId, vals[0], vals[1])
+		)
+
+		$('#current-buildings').on('change', '.producer-on-off', () -> 
+			buildingId = $(this).attr('id').split('-')[0];
+			producerOn = !!$(this).prop('checked')
+			app.game.updateProducerOnOff(buildingId, producerOn)
+		)
+
+		$('#set-resource-pickup').click((e) => 
+			app.game.changeState('setting resource pickup')
+		)
+
+		$('#set-resource-dropoff').click((e) => 
+			app.game.changeState('setting resource dropoff')
+		)
+
+
+
+	getSelectedSquad: ->
+		return $('#squad-select').val()
 
 
 
 	getTileFromEvent: (event) ->
-
 		cellX = Math.floor(event.offsetX / app.view.components.map.currentCellLength);
 		cellY = Math.floor(event.offsetY / app.view.components.map.currentCellLength);
 		x = (cellX + app.view.components.map.currentX) % app.map.width
 		y = (cellY + app.view.components.map.currentY) % app.map.height
 		return {x: x, y: y}
-		#return app.view.getTileFromPixels(event.offsetX, event.offsetY)
-		###
-		x = new Number()
-		y = new Number()
-		canvas = app.view.components.map.clickableCanvas
-		if event.x != undefined && event.y != undefined
-			x = event.x
-			y = event.y
-		else #Firefox method to get the position
-			x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
-			y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop
-		x -= canvas.offsetLeft
-		y -= canvas.offsetTop
-		return app.view.getTileFromPixels(x, y)
-		###
-
 
 
 	processKeyDown: (event)->

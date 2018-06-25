@@ -14,7 +14,8 @@ class View
 				clickableCanvas: {}
 				selectedTile: null
 			control: {}
-			info: {}	
+			info: 
+				selectedTile: $('#selected-tile')
 			message: $('.message')
 		@initialize.map.canvases(this)
 		@initialize.map.cells(this)
@@ -85,6 +86,39 @@ class View
 						cell.fill('#000')
 
 
+	addBuilding: (building) ->
+		row = $('<tr>')
+			.attr('id', 'building-row-' + building.id)
+			.append('<td>' + building.playerGivenName + '</td>')
+		if building.producer
+			controlCell = $('<td>')
+			controlCell.append('<h4>Producing: </h4>')
+			$('<input>')
+				.attr('type', 'checkbox')
+				.attr('id', building.id + '-on')
+				.prop('checked', true)
+				.addClass('producer-on-off')
+				.appendTo(controlCell)
+			controlCell.append('<h4>Squad</h4>')
+			controlCell.append('<label>From: </label>')
+			squadSelectLower = $('<select>').addClass('producer-squad-select')
+			squadSelectLower.attr('id', 'squad-select-lower-' + building.id).appendTo(controlCell)
+			controlCell.append('<label>To: </label>')
+			squadSelectUpper = $('<select>').addClass('producer-squad-select')
+			squadSelectUpper.attr('id', 'squad-select-upper-' + building.id).appendTo(controlCell)
+			for squadNum in [1..config.maxSquads]
+				$("<option>")
+					.attr('value', squadNum - 1)
+					.html(squadNum)
+					.appendTo(squadSelectLower)
+				$("<option>")
+					.attr('value', squadNum - 1)
+					.html(squadNum)
+					.appendTo(squadSelectUpper)
+			controlCell.appendTo(row)
+		$(@components.buildingsTable).append(row)
+
+
 	updateTile: (tile) -> 
 		cells = @getCellsFromTile(tile);
 		for cell in cells
@@ -108,7 +142,8 @@ class View
 
 
 	drawGhostConstruction: (tile, character) -> 
-		@getCellFromTile(tile, 'graphics').drawGhostConstruction(character)
+		cell = @getCellFromTile(tile, 'graphics')
+		if cell then cell.drawGhostConstruction(character)
 
 
 	eraseGhostConstruction: (tile) ->
@@ -164,6 +199,22 @@ class View
 		return config.view.colors.players[clientFacingPlayer.team]
 
 
+	selectTile: (tile) ->
+		if not tile
+			return
+		@components.map.selectedTile = tile
+		tileInfo = @components.info.selectedTile
+		tileInfo.find('.x').html(tile.x)
+		tileInfo.find('.y').html(tile.y)
+		if 'resources' of tile
+			tileInfo.find('#wood').html(if tile.resources.wood then tile.resources.wood else 0)
+			tileInfo.find('#food').html(if tile.resources.food then tile.resources.food else 0)
+			tileInfo.find('#metal').html(if tile.resources.metal then tile.resources.metal else 0)
+		else
+			tileInfo.find('.resourceCount').html('?')
+
+
+
 
 ##############################
 #
@@ -206,6 +257,7 @@ View.prototype.initialize =
 				.data('character', building.character)
 				.html(building.readableName)
 				.appendTo("#construct-tab .buttons .logistics")
+		v.components.buildingsTable = $('#current-buildings')[0]
 		#Command Tab
 		#Add an dropdown menu for squads
 		for squadNum in [1..config.maxSquads]
