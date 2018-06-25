@@ -82,7 +82,7 @@ class Game
 		@hoveredTile = tile
 
 	mouseLeaveCanvas: -> 
-		app.view.eraseGhostConstruction(@hoveredTile)
+		if @hoveredTile then app.view.eraseGhostConstruction(@hoveredTile)
 		@hoveredTile = null
 
 	updateSquadParams: (squad, name, value)->

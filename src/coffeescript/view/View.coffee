@@ -142,7 +142,8 @@ class View
 
 
 	drawGhostConstruction: (tile, character) -> 
-		@getCellFromTile(tile, 'graphics').drawGhostConstruction(character)
+		cell = @getCellFromTile(tile, 'graphics')
+		if cell then cell.drawGhostConstruction(character)
 
 
 	eraseGhostConstruction: (tile) ->

@@ -119,7 +119,9 @@ Game = class Game {
   }
 
   mouseLeaveCanvas() {
-    app.view.eraseGhostConstruction(this.hoveredTile);
+    if (this.hoveredTile) {
+      app.view.eraseGhostConstruction(this.hoveredTile);
+    }
     return this.hoveredTile = null;
   }
 
@@ -840,7 +842,11 @@ View = class View {
   }
 
   drawGhostConstruction(tile, character) {
-    return this.getCellFromTile(tile, 'graphics').drawGhostConstruction(character);
+    var cell;
+    cell = this.getCellFromTile(tile, 'graphics');
+    if (cell) {
+      return cell.drawGhostConstruction(character);
+    }
   }
 
   eraseGhostConstruction(tile) {
