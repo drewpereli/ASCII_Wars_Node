@@ -83,7 +83,8 @@ var config = {
 			resources: {
 				wood: 'brown'
 			},
-			players: ['black', 'white']
+			//Must be in hex!!!
+			players: ['#000', '#FFF']
 		},
 		map: {
 			height: 30,

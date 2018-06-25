@@ -10,11 +10,15 @@ class Building extends Actor{
 		args.acting = true;
 		if (!args.maxStorage) args.maxStorage = 0;
 		super(args);
+		this.completeness = 0;
+		this.clientFacingFields.push('completeness');
 		this.clientFacingFields.push('storing');
+		this.clientFacingFields.push('acting');
 	}
 
 	setOnOff(buildingOn){
 		this.acting = buildingOn;
+		this.tile.changed.actor = true;
 	}
 
 	getTotalStored(){
@@ -36,17 +40,30 @@ class Building extends Actor{
 		if (this.getRemainingStorage() <= 0) return false;
 		if (this.isStoring(resource)) this.storing[resource]++;
 		else this.storing[resource] = 1;
+		this.tile.changed.actor = true;
 		return true;
 	}
 
 	removeStorage(resource){
 		if (!this.isStoring(resource)) return false;
 		this.storing[resource]--;
+		this.tile.changed.actor = true;
 		return true;
 	}
 
 	isStoring(resource){
 		return this.storing[resource] > 0;
+	}
+
+
+	isIncomplete(){
+		return this.completeness < 1;
+	}
+
+
+	increaseCompleteness(){
+		this.completeness += .01;
+		this.tile.changed.actor = true;
 	}
 
 

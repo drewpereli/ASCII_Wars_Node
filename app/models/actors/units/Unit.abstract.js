@@ -9,8 +9,9 @@ class Unit extends Actor{
 			maxHealth: 100,
 			moveTime: 1,
 			defense: 0,
-			damage: false,
-			attackTime: false
+			damage: 1,
+			attackTime: 10,
+			constructionTime: 10
 		}
 		var args = defaultArgs;
 		Object.assign(args, specifiedArgs);
@@ -94,6 +95,15 @@ class Unit extends Actor{
 				}
 				else console.log('Could not find tile to drop off resource at');
 			}
+		}
+		else if (behavior  === 'building'){
+			//Find nearest incomplete building
+			var buildingTile = this.findClosestExploredTileConditional(t => {
+				return t.actor && t.actor.type === 'building' && t.actor.isIncomplete() && t.actor.player === this.player;
+			});
+			if (!buildingTile) return this.moveRandomly();
+			if (this.isNextToOrOn(buildingTile)) return this.construct(buildingTile.actor);
+			else this.moveTowards(buildingTile);
 		}
 		else{
 			this.moveRandomly();
@@ -266,6 +276,13 @@ class Unit extends Actor{
 			console.log('Building would not accept resource ' + this.holding + '. Building: ' + building);
 		}
 	}
+
+
+	construct(building){
+		building.increaseCompleteness();
+		this.timeUntilNextAction = this.constructionTime;
+	}
+
 
 	getBehaviorParams(){
 		return this.player.getSquad(this.squad).getBehaviorParams();

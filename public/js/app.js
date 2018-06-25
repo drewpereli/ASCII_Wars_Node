@@ -592,9 +592,11 @@ Cell = class Cell {
         if (tile.actor) {
           a = tile.actor;
           char = a.character;
-          charColor = app.view.getPlayerColor(a.player);
           if (a.type === 'building') {
+            charColor = hexToRGBA(app.view.getPlayerColor(a.player), a.completeness + .2);
             borderColor = charColor;
+          } else {
+            charColor = app.view.getPlayerColor(a.player);
           }
         }
         break;

@@ -65,9 +65,11 @@ class Cell
 				if tile.actor
 					a = tile.actor
 					char = a.character
-					charColor = app.view.getPlayerColor(a.player)
 					if a.type is 'building'
+						charColor = hexToRGBA app.view.getPlayerColor(a.player), a.completeness + .2
 						borderColor = charColor
+					else
+						charColor = app.view.getPlayerColor(a.player)
 			when 'water'
 				if tile.waterDepth > 0
 					fillColor = 'rgb(0, 0, ' + (255 - 10 * tile.waterDepth) + ')'
