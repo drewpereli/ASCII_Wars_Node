@@ -138,6 +138,9 @@ class Game{
 
 	addActor(actor){
 		this.actors.push(actor);
+		if (actor.name === 'command_center') {
+			actor.player.addCommandCenter(actor);
+		}
 		console.log('Actor id: ', actor.id);
 		if (actor.type === 'building' && actor.name !== 'wall')
 			this.emitToPlayer(actor.player, 'new building', actor.getClientDataFor(actor.player));

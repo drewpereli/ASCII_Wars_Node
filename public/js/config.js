@@ -105,7 +105,8 @@ var config = {
 		water: false,
 		allTilesVisible: false,
 		testActors: 0,
-		flatMap: true
+		flatMap: true,
+		producerLimit: 1
 	},
 	logTimeStamps: false
 }

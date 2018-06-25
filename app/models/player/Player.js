@@ -16,6 +16,7 @@ class Player extends Model{
 		this.readyForNextTurn = false;
 		this.clientFacingFields = ['team'];
 		this.game = args.game;
+		this.commandCenter;
 		this.squads = [];
 		for (var i = 0 ; i < config.maxSquads ; i++){
 			this.squads.push(new Squad({squadNum: i}));
@@ -24,6 +25,10 @@ class Player extends Model{
 
 	getActors(){
 		return this.game.actors.filter(a => a.player === this);
+	}
+
+	getCommandCenter(){
+		return this.commandCenter;
 	}
 
 	getSquad(num){
@@ -55,6 +60,20 @@ class Player extends Model{
 		console.log('Constructing new ' + buildingName);
 		var building = new buildingClass({player: this, tile: tile});
 		return this.game.addActor(building);
+	}
+
+
+	addCommandCenter(commandCenter){
+		this.commandCenter = commandCenter;
+		//Set command center as squad move point and resource dropoff
+		this.squads.forEach(s => {
+			s.setBehaviorParams(
+				{
+					movingTo: {x: commandCenter.tile.x, y: commandCenter.tile.y},
+					resourceDropoff: {x: commandCenter.tile.x, y: commandCenter.tile.y}
+				}
+			);
+		});
 	}
 
 

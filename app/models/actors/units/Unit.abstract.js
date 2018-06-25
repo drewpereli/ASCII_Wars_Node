@@ -51,15 +51,16 @@ class Unit extends Actor{
 				var pickupActual = this.findClosestExploredTileConditional(t => {
 					if (!t.canProduce(resource)) return false;
 					//We don't want to pick up from our drop off point
-					if (behaviorParams.resourceDropoff && t.x === behaviorParams.resourceDropoff.x && t.y === behaviorParams.resourceDropoff.y) return false;
+					if (t.x === behaviorParams.resourceDropoff.x && t.y === behaviorParams.resourceDropoff.y) return false;
 					return true;
 				}, pickupTarget);
 				if (pickupActual){
+					console.log('Found tile to pick up at');
 					if (this.isNextToOrOn(pickupActual)) this.harvest(resource, pickupActual);
 					else this.moveTowards(pickupActual);
 				}
 				else{
-					//console.log('Could not find tile to pick up resource at');
+					console.log('Could not find tile to pick up resource at');
 					//Auto explore
 					var unexplored = this.findClosestUnexploredTile();
 					if (unexplored){
@@ -72,13 +73,7 @@ class Unit extends Actor{
 			}
 			//Else if we are holding a resource
 			else{
-				//If there is a dropoff location, dropoff there
-				//Else, find the nearest building with storage space > 0
-				var dropoffActual = behaviorParams.resourceDropoff ? 
-										this.game.map.getTile(behaviorParams.resourceDropoff.x, behaviorParams.resourceDropoff.y) : 
-										this.findClosestExploredTileConditional(t => {
-											return t.actor && t.actor.type === 'building' && t.actor.getRemainingStorage() > 0;
-										});
+				var dropoffActual = this.game.map.getTile(behaviorParams.resourceDropoff.x, behaviorParams.resourceDropoff.y);
 				if (dropoffActual) {
 					//If the dropoff target is a sibling, drop it off!
 					if (this.isNextToOrOn(dropoffActual)) {
@@ -87,9 +82,15 @@ class Unit extends Actor{
 							console.log('Dropoff building has no remaining storage');
 							return;
 						}
-						else this.dropOff(dropoffActual.actor);
+						else {
+							console.log('Dropping off resource');
+							this.dropOff(dropoffActual.actor);
+						}
 					}
-					else this.moveTowards(dropoffActual);
+					else {
+						console.log('Moving towards drop point');
+						this.moveTowards(dropoffActual);
+					} 
 				}
 				else console.log('Could not find tile to drop off resource at');
 			}
